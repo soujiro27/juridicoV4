@@ -1,0 +1,41 @@
+header
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+            nav.collapse.navbar-collapse.bs-navbar-collapse(role='navigation')
+                .col-xs-12
+                .col-xs-2
+                    a(href='/')
+                        img(src='../img/logo-top.png')
+                .col-xs-2
+                    ul.nav.navbar-nav
+                        li
+                            a(href='#')
+                                i.fa.fa-th-list
+                                |  Cuenta Publica 2016
+                .col-xs-3
+                    h2 Tipo Nombres
+                .col-xs-2
+                    ul.nav.navbar-nav
+                        li
+                            a(href='./notificaciones')
+                                i.fa.fa-envelope-o
+                                |  Tiene 
+                                span
+                                    input#txtNoti.noti(type='text')
+                                |  Mensaje(s).
+                .col-xs-3
+                    ul.nav.navbar-nav.pull-right
+                        li.dropdown.pull-right
+                            a.dropdown-toggle(data-toggle='dropdown', href='/')
+                            i.fa.fa-user
+                            b Usuario
+                            b.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='/perfil')
+                                    i.fa.fa-user
+                                    |  Perfil
+                            li
+                                a(href='/cerrar')
+                                    i.fa.fa-sign-out
+                                    |  Salir

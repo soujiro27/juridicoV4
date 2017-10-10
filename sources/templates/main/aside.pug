@@ -1,0 +1,61 @@
+.sidebar
+  .sidebar-dropdown
+    a(href='/') Navigation
+  ul#nav
+    li.has_sub
+      a(href='/')
+        i.fa.fa-home
+        |  Inicio
+    li#GESTION.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-pencil-square-o
+        |  Gestión
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#GESTION-UL
+    li#PROGRAMA.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-bars
+        |  Programas
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#PROGRAMA-UL
+    li#AUDITORIA.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-search
+        |  Auditorías
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#AUDITORIA-UL
+    li#OBSERVACIONES.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-cogs
+        |  Acciones
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#OBSERVACIONES-UL
+    li#CONFIGURACION.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-pencil-square-o
+        |  Catálogos
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#CONFIGURACION-UL
+    li#REPORTEADOR.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-file-text-o
+        |  Informes
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#REPORTEADOR-UL
+    li#NORMATIVIDAD.has_sub(style='display:none;')
+      a(href='')
+        i.fa.fa-pencil-square-o
+        |  Normatividad
+        span.pull-right
+          i.fa.fa-chevron-right
+      ul#NORMATIVIDAD-UL
+    li.has_sub
+      a(href='/cerrar')
+        i.fa.fa-sign-out
+        |  Salir

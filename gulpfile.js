@@ -3,7 +3,7 @@ var pug = require('gulp-pug')
 var stylus = require('gulp-stylus')
 
 gulp.task('templates',function () {
-    gulp.src('./sources/templates/*.pug')
+    gulp.src('./sources/templates/main/main.pug')
     .pipe(pug({
         pretty:true
     }))
