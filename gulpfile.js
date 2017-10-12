@@ -1,21 +1,59 @@
 var gulp = require('gulp')
 var pug = require('gulp-pug')
 var stylus = require('gulp-stylus')
+var browserify = require('browserify')
+var source = require('vinyl-source-stream')
+var babelify = require('babelify')
+var buffer = require('vinyl-buffer')
+var p = require('partialify')
 
-gulp.task('templates',function () {
-    gulp.src('./sources/templates/main/main.pug')
+
+gulp.task('main',function () {
+    gulp.src('./dev/frontend/Templates/Main/main.pug')
     .pipe(pug({
         pretty:true
     }))
-    .pipe(gulp.dest('./View/templates/'))
+    .pipe(gulp.dest('./'))
 })
 
+gulp.task('tables',function () {
+    gulp.src('./dev/frontend/Templates/Tables/*.pug')
+    .pipe(pug({
+        pretty:true
+    }))
+    .pipe(gulp.dest('./dev/frontend/utils/Templates'))
+})
+
+
 gulp.task('css',function(){
-    gulp.src('./sources/css/main.styl')
+    gulp.src('./dev/frontend/assets/css/main.styl')
     .pipe(stylus(
         {'include css':true}
     ))
-    .pipe(gulp.dest('./View/css/'))
+    .pipe(gulp.dest('./assets/Css/'))
 })
 
-gulp.task('vistaRender',['templates','css'])
+gulp.task('js',function(){
+    return browserify('./dev/frontend/index.js')
+    .transform('babelify',{presets:['es2015']})
+    .transform(p)
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./assets/js/'))
+})
+
+gulp.task('menu',function(){
+    return browserify('./dev/frontend/utils/Menu/index.js')
+    .transform('babelify',{presets:['es2015']})
+    .bundle()
+    .pipe(source('menu.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./assets/js/'))
+})
+
+
+
+
+gulp.task('vistaRender',['html','css'])
+gulp.task('pugRender',['main','tables'])
