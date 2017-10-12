@@ -2,7 +2,7 @@
 'use strict';
 
 var $ = require('jquery');
-
+var cont = 0;
 var datos = {
   idUsuario: '2294',
   idCuentaActual: 'CTA-2016',
@@ -82,13 +82,42 @@ $(".has_sub > a").click(function (e) {
 });
 
 $('div.buttonHide').click(function () {
+  if (cont === 0) {
+    $('ul#nav').animate({
+      left: '-200px'
+    });
+    $(this).animate({
+      left: '17px'
+    });
+    $(this).css('transform', 'rotate(180deg)');
+    var div = $('div#tableLarge');
+    div.removeClass('col-md-9');
+    div.removeClass('col-md-offset-2');
+    div.addClass('col-md-10');
+    div.addClass('col-md-offset-1');
+    cont += 1;
+  } else {
+    $('ul#nav').animate({
+      left: '0px'
+    });
+    $(this).animate({
+      left: '217px'
+    });
+    $(this).css('transform', 'rotate(0deg)');
+
+    var _div = $('div#tableLarge');
+    _div.removeClass('col-md-10');
+    _div.removeClass('col-md-offset-1');
+    _div.addClass('col-md-9');
+    _div.addClass('col-md-offset-2');
+    cont -= 1;
+  }
   /*$('ul#nav').animate({
     left:'-200px'
   })
   $(this).animate({
     left:'17px'
   })*/
-  $('ul#nav').toggle();
 });
 
 },{"jquery":2}],2:[function(require,module,exports){

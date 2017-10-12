@@ -1,5 +1,5 @@
 const $ = require('jquery')
-
+let cont=0
 const datos={
     idUsuario:'2294',
     idCuentaActual:'CTA-2016',
@@ -88,14 +88,36 @@ $(".has_sub > a").click(function(e){
 
 
 $('div.buttonHide').click(function(){
-  let cont=0
   if(cont===0){
     $('ul#nav').animate({
       left:'-200px'
     })
     $(this).animate({
-      left:'17px'
+      left:'17px',
     })
+    $(this).css('transform','rotate(180deg)')
+    let div = $('div#tableLarge')
+    div.removeClass('col-md-9')
+    div.removeClass('col-md-offset-2')
+    div.addClass('col-md-10')
+    div.addClass('col-md-offset-1')
+    cont+=1
+  }
+  else{
+    $('ul#nav').animate({
+      left:'0px'
+    })
+    $(this).animate({
+      left:'217px'
+    })
+    $(this).css('transform','rotate(0deg)')
+   
+    let div = $('div#tableLarge')
+    div.removeClass('col-md-10')
+    div.removeClass('col-md-offset-1')
+    div.addClass('col-md-9')
+    div.addClass('col-md-offset-2')
+    cont-=1
   }
    /*$('ul#nav').animate({
      left:'-200px'
