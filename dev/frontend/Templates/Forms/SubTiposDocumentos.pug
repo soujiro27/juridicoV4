@@ -1,0 +1,18 @@
+form#SubTiposDocumentos(method='POST')
+  .form-group.idDocumento
+    label(for='idDocumento', clas='form-control-label') Tipo de Documento
+    select#idDocumento.form-control(name='idTipoDocto', required='required')
+      | :optionDocumento
+  .form-group.nombre
+    label(for='nombre', clas='form-control-label') Nombre
+    input#nombre.form-control(type='text', placeholder='Nombre', required='', pattern='[A-Za-z].{1,49}', name='nombre', title='Nombre Incorrecto o Caracteres maximos')
+  .form-group.auditoria
+    label(for='auditoria', clas='form-control-label') Datos Auditoria
+    select#auditoria.form-control(name='auditoria', required='required' aria-describedby="passwordHelpBlock" )
+      option(value='')  Seleccione una Opción 
+      option(value='SI') SI
+      option(value='NO') NO
+    small#passwordHelpBlock.form-text.text-muted El Documento Requiere de Datos de una Auditoria
+  .form-group.send
+    input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+    button#cancelar.btn.btn-danger.btn-sm Cancelar

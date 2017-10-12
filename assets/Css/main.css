@@ -1957,3 +1957,22 @@ div.buttonHide p {
 div.buttonHide p i {
   color: #fff;
 }
+table.principal thead {
+  background-color: #65140f !important;
+  color: #fff;
+}
+a#addRegister {
+  color: #fff !important;
+}
+form {
+  padding: 8px;
+}
+form input[type="text"]:focus {
+  border-color: #26bce0;
+}
+form div.send button {
+  margin-left: 15px;
+}
+small {
+  color: #f00 !important;
+}

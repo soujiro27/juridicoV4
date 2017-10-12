@@ -1,0 +1,23 @@
+
+<form id="SubTiposDocumentos" method="POST">
+  <div class="form-group idDocumento">
+    <label for="idDocumento" clas="form-control-label">Tipo de Documento</label>
+    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>
+  </div>
+  <div class="form-group nombre">
+    <label for="nombre" clas="form-control-label">Nombre</label>
+    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>
+  </div>
+  <div class="form-group auditoria">
+    <label for="auditoria" clas="form-control-label">Datos Auditoria</label>
+    <select class="form-control" id="auditoria" name="auditoria" required="required" aria-describedby="passwordHelpBlock">
+      <option value=""> Seleccione una Opción </option>
+      <option value="SI">SI</option>
+      <option value="NO">NO</option>
+    </select><small class="form-text text-muted" id="passwordHelpBlock">El Documento Requiere de Datos de una Auditoria</small>
+  </div>
+  <div class="form-group send">
+    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>
+    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>
+  </div>
+</form>

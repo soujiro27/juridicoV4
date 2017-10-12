@@ -1,0 +1,7 @@
+form#Acciones(method='POST')
+  .form-group.nombre
+    label.form-control-label(for='nombre') Nombre 
+    input#nombre.form-control(type='text', placeholder='Nombre', required='', pattern='[A-Za-z].{1,10}', name='nombre', title='Nombre Incorrecto o Caracteres maximos')
+  .form-group.send
+    input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+    button#cancelar.btn.btn-danger.btn-sm Cancelar

@@ -1,0 +1,16 @@
+form#DoctosTextos(method='POST')
+    .form-group.idDocumento
+        label.form-control-label(for='idDocumento') Tipo de Documento
+        input#tipo(type='hidden', name='tipo', value='JURIDICO')
+        input#nombre(type='hidden', name='nombre', value='TEXTO-JURIDICO')
+        select#idDocumento.form-control(name='idTipoDocto', required='required')
+            | :optionDocumento
+    .form-group.subDocumento
+        label.form-control-label(for='subDocumento') Tipo de SubDocumento
+        select#subDocumento.form-control(name='idSubTipoDocumento', required='required')
+    .form-group.texto
+        label.form-control-label(for='texto') Texto
+        textarea#texto.form-control(rows='3', name='texto', required='', placeholder='texto')
+    .form-group.send
+        input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+        button#cancelar.btn.btn-danger.btn-sm Cancelar

@@ -1,0 +1,21 @@
+
+<form id="DoctosTextos" method="POST">
+  <div class="form-group idDocumento">
+    <label class="form-control-label" for="idDocumento">Tipo de Documento</label>
+    <input id="tipo" type="hidden" name="tipo" value="JURIDICO"/>
+    <input id="nombre" type="hidden" name="nombre" value="TEXTO-JURIDICO"/>
+    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>
+  </div>
+  <div class="form-group subDocumento">
+    <label class="form-control-label" for="subDocumento">Tipo de SubDocumento</label>
+    <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required"></select>
+  </div>
+  <div class="form-group texto">
+    <label class="form-control-label" for="texto">Texto</label>
+    <textarea class="form-control" id="texto" rows="3" name="texto" required="" placeholder="texto"></textarea>
+  </div>
+  <div class="form-group send">
+    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>
+    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>
+  </div>
+</form>

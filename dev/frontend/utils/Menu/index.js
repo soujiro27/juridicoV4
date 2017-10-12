@@ -5,8 +5,9 @@ const datos={
     idCuentaActual:'CTA-2016',
     userName:'ROBERTO ANTONIO PAREDES',
     cuenta:'CUENTA PUBLICA 2016',
-    ruta:'Caracteres'
+    ruta:'Acciones'
 }
+const rutaAbsoluta='/juridico/'
 
 $('a#CuentaPublica').append('<span>'+datos.cuenta+'</span>')
 $('h2#tipo').text(datos.ruta)
@@ -127,3 +128,5 @@ $('div.buttonHide').click(function(){
    })*/
    
 })
+
+$('a#addRegister').attr('href',rutaAbsoluta+datos.ruta+'/Add')

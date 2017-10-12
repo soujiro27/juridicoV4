@@ -1,0 +1,15 @@
+
+<form id="Caracteres" method="POST">
+  <div class="form-group siglas">
+    <label class="form-control-label" for="siglas">Siglas</label>
+    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]" name="siglas" title="Inserta una Sigla"/>
+  </div>
+  <div class="form-group nombre">
+    <label class="form-control-label" for="nombre">Nombre</label>
+    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>
+  </div>
+  <div class="form-group send">
+    <input class="btn btn-info" type="submit" value="Guardar"/>
+    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>
+  </div>
+</form>

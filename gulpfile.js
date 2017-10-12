@@ -25,6 +25,14 @@ gulp.task('tables',function () {
 })
 
 
+gulp.task('forms',function () {
+    gulp.src('./dev/frontend/Templates/Forms/*.pug')
+    .pipe(pug({
+        pretty:true
+    }))
+    .pipe(gulp.dest('./dev/frontend/utils/Templates'))
+})
+
 gulp.task('css',function(){
     gulp.src('./dev/frontend/assets/css/main.styl')
     .pipe(stylus(
@@ -56,4 +64,4 @@ gulp.task('menu',function(){
 
 
 gulp.task('vistaRender',['html','css'])
-gulp.task('pugRender',['main','tables'])
+gulp.task('pugRender',['main','tables','forms'])

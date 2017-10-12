@@ -5,12 +5,13 @@
 @import './jquery-ui.theme.min.css'
 @import './style-dashboard.css'
 
-
+vino=#65140F
+azul=#26bce0
 div.buttonHide
     position absolute
     top 15px
     left 217px
-    background-color #65140F
+    background-color vino
     z-index 61
     border-radius: 50%;
     height: 25px;
@@ -21,4 +22,18 @@ div.buttonHide
         padding: 2px
         i
             color white
-    
+table.principal
+    thead
+        background-color vino !important
+        color white
+a#addRegister
+    color white !important
+form
+    padding: 8px
+    input[type="text"]:focus
+        border-color: azul
+    div.send
+        button
+            margin-left: 15px
+small
+    color red !important
