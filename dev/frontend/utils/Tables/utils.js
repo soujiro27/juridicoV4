@@ -1,10 +1,14 @@
 const yo = require('yo-yo')
 const $ =  require('jquery')
+const page =  require('page')
+
+const urls =  require('./../rutasAbsolutas')
 
 const utils = {
     loadDataCatalogs,
     headers,
     body,
+    clickTr
 
 }
 
@@ -45,7 +49,13 @@ function body(datos){
     return tr;
 }
 
-
+function clickTr(ruta){
+    $('table.principal tbody tr').click(function(){
+        let id=$(this).children().first().data('valor')
+        let campo=$(this).children().first().attr('id')
+        page.redirect(urls.inicio + ruta + '/update/' + campo + '/' + id)
+    })
+}
 
 module.exports = utils
 

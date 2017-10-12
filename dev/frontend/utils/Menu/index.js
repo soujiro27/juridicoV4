@@ -5,7 +5,7 @@ const datos={
     idCuentaActual:'CTA-2016',
     userName:'ROBERTO ANTONIO PAREDES',
     cuenta:'CUENTA PUBLICA 2016',
-    ruta:'Acciones'
+    ruta:'Caracteres'
 }
 const rutaAbsoluta='/juridico/'
 

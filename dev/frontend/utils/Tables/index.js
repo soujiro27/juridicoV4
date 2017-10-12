@@ -11,8 +11,9 @@ class Tables{
     return template
     }
     
-    drawMainTable(template){
+    drawMainTable(template,ruta){
         $('div#main-content').html(template)
+        utils.clickTr(ruta)
     }
 
   

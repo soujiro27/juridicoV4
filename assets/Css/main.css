@@ -1961,6 +1961,12 @@ table.principal thead {
   background-color: #65140f !important;
   color: #fff;
 }
+table.principal thead th#idCaracter {
+  display: none;
+}
+table.principal tbody td#idCaracter {
+  display: none;
+}
 a#addRegister {
   color: #fff !important;
 }
