@@ -15,7 +15,8 @@ const datos = {
 
 
 function getSingleData(campo,id){
-    let data = datos //api 
+    let data = datos //api
+    data['campo'] = campo
     return data
 }
 
