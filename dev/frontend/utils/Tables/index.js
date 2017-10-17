@@ -14,6 +14,7 @@ class Tables{
     drawMainTable(template,ruta){
         $('div#main-content').html(template)
         utils.clickTr(ruta)
+        utils.loadOrder(ruta)
     }
 
   

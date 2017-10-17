@@ -8,6 +8,7 @@
 
 vino=#65140F
 azul=#26bce0
+row = #DEEFFF
 div.buttonHide
     position absolute
     top 15px
@@ -27,11 +28,19 @@ table.principal
     thead
         background-color vino !important
         color white
+        th
+            cursor pointer
+            position relative
         th#idCaracter
             display: none
+
     tbody
-        td#idCaracter
-            display: none
+        tr:hover
+            border-color vino !important
+            box-shadow: 5px 5px 3px grey !important
+            background-color: row
+            td
+                cursor pointer
 a#addRegister
     color white !important
 form
@@ -47,3 +56,11 @@ small
     border-color red !important
 p.error
     color red
+
+
+div.orderby
+    position absolute
+    bottom 0
+    right 0
+    width: 200px
+    background-color: vino 

@@ -11,17 +11,20 @@ class Utils{
         'Volantes' =>'JURIDICO'
     );
 
-    public function conecta($rutaConexion){
+    public function conecta(){
         try{
-            require $this->rutaConexion;
+            require_once 'juridico/db/rutasAbsolutas.php';
+            $rutas = new RutasAbsolutas();
+            $rutas = $rutas->rutas();
+            require $rutas['conexion'];
             $db = new PDO("sqlsrv:Server={$hostname}; Database={$database}", $username, $password );
             return $db;
         }catch (PDOException $e) {die();}
     }
 
 
-    public function validateModulUser($modulo,$app,$rutaConexion){
-        $db = $this->conecta($rutaConexion);
+    public function validateModulUser($modulo,$app){
+        $db = $this->conecta();
         $query = "select idRol from sia_usuariosroles where idUsuario='".$_SESSION['idUsuario']."'";
         $sql = $db->prepare($query);
         $sql->execute();
@@ -29,10 +32,14 @@ class Utils{
         
         $roles = $this->roles;
         if(!array_key_exists($modulo,$roles)){
+           
            $app->redirect('/dashboard');
+           return False;
         }else{
             if($roles[$modulo]!=$res[0]['idRol']) {
+                
                 $app->redirect('/dashboard');
+                return False;
             }
         }
     }

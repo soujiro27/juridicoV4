@@ -2,37 +2,36 @@ const yo = require('yo-yo')
 const $ =  require('jquery')
 const page =  require('page')
 
+
 const urls =  require('./../rutasAbsolutas')
+const tableApi = require('./../../../apis/tables/index')
+
+let api = new tableApi()
 
 const utils = {
     loadDataCatalogs,
     headers,
     body,
-    clickTr
-
+    clickTr,
+    loadOrder
 }
 
-function loadDataCatalogs(ruta){
-    let data=[{
-        idCaracter:'1023',
-        siglas:'U',
-        nombre:'URGENTE',
-        estatus:'ACTIVO'
-        },
-        {
-            idCaracter:'1024',
-            siglas:'N',
-            nombre:'NORMAL',
-            estatus:'ACTIVO'
-            }
-    ]
-    return data
+const modulosOrder = ['Volantes']
+
+
+
+
+async function loadDataCatalogs(ruta){
+  
+    let promesa = api.getTable(ruta)
+    let datos = await promesa
+    return datos
 }
 
 function headers(datos){
     let th=''
     $.each(datos[0],function(index,el){
-        th+=`<th id="${index}" class="${index}" data-order="${index}">${index}</th>`
+        th+=`<th id="${index}" class="${index}" data-order="${index}">${index} <div class="orderby"></div></th>`
     })
     return th
 }
@@ -56,6 +55,22 @@ function clickTr(ruta){
         page.redirect(urls.inicio + ruta + '/update/' + campo + '/' + id)
     })
 }
+
+function loadOrder(ruta){
+  for(let x in modulosOrder){
+      if(ruta==modulosOrder[x]){
+        clickOrder()
+      }
+  }
+}
+
+function clickOrder(){
+    $('table.principal th').click(function(){
+        let template = require('./../Templates/order.html')
+        $(this).children().first().html(template)
+    })
+}
+
 
 module.exports = utils
 

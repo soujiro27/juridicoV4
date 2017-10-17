@@ -2937,11 +2937,20 @@ table.principal thead {
   background-color: #65140f !important;
   color: #fff;
 }
+table.principal thead th {
+  cursor: pointer;
+  position: relative;
+}
 table.principal thead th#idCaracter {
   display: none;
 }
-table.principal tbody td#idCaracter {
-  display: none;
+table.principal tbody tr:hover {
+  border-color: #65140f !important;
+  box-shadow: 5px 5px 3px #808080 !important;
+  background-color: #deefff;
+}
+table.principal tbody tr:hover td {
+  cursor: pointer;
 }
 a#addRegister {
   color: #fff !important;
@@ -2963,4 +2972,11 @@ small {
 }
 p.error {
   color: #f00;
+}
+div.orderby {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  background-color: #65140f;
 }
