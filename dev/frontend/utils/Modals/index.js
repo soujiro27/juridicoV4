@@ -32,6 +32,32 @@ class Modals{
         })
     }
 
+    notaInformativa(){
+        $.confirm({
+            title: '¿Contiene NOTA INFORMATICA?',
+            theme:'modern',
+            buttons:{
+                confirm:{
+                    btnClass:'btn-primary',
+                    text: 'SI',
+                    action:function(){
+                        $('input#notaConfronta').val('SI')
+                    }},
+                somethingElse:{
+                    btnClass:'btn-danger',
+                    text:'NO',
+                    action:function(){
+                        $('input#notaConfronta').val('NO')
+                    }}}})
+    }
+
+    auditoria(){
+        
+        $.confirm({
+            title: '¿Contiene NOTA INFORMATICA?',
+            theme:'modern',
+        })
+    }
 
 }
 

@@ -1,0 +1,81 @@
+form#Volantes.form-inline(method='POST')
+  .headerVolante
+    .form-group.idDocumento
+      label(for='idDocumento') Tipo de Documento
+      select#idDocumento.form-control(name='idTipoDocto', required='required')
+        | :documentos
+    .form-group.subDocumento
+      label(for='subDocumento') Tipo de SubDocumento
+      select#subDocumento.form-control(name='idSubTipoDocumento', required='required')
+        option(value="") Seleccione un Documento Primero
+      input#notaConfronta(type='hidden', value='NO', name='notaConfronta')
+    .form-group.Promocion
+      label(for='subDocumento') Promocion de Accion
+      select#promocion.form-control(name='promocion', required='required')
+        option(value='')  Seleccione una Opción 
+        option(value='SI')  SI
+        option(value='NO')  NO 
+    .form-group.extemporaneo
+      label(for='extemporaneo') Extemporáneo
+      select#extemporaneo.form-control(name='extemporaneo', required='required')
+        option(value='')  Seleccione una Opción 
+        option(value='SI')  SI
+        option(value='NO')  NO 
+    .form-group.cveAuditoria
+      label(for='cveAuditoria') Auditoria
+      .addAuditoriaContainer
+        p#textoCveAuditoria Selecciona Una Auditoria
+        button#modalAuditoria.btn
+          i.fa.fa-pencil-square-o(aria-hidden='true')
+        input#cveAuditoria(type='hidden', name='cveAuditoria', value='')
+  .contentVolante
+    .bloque1
+      .form-group.Folio
+        label(for='Folio') Folio
+        input#Folio.form-control(type='number', name='folio', required='')
+      .form-group.subFolio
+        label(for='subFolio') subFolio
+        input#subFolio.form-control(type='number', name='subFolio', required='', value='0')
+      .form-group.numDocumento
+        label(for='numDocumento') Numero de Documento
+        input#numDocumento.form-control(type='text', name='numDocumento', required='')
+    .bloque2
+      .form-group.fDocumento
+        label(for='fDocumento') Fecha de Documento
+        input#fDocumento.form-control.fechaInput(type='text', name='fDocumento', required='', pattern='(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))')
+      .form-group.anexos
+        label(for='anexos') Numero de Anexos
+        input#anexos.form-control(type='number', name='anexos', required='', pattern='[0-9]{1,16}')
+      .form-group.fRecepcion
+        label(for='fRecepcion') Fecha de Recepcion
+        input#fRecepcion.form-control.fechaInput(type='text', name='fRecepcion', required='', pattern='(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))')
+      .form-group.hRecepcion
+        label(for='hRecepcion') Hora de Recepcion
+        input#hRecepcion.form-control(type='time', name='hRecepcion', required='', pattern='([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}', placeholder='00:00', title='Formato de 24 horas 00:00')
+    .bloque3
+      .form-group.idRemitente
+        label(for='idRemitente') Remitente
+        input#idRemitente.form-control(type='text', name='idRemitente', readonly='')
+      .form-group.Destinatario
+        label(for='Destinatario') Destinatario
+        input#Destinatario.form-control(type='text', name='destinatario', placeholder='Destinatario', pattern='[a-zA-Z._- ]', required='', title='Unicamente letras', value='DR. IVÁN DE JESÚS OLMOS CANSINO', readonly='')
+    .bloque4
+      .form-group.Asunto
+        label(for='Asunto') Asunto
+        textarea.form-control(rows='3', name='asunto', required='', placeholder='Asunto')
+    .bloque5
+      .form-group.idCaracter
+        label(for='idCaracter') Caracter
+        select#idCaracter.form-control(name='idCaracter', required='required')
+          | :caracteres
+      .form-group.idTurnado
+        label(for='idTurnado') Turnado a:
+        select#idTurnado.form-control(name='idTurnado', required='required')
+          | :turnados
+      .form-group.idAccion
+        label(for='idAccion') Instruccion
+        select#idAccion.form-control(name='idAccion', required='required')
+          | :acciones 
+  .form-group.send
+    input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+    button#cancelar.btn.btn-danger.btn-sm Cancelar

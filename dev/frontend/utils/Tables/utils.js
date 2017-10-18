@@ -31,7 +31,13 @@ async function loadDataCatalogs(ruta){
 function headers(datos){
     let th=''
     $.each(datos[0],function(index,el){
-        th+=`<th id="${index}" class="${index}" data-order="${index}">${index} <div class="orderby"></div></th>`
+        //th+=`<th id="${index}" class="${index}" data-order="${index}">${index}</th>`
+        th+=`
+            <th id="${index}" class="${index}" data-order="${index}" >
+                <div class="thText">
+                    <span>${index}</span>
+                </div>
+            </th>`
     })
     return th
 }
@@ -59,16 +65,32 @@ function clickTr(ruta){
 function loadOrder(ruta){
   for(let x in modulosOrder){
       if(ruta==modulosOrder[x]){
-        clickOrder()
+        clickOrder(ruta)
       }
   }
 }
 
-function clickOrder(){
-    $('table.principal th').click(function(){
-        let template = require('./../Templates/order.html')
-        $(this).children().first().html(template)
+function clickOrder(ruta){
+
+    let div = $('div.thText')
+    div.append('<i class="fa fa-caret-up" aria-hidden="true" data-order="ASC"></i>')
+    div.append('<i class="fa fa-caret-down" aria-hidden="true" data-order="DESC"></i>')
+    $('div.thText i').click(function(){
+        let campo = $(this).parent().children().first().text()
+        let tipo = $(this).data('order')
+        api.getTableOrder(ruta,{campo:campo,tipo:tipo})
+        .then(json=>{
+            let template = require('./../Templates/table.html')
+            let headers = utils.headers(json)
+            let body = utils.body(json)
+            template = template.replace(':headers',headers)
+            template = template.replace(':body',body)
+            $('div#main-content').html(template)
+            utils.loadOrder(ruta)
+        })
+        
     })
+    
 }
 
 

@@ -1,12 +1,15 @@
 const $ = require('jquery')
 let cont=0
-const datos={
-    idUsuario:'2294',
-    idCuentaActual:'CTA-2016',
-    userName:'ROBERTO ANTONIO PAREDES',
-    cuenta:'CUENTA PUBLICA 2016',
-    ruta:'Caracteres'
-}
+let datos
+
+$.get({
+  url:'/Sessions',
+  async:false,
+  success: function(json){
+      datos = JSON.parse(json)
+  }
+})
+
 const rutaAbsoluta='/juridico/'
 
 $('a#CuentaPublica').append('<span>'+datos.cuenta+'</span>')

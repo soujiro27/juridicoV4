@@ -3,13 +3,16 @@
 
 var $ = require('jquery');
 var cont = 0;
-var datos = {
-  idUsuario: '2294',
-  idCuentaActual: 'CTA-2016',
-  userName: 'ROBERTO ANTONIO PAREDES',
-  cuenta: 'CUENTA PUBLICA 2016',
-  ruta: 'Caracteres'
-};
+var datos = void 0;
+
+$.get({
+  url: '/Sessions',
+  async: false,
+  success: function success(json) {
+    datos = JSON.parse(json);
+  }
+});
+
 var rutaAbsoluta = '/juridico/';
 
 $('a#CuentaPublica').append('<span>' + datos.cuenta + '</span>');

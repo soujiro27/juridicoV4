@@ -31,16 +31,21 @@ table.principal
         th
             cursor pointer
             position relative
-        th#idCaracter
-            display: none
+            &#idVolante
+                display: none
+            div.thText
+                i
+                    margin-left 5px
+                    font-size 15px
+
 
     tbody
         tr:hover
             border-color vino !important
             box-shadow: 5px 5px 3px grey !important
             background-color: row
-            td
-                cursor pointer
+        td#idVolante
+            display: none
 a#addRegister
     color white !important
 form
@@ -58,9 +63,12 @@ p.error
     color red
 
 
-div.orderby
-    position absolute
-    bottom 0
-    right 0
-    width: 200px
-    background-color: vino 
+div#headerText
+    cursor pointer
+    i
+        margin-left 8px
+        font-size: 15px !important
+
+form#Volantes
+        label
+            display: block !important
