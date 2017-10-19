@@ -229,14 +229,22 @@ function searchDocumento(){
                 let nombre = datos[0].anexoDoc
                 let arreglo = nombre.split(".")
                 arreglo = arreglo[1].toUpperCase()
-                console.log('arreglo', arreglo);
                 if(arreglo=='PDF' ){
-                    $('div.icon').html(`<span><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>`)
+                    $('div.icon img').attr('src','../../img/pdf.png')
+                }else if(arreglo == 'DOC' || arreglo== 'DOCX'){
+                    $('div.icon img').attr('src','../../img/doc.png')
+                }else if(arreglo == 'XLS' || arreglo == 'XLSX')
+                {$('div.icon img').attr('src','../../img/xls.png')
+
+                }else if(arreglo == 'JPG'){
+                    $('div.icon img').attr('src','../../img/jpg.png')
                 }
-                $('div.nombre').html(`<span>${nombre}</p>`)
+
+                $('div.nombre').html(`<span>${nombre}</span>`)
             }   
             else{
-
+                $('div.icon img').attr('src','../../img/file.png')
+                $('div.nombre').html(`<span>No hay archivos o el Documento no Existe</span>`)
             }
         })
     })

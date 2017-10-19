@@ -3085,6 +3085,7 @@ div.contentVolante div.idTurnado {
 div.document-container div.inputs {
   display: flex;
 }
+div.document-container div.inputs border-bottom,
 div.document-container div.inputs div.documento {
   width: 20%;
   margin-right: 30px;

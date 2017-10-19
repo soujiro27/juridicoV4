@@ -193,7 +193,7 @@ var test = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 
 page();
 
-},{"./../apis/Main/index":1,"./utils/Routes/Add/index":7,"./utils/Routes/Update/index":9,"./utils/Tables/index":11,"./utils/Tables/utils":12,"babelify-es6-polyfill":181,"bluebird":184,"co":187,"jquery":196,"page":200}],5:[function(require,module,exports){
+},{"./../apis/Main/index":1,"./utils/Routes/Add/index":7,"./utils/Routes/Update/index":9,"./utils/Tables/index":11,"./utils/Tables/utils":12,"babelify-es6-polyfill":181,"bluebird":184,"co":188,"jquery":196,"page":200}],5:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -331,7 +331,7 @@ var Modals = function () {
 
 module.exports = Modals;
 
-},{"./../../../apis/forms/index":2,"./utils":6,"bluebird":184,"co":187,"jquery":196,"jquery-confirm":193,"jquery-ui-browserify":195}],6:[function(require,module,exports){
+},{"./../../../apis/forms/index":2,"./utils":6,"bluebird":184,"co":188,"jquery":196,"jquery-confirm":193,"jquery-ui-browserify":195}],6:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -505,7 +505,7 @@ page('/juridico/DocumentosGral/add', function (ctx, next) {
     addUtils.cancelar('DocumentosGral');
 });
 
-},{"./../../Templates/Acciones.html":13,"./../../Templates/Caracteres.html":14,"./../../Templates/DoctosTextos.html":15,"./../../Templates/SubTiposDocumentos.html":16,"./../../Templates/Volantes.html":17,"./../../Templates/documentos.html":21,"./../../Templates/volantesDiversos.html":23,"./utils":8,"bluebird":184,"ckeditor":186,"co":187,"jquery":196,"page":200}],8:[function(require,module,exports){
+},{"./../../Templates/Acciones.html":13,"./../../Templates/Caracteres.html":14,"./../../Templates/DoctosTextos.html":15,"./../../Templates/SubTiposDocumentos.html":16,"./../../Templates/Volantes.html":17,"./../../Templates/documentos.html":21,"./../../Templates/volantesDiversos.html":23,"./utils":8,"bluebird":184,"ckeditor":187,"co":188,"jquery":196,"page":200}],8:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -849,12 +849,21 @@ function searchDocumento() {
                                 arreglo = nombre.split(".");
 
                                 arreglo = arreglo[1].toUpperCase();
-                                console.log('arreglo', arreglo);
                                 if (arreglo == 'PDF') {
-                                    $('div.icon').html('<span><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>');
+                                    $('div.icon img').attr('src', '../../img/pdf.png');
+                                } else if (arreglo == 'DOC' || arreglo == 'DOCX') {
+                                    $('div.icon img').attr('src', '../../img/doc.png');
+                                } else if (arreglo == 'XLS' || arreglo == 'XLSX') {
+                                    $('div.icon img').attr('src', '../../img/xls.png');
+                                } else if (arreglo == 'JPG') {
+                                    $('div.icon img').attr('src', '../../img/jpg.png');
                                 }
-                                $('div.nombre').html('<span>' + nombre + '</p>');
-                            } else {}
+
+                                $('div.nombre').html('<span>' + nombre + '</span>');
+                            } else {
+                                $('div.icon img').attr('src', '../../img/file.png');
+                                $('div.nombre').html('<span>No hay archivos o el Documento no Existe</span>');
+                            }
 
                         case 4:
                         case 'end':
@@ -868,7 +877,7 @@ function searchDocumento() {
 
 module.exports = utils;
 
-},{"./../../../../apis/Main/index":1,"./../../../../apis/forms/index":2,"./../../Modals/index":5,"./../../Templates/auditoria.html":18,"./../../rutasAbsolutas":24,"bluebird":184,"co":187,"jquery":196}],9:[function(require,module,exports){
+},{"./../../../../apis/Main/index":1,"./../../../../apis/forms/index":2,"./../../Modals/index":5,"./../../Templates/auditoria.html":18,"./../../rutasAbsolutas":24,"bluebird":184,"co":188,"jquery":196}],9:[function(require,module,exports){
 'use strict';
 
 window.CKEDITOR_BASEPATH = 'node_modules/ckeditor/';
@@ -901,7 +910,7 @@ page('/juridico/Caracteres/update/:campo/:id', function (ctx, next) {
     modal.updateCaracteres(templates.Caracteres, datos);
 });
 
-},{"./../../Modals/index":5,"./../../Templates/Acciones.html":13,"./../../Templates/Caracteres.html":14,"./../../Templates/DoctosTextos.html":15,"./../../Templates/SubTiposDocumentos.html":16,"./utils.js":10,"ckeditor":186,"jquery":196,"page":200}],10:[function(require,module,exports){
+},{"./../../Modals/index":5,"./../../Templates/Acciones.html":13,"./../../Templates/Caracteres.html":14,"./../../Templates/DoctosTextos.html":15,"./../../Templates/SubTiposDocumentos.html":16,"./utils.js":10,"ckeditor":187,"jquery":196,"page":200}],10:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -1071,7 +1080,7 @@ module.exports = '\n<table class="datosAuditoria">\n  <thead>\n    <tr>\n      <
 },{}],20:[function(require,module,exports){
 module.exports = '\n<table class="datosTurnado">\n  <thead>\n    <tr>\n      <th>Irac</th>\n      <th>Confronta</th>\n      <th>Ifa</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
 },{}],21:[function(require,module,exports){
-module.exports = '\n<div class="document-container">\n  <div class="datos">\n    <form id="documentosJur" enctype="multipart/form-data">\n      <div class="inputs">\n        <div class="form-group documento">\n          <label class="form-control-label" for="documento">Numero Documento</label>\n          <input class="form-control" id="documento" type="text" placeholder="Numero Documento" required="required" name="nombre"/>\n        </div>\n        <div class="form-group file">\n          <input type="file" name="anexoDoc" id="imagen" required="required"/>\n          <div><span><i class="fa fa-upload" aria-hidden="true"></i></span><span class="titulo">Selecciona Archivo</span></div>\n        </div>\n      </div>\n      <div class="documento">\n        <div>\n          <p>Documento Asignado</p>\n        </div>\n        <div class="documento-datos">\n          <div class="icon"></div>\n          <div class="nombre"></div>\n        </div>\n      </div>\n      <div class="form-group send">\n        <input class="btn btn-info" type="submit" value="Guardar"/>\n        <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n      </div>\n    </form>\n  </div>\n</div>';
+module.exports = '\n<div class="document-container">\n  <div class="datos">\n    <form id="documentosJur" enctype="multipart/form-data">\n      <div class="inputs">\n        <div class="form-group documento">\n          <label class="form-control-label" for="documento">Numero Documento</label>\n          <input class="form-control" id="documento" type="text" placeholder="Numero Documento" required="required" name="nombre"/>\n        </div>\n        <div class="form-group file">\n          <input type="file" name="anexoDoc" id="imagen" required="required"/>\n          <div><span><i class="fa fa-upload" aria-hidden="true"></i></span><span class="titulo">Selecciona Archivo</span></div>\n        </div>\n      </div>\n      <div class="documento">\n        <div>\n          <p>Documento Asignado</p>\n        </div>\n        <div class="documento-datos">\n          <div class="icon"><img src="../img/file.png"/></div>\n          <div class="nombre">\n            <p>Sin Documentos</p>\n          </div>\n        </div>\n      </div>\n      <div class="form-group send">\n        <input class="btn btn-info" type="submit" value="Guardar"/>\n        <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n      </div>\n    </form>\n  </div>\n</div>';
 },{}],22:[function(require,module,exports){
 module.exports = '\n<table class="table  principal" id="table-main">\n  <thead>:headers</thead>\n  <tbody>:body</tbody>\n</table>';
 },{}],23:[function(require,module,exports){
@@ -4404,7 +4413,7 @@ module.exports = hyperx(belCreateElement, {comments: true})
 module.exports.default = module.exports
 module.exports.createElement = belCreateElement
 
-},{"global/document":188,"hyperx":191,"on-load":199}],184:[function(require,module,exports){
+},{"global/document":189,"hyperx":192,"on-load":199}],184:[function(require,module,exports){
 (function (process,global){
 /* @preserve
  * The MIT License (MIT)
@@ -10030,9 +10039,195 @@ module.exports = ret;
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":202}],185:[function(require,module,exports){
+},{"_process":186}],185:[function(require,module,exports){
 
 },{}],186:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],187:[function(require,module,exports){
 /*
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
@@ -11115,7 +11310,7 @@ CKEDITOR.tools.removeFunction(this._.frameLoadedHandler);f&&f.getParent()?(f.cle
 CKEDITOR.config.skin="moono-lisa",function(){var a=function(a,b){var c=CKEDITOR.getUrl("plugins/"+b);a=a.split(",");for(var e=0;e<a.length;e++)CKEDITOR.skin.icons[a[e]]={path:c,offset:-a[++e],bgsize:a[++e]}};CKEDITOR.env.hidpi?a("about,0,,bold,24,,italic,48,,strike,72,,subscript,96,,superscript,120,,underline,144,,bidiltr,168,,bidirtl,192,,blockquote,216,,copy-rtl,240,,copy,264,,cut-rtl,288,,cut,312,,paste-rtl,336,,paste,360,,codesnippet,384,,bgcolor,408,,textcolor,432,,copyformatting,456,,creatediv,480,,docprops-rtl,504,,docprops,528,,embed,552,,embedsemantic,576,,find-rtl,600,,find,624,,replace,648,,flash,672,,button,696,,checkbox,720,,form,744,,hiddenfield,768,,imagebutton,792,,radio,816,,select-rtl,840,,select,864,,textarea-rtl,888,,textarea,912,,textfield-rtl,936,,textfield,960,,horizontalrule,984,,iframe,1008,,image,1032,,indent-rtl,1056,,indent,1080,,outdent-rtl,1104,,outdent,1128,,justifyblock,1152,,justifycenter,1176,,justifyleft,1200,,justifyright,1224,,language,1248,,anchor-rtl,1272,,anchor,1296,,link,1320,,unlink,1344,,bulletedlist-rtl,1368,,bulletedlist,1392,,numberedlist-rtl,1416,,numberedlist,1440,,mathjax,1464,,maximize,1488,,newpage-rtl,1512,,newpage,1536,,pagebreak-rtl,1560,,pagebreak,1584,,pastefromword-rtl,1608,,pastefromword,1632,,pastetext-rtl,1656,,pastetext,1680,,placeholder,1704,,preview-rtl,1728,,preview,1752,,print,1776,,removeformat,1800,,save,1824,,scayt,1848,,selectall,1872,,showblocks-rtl,1896,,showblocks,1920,,smiley,1944,,source-rtl,1968,,source,1992,,sourcedialog-rtl,2016,,sourcedialog,2040,,specialchar,2064,,table,2088,,templates-rtl,2112,,templates,2136,,uicolor,2160,,redo-rtl,2184,,redo,2208,,undo-rtl,2232,,undo,2256,,simplebox,4560,auto,spellchecker,2304,",
 "icons_hidpi.png"):a("about,0,auto,bold,24,auto,italic,48,auto,strike,72,auto,subscript,96,auto,superscript,120,auto,underline,144,auto,bidiltr,168,auto,bidirtl,192,auto,blockquote,216,auto,copy-rtl,240,auto,copy,264,auto,cut-rtl,288,auto,cut,312,auto,paste-rtl,336,auto,paste,360,auto,codesnippet,384,auto,bgcolor,408,auto,textcolor,432,auto,copyformatting,456,auto,creatediv,480,auto,docprops-rtl,504,auto,docprops,528,auto,embed,552,auto,embedsemantic,576,auto,find-rtl,600,auto,find,624,auto,replace,648,auto,flash,672,auto,button,696,auto,checkbox,720,auto,form,744,auto,hiddenfield,768,auto,imagebutton,792,auto,radio,816,auto,select-rtl,840,auto,select,864,auto,textarea-rtl,888,auto,textarea,912,auto,textfield-rtl,936,auto,textfield,960,auto,horizontalrule,984,auto,iframe,1008,auto,image,1032,auto,indent-rtl,1056,auto,indent,1080,auto,outdent-rtl,1104,auto,outdent,1128,auto,justifyblock,1152,auto,justifycenter,1176,auto,justifyleft,1200,auto,justifyright,1224,auto,language,1248,auto,anchor-rtl,1272,auto,anchor,1296,auto,link,1320,auto,unlink,1344,auto,bulletedlist-rtl,1368,auto,bulletedlist,1392,auto,numberedlist-rtl,1416,auto,numberedlist,1440,auto,mathjax,1464,auto,maximize,1488,auto,newpage-rtl,1512,auto,newpage,1536,auto,pagebreak-rtl,1560,auto,pagebreak,1584,auto,pastefromword-rtl,1608,auto,pastefromword,1632,auto,pastetext-rtl,1656,auto,pastetext,1680,auto,placeholder,1704,auto,preview-rtl,1728,auto,preview,1752,auto,print,1776,auto,removeformat,1800,auto,save,1824,auto,scayt,1848,auto,selectall,1872,auto,showblocks-rtl,1896,auto,showblocks,1920,auto,smiley,1944,auto,source-rtl,1968,auto,source,1992,auto,sourcedialog-rtl,2016,auto,sourcedialog,2040,auto,specialchar,2064,auto,table,2088,auto,templates-rtl,2112,auto,templates,2136,auto,uicolor,2160,auto,redo-rtl,2184,auto,redo,2208,auto,undo-rtl,2232,auto,undo,2256,auto,simplebox,2280,auto,spellchecker,2304,auto",
 "icons.png")}())})();
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 
 /**
  * slice() reference.
@@ -11354,7 +11549,7 @@ function isObject(val) {
   return Object == val.constructor;
 }
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 (function (global){
 var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
@@ -11375,7 +11570,7 @@ if (typeof document !== 'undefined') {
 module.exports = doccy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"min-document":185}],189:[function(require,module,exports){
+},{"min-document":185}],190:[function(require,module,exports){
 (function (global){
 var win;
 
@@ -11392,7 +11587,7 @@ if (typeof window !== "undefined") {
 module.exports = win;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 module.exports = attributeToProperty
 
 var transform = {
@@ -11413,7 +11608,7 @@ function attributeToProperty (h) {
   }
 }
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var attrToProp = require('hyperscript-attribute-to-property')
 
 var VAR = 0, TEXT = 1, OPEN = 2, CLOSE = 3, ATTR = 4
@@ -11696,12 +11891,7 @@ var closeRE = RegExp('^(' + [
 ].join('|') + ')(?:[\.#][a-zA-Z0-9\u007F-\uFFFF_:-]+)*$')
 function selfClosing (tag) { return closeRE.test(tag) }
 
-},{"hyperscript-attribute-to-property":190}],192:[function(require,module,exports){
-module.exports = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == '[object Array]';
-};
-
-},{}],193:[function(require,module,exports){
+},{"hyperscript-attribute-to-property":191}],193:[function(require,module,exports){
 /*!
  * jquery-confirm v3.3.2 (http://craftpip.github.io/jquery-confirm/)
  * Author: Boniface Pereira
@@ -37888,7 +38078,7 @@ function eachMutation (nodes, fn) {
   }
 }
 
-},{"assert":198,"global/document":188,"global/window":189}],200:[function(require,module,exports){
+},{"assert":198,"global/document":189,"global/window":190}],200:[function(require,module,exports){
 (function (process){
   /* globals require, module */
 
@@ -38514,7 +38704,7 @@ function eachMutation (nodes, fn) {
   page.sameOrigin = sameOrigin;
 
 }).call(this,require('_process'))
-},{"_process":202,"path-to-regexp":201}],201:[function(require,module,exports){
+},{"_process":186,"path-to-regexp":201}],201:[function(require,module,exports){
 var isarray = require('isarray')
 
 /**
@@ -38906,191 +39096,10 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(path, keys, options)
 }
 
-},{"isarray":192}],202:[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
+},{"isarray":202}],202:[function(require,module,exports){
+module.exports = Array.isArray || function (arr) {
+  return Object.prototype.toString.call(arr) == '[object Array]';
 };
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
 
 },{}],203:[function(require,module,exports){
 (function (process,global){
@@ -39747,7 +39756,7 @@ process.umask = function() { return 0; };
 );
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":202}],204:[function(require,module,exports){
+},{"_process":186}],204:[function(require,module,exports){
 var bel = require('bel') // turns template tag into DOM elements
 var morphdom = require('morphdom') // efficiently diffs + morphs two DOM elements
 var defaultEvents = require('./update-events.js') // default events to be copied when dom elements update
