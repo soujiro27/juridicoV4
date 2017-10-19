@@ -49,4 +49,70 @@ module.exports = class FormApi{
         })
         return datos
     }
+
+    getObservaciones(volante){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/observaciones/irac`,
+                data:volante,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
+
+
+    getObservacionesById(id){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/observaciones/id`,
+                data:id,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
+
+    getIracById(id){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/irac/id`,
+                data:id,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
+
+    getDocumentosSiglas(id){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/documentosSiglas/id`,
+                data:id,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
+
+    getPersonalFirma(id){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/irac/firmas`,
+                data:id,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
 }

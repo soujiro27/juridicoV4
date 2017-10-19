@@ -17,7 +17,8 @@ const templates={
     Acciones:require('./../../Templates/Acciones.html'),
     Volantes:require('./../../Templates/Volantes.html'),
     VolantesDiversos:require('./../../Templates/volantesDiversos.html'),
-    documentos : require('./../../Templates/documentos.html')
+    documentos : require('./../../Templates/documentos.html'),
+    confronta : require('./../../Templates/confronta.html')
 }
 
 /*--------instanciar cclearlases---------*/
@@ -99,3 +100,20 @@ page('/juridico/DocumentosGral/add',function(ctx,next){
     addUtils.cancelar('DocumentosGral')
 })
 
+page('/juridico/Irac/add/idVolante/:id',function(ctx,next){
+    let index = co(function*(){
+        let template = yield addUtils.loadObservaciones(ctx.params.id)
+        $('div#main-content').html(template)
+        addUtils.newObservacion(ctx.params.id)
+        addUtils.cedulaIrac(ctx.params.id)
+        addUtils.cancelar('Irac')
+
+    })
+})
+
+page('/juridico/confrontasJuridico/add/idVolante/:id',function(ctx,next){
+    let template = templates.confronta
+    $('div#main-content').html(template)
+    addUtils.hideButtons()
+    addUtils.cancelar('confrontasJuridico')
+})

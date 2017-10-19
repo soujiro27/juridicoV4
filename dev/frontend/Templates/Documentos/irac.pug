@@ -1,0 +1,28 @@
+.irac
+    .irac-datos
+        .irac-datos-folio
+            p.titulo Folio:
+            p.folio :folio
+        .irac-datos-numDocumento
+            p.titulo Numero de Documento
+            p.numDocumento :numDocumento
+        .irac-datos-remitente
+            p.titulo Remitente
+            p.remitente :remitente
+    .irac-tabla
+        table.observaciones.table
+            thead
+                tr
+                    th.idVolante IdVolante
+                    th Pagina
+                    th Parrafo
+                    th Observacion
+                    th Estatus
+            tbody
+                | :body
+    .irac-botones
+        button.btn.btn-info#add Agregar Observacion
+        button.btn.btn-warning#cedula Generar Cedula
+        button.btn.btn-warning#print Imprimir Cedula
+        button.btn.btn-danger#cancelar Cancelar
+

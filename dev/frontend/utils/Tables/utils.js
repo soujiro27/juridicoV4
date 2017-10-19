@@ -13,7 +13,9 @@ const utils = {
     headers,
     body,
     clickTr,
-    loadOrder
+    loadOrder,
+    hideAdd,
+    redirect
 }
 
 const modulosOrder = ['Volantes']
@@ -58,7 +60,8 @@ function clickTr(ruta){
     $('table.principal tbody tr').click(function(){
         let id=$(this).children().first().data('valor')
         let campo=$(this).children().first().attr('id')
-        page.redirect(urls.inicio + ruta + '/update/' + campo + '/' + id)
+        utils.redirect(ruta,campo,id)
+       
     })
 }
 
@@ -91,6 +94,22 @@ function clickOrder(ruta){
         
     })
     
+}
+
+
+function hideAdd(ruta){
+    if(ruta == 'Irac' || ruta == 'Ifa' || ruta == 'confrontasJuridico'){
+        $('a#addRegister').hide();
+    }
+}
+
+function redirect(ruta,campo,id)
+{
+    if(ruta == 'Irac' || ruta == 'Ifa' || ruta == 'confrontasJuridico'){
+        page.redirect(urls.inicio + ruta + '/add/' + campo + '/' + id)
+    }else{
+        page.redirect(urls.inicio + ruta + '/update/' + campo + '/' + id)
+    }
 }
 
 

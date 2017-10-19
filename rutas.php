@@ -83,6 +83,25 @@ $app->get('/table/VolantesDiversos',function() use ($app){
 });
 
 
+$app->get('/table/Irac',function() use ($app){
+    $tables = new Tables();
+    $tables->irac();
+});
+
+$app->get('/table/confrontasJuridico',function() use ($app){
+    $tables = new Tables();
+    $tables->confronta();
+});
+
+$app->get('/table/Ifa',function() use ($app){
+    $tables = new Tables();
+    $tables->ifa();
+});
+
+$app->get('/table/Documentos',function() use ($app){
+    $tables = new Tables();
+    $tables->documentos();
+});
 
 /*------------------------------------------------------*/
 
@@ -163,5 +182,35 @@ $app->get('/documentos/auditoria',function() use ($app){
 /*--------------------------------------------------------*/
 
 
+
+/*--------- Obtienes las observaciones de irac e ifa -----*/
+
+$app->get('/observaciones/irac',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getObservacionesIrac($app->request->get());
+});
+
+$app->get('/observaciones/id',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getObservacionesById($app->request->get());
+});
+
+
+$app->get('/irac/id',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getIracByID($app->request->get());
+});
+
+$app->get('/documentosSiglas/id',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getDocumentosSiglas($app->request->get());
+});
+
+$app->get('/irac/firmas',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getPersonalFirma($app->request->get());
+});
+
+/*--------------------------------------------------------*/
 
 ?>

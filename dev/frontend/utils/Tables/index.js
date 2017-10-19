@@ -15,6 +15,7 @@ class Tables{
         $('div#main-content').html(template)
         utils.clickTr(ruta)
         utils.loadOrder(ruta)
+        utils.hideAdd(ruta)
     }
 
   

@@ -1,0 +1,23 @@
+#DocumentosSiglas.contentIrac
+  form#DocumentosSiglas.form-inline(method='POST')
+    .datos-llenado
+        .form-group.siglas
+            label.form-control-label(for='siglas') Siglas
+            input#siglas.form-control(type='text', name='siglas', required='')
+            input#idSubTipoDocumento(type='hidden', name='idSubTipoDocumento', value=':sub')
+            input(type='hidden', name='idVolante', value=':idVolante')
+        .form-group.fecha
+            label.form-control-label(for='fecha') Fecha Documento
+            input#fOficio.form-control.fechaInput(type='text', name='fOficio', required='', pattern='(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))')
+        .form-group.numFolio
+            label.form-control-label(for='numFolio') Numero Folio
+            input#numFolio.form-control(type='text', name='numFolio', required='')
+    .firmas
+        .titulo
+            p Personal que Firma
+        .inputs
+            | :firmas
+
+    .form-group.send
+      input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+      button#cancelar.btn.btn-danger Cancelar

@@ -118,7 +118,70 @@ class Catalogos{
         echo json_encode($res);
     }
 
+    public function getObservacionesIrac($datos){
+        $volante = $datos['idVolante'];
+        $db = $this->conecta();
+        $query = "select idObservacionDoctoJuridico,pagina,parrafo,observacion,estatus from sia_ObservacionesDoctosJuridico where idVolante = '$volante'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
 
+
+    public function getObservacionesById($datos){
+        $volante = $datos['idObservacionDoctoJuridico'];
+        $db = $this->conecta();
+        $query = "select idObservacionDoctoJuridico,idVolante,idSubTipoDocumento,cveAuditoria,pagina,parrafo,observacion,estatus from sia_ObservacionesDoctosJuridico where idObservacionDoctoJuridico = '$volante'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
+
+    
+    public function getIracByID($datos){
+        $id = $datos['id'];
+        $db = $this->conecta();
+        $query="select v.idVolante,v.folio,v.numDocumento, v.fRecepcion, v.idRemitente, v.asunto, v.estatus, t.estadoProceso,
+        vd.cveAuditoria, sub.idSubTipoDocumento
+        from sia_Volantes v
+        inner join sia_VolantesDocumentos vd on v.idVolante=vd.idVolante
+        inner join sia_catSubTiposDocumentos sub on vd.idSubTipoDocumento=sub.idSubTipoDocumento
+        inner join sia_turnosJuridico t on v.idVolante=t.idVolante
+        where sub.nombre='IRAC' and v.idTurnado=
+        (select nombreCorto from sia_areas where idAreaSuperior='DGAJ' and idEmpleadoTitular=
+        (select idEmpleado from sia_usuarios where idUsuario='".$_SESSION ['idUsuario']."')) and v.idVolante='$id'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
+
+    public function getDocumentosSiglas($datos){
+        $id = $datos['idVolante'];
+        $db = $this->conecta();
+        $query="select * from sia_DocumentosSiglas where idVolante='$id'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+
+    }
+
+    public function getPersonalFirma($datos){
+        $id = $datos['idUsuario'];
+        $db = $this->conecta();
+        $query="select * from sia_PuestosJuridico where idArea = (select pj.idArea from sia_usuarios u
+        inner join sia_PuestosJuridico pj on u.idEmpleado=pj.rpe
+        where idUsuario='$id') 
+        and titular ='NO'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+
+    }
 
 }
 

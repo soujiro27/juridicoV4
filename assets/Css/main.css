@@ -2915,6 +2915,9 @@ body[class*=jconfirm-no-scroll-] {
           transform: scale(1);
 }
 
+table tr {
+  cursor: pointer;
+}
 div.buttonHide {
   position: absolute;
   top: 15px;
@@ -2951,7 +2954,7 @@ table.principal thead th div.thText i {
 table.principal tbody tr:hover {
   border-color: #65140f !important;
   box-shadow: 5px 5px 3px #808080 !important;
-  background-color: #deefff;
+  background-color: #f1f2f2;
 }
 table.principal tbody td#idVolante {
   display: none;
@@ -3084,11 +3087,8 @@ div.contentVolante div.idTurnado {
 }
 div.document-container div.inputs {
   display: flex;
-}
-div.document-container div.inputs border-bottom,
-div.document-container div.inputs div.documento {
-  width: 20%;
-  margin-right: 30px;
+  border-bottom: 1px solid #afafaf;
+  padding-bottom: 5px;
 }
 div.document-container div.inputs div.file {
   position: relative;
@@ -3114,30 +3114,129 @@ div.document-container div.inputs div.file div span {
   margin-right: 21px;
   font-size: 16px;
 }
-/*
-    div.datos
-        width: 45%
-        div.documento
-            margin-bottom 20px
-        div.file
-            position relative
-            width: 300px
-            input#imagen
-                position absolute
-                top 0
-                left 0
-                opacity: 0
-                width: 100%
-                padding: 8px
-            div
-                background-color: vino
-                color white
-                padding: 8px
-                span
-                    margin-right 21px
-                    font-size: 18px
-                    .titulo
-                        font-size: 15px !important
-    div.documento
-        width: 45%
-        */
+div.document-container div.documento {
+  width: 20%;
+  margin-right: 30px;
+  padding-bottom: 45px;
+}
+div.document-container div.documento-datos {
+  display: flex;
+  align-items: center;
+}
+div.irac-datos {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-bottom: 1px solid #afafaf;
+  margin-bottom: 10px;
+}
+div.irac-datos div {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+  background-color: #65140f;
+  width: 230px;
+  padding: 3px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+div.irac-datos div p.titulo {
+  padding: 5px;
+  color: #fff;
+  margin-right: 10px;
+}
+div.irac-datos div p.folio,
+div.irac-datos div p.numDocumento,
+div.irac-datos div p.remitente {
+  padding: 5px;
+  background-color: #fff;
+  color: #65140f;
+  border-radius: 5px;
+}
+div.irac-tabla {
+  padding: 5px;
+  margin-bottom: 30px;
+}
+div.irac-tabla table {
+  padding: 5px;
+  border: 1px solid #afafaf;
+}
+div.irac-tabla table thead {
+  padding: 5px;
+  background-color: #65140f;
+  color: #fff;
+  text-align: center;
+}
+div.irac-tabla table thead th.idVolante {
+  display: none;
+}
+div.irac-tabla table tbody td#idObservacionDoctoJuridico {
+  display: none;
+}
+div.irac-tabla table tbody tr:hover {
+  border-color: #65140f !important;
+  box-shadow: 5px 5px 3px #808080 !important;
+  background-color: #f1f2f2;
+}
+div.irac div.irac-botones {
+  margin: 15px auto 25px auto;
+}
+div.irac div.irac-botones button {
+  margin-left: 25px;
+}
+form#ObservacionesDoctosJuridico div.datos {
+  display: block !important;
+}
+form#ObservacionesDoctosJuridico div.envio {
+  display: block !important;
+  margin-top: 30px !important;
+}
+form#ObservacionesDoctosJuridico div.observacion {
+  width: 100% !important;
+}
+form#DocumentosSiglas div.datos-llenado {
+  display: flex !important;
+  align-items: center;
+  border-bottom: 1px solid #afafaf;
+  padding-bottom: 25px;
+}
+form#DocumentosSiglas div.datos-llenado div {
+  width: 30%;
+}
+form#DocumentosSiglas div.datos-llenado div label {
+  display: block !important;
+}
+form#DocumentosSiglas div.firmas div.inputs {
+  display: flex;
+  align-items: center;
+}
+form#DocumentosSiglas div.firmas div.inputs div.firma-container {
+  margin-right: 15px;
+  border-radius: 10px;
+  border: 1px solid #afafaf;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+form#DocumentosSiglas div.firmas div.inputs div.firma-container input {
+  height: 21px;
+  width: 25px;
+}
+form#DocumentosSiglas div.firmas div.inputs div.firma-container div.user {
+  width: 30px;
+  margin-left: 5px;
+}
+form#DocumentosSiglas div.firmas div.inputs div.firma-container div.user i {
+  font-size: 25px;
+}
+form#DocumentosSiglas div.firmas div.inputs div.firma-container div.datos {
+  width: 220px;
+}
+form#DocumentosSiglas div.send {
+  margin: 20px 5px;
+}
+form#DocumentosSiglas div.send button {
+  margin: 0 10px;
+}

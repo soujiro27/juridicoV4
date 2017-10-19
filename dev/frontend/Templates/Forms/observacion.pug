@@ -1,0 +1,18 @@
+form#ObservacionesDoctosJuridico.form-inline(method='POST')
+  .datos
+    .form-group.pagina
+      label(for='text') Hoja
+      input#pagina.form-control(type='text', name='pagina', required='')
+      input(type='hidden', name='idVolante', value=':idVolante')
+      input(type='hidden', name='cveAuditoria', value=':cveAuditoria')
+      input(type='hidden', name='idSubTipoDocumento', value=':idSubDoc:')
+    .form-group.parrafo
+      label(for='parrafo') Parrafo
+      input#parrafo.form-control(type='text', name='parrafo', required='')
+  .form-group.observacion
+    label(for='observacion') Observacion
+    textarea#observacion.form-control(rows='3', name='observacion')
+  .envio
+    .form-group.send
+      input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+      button#cancelar.btn.btn-danger Cancelar

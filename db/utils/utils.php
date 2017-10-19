@@ -9,7 +9,11 @@ class Utils{
         'Acciones' => 'JURIDICO',
         'DocumentosGral' => 'JURIDICO',
         'Volantes' =>'JURIDICO',
-        'VolantesDiversos' => 'JURIDICO'
+        'VolantesDiversos' => 'JURIDICO',
+        'Irac' => 'JURIDICO-ATN',
+        'confrontasJuridico' => 'JURIDICO-ATN',
+        'Ifa' => 'JURIDICO-ATN',
+        'Documentos' => 'JURIDICO-ATN'
     );
 
     public function conecta(){

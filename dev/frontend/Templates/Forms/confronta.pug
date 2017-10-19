@@ -1,0 +1,30 @@
+form#confrontasJuridico.form-inline(method='POST')
+    .
+  .form-group.notaInformativa
+    label(for='notaInformativa') nota Informativa
+    input#notaInformativa.form-control(type='text', placeholder='nota Informativa', name='notaInformativa')
+  .form-group.nombre
+    label(for='nombre') Nombre
+    input#nombre.form-control(type='text', placeholder='Nombre', required='', pattern='[A-Za-z].{1,49}', name='nombreResponsable', title='Formato Incorrecto')
+  .form-group.cargo
+    label(for='cargo') Cargo
+    input#cargo.form-control(type='text', placeholder='cargo', required='', pattern='[A-Za-z].{1,49}', name='cargoResponsable', title='Formato Incorrecto')
+  .form-group.fConfronta
+    label(for='fConfronta') Fecha Confronta
+    input#fConfronta.form-control.fechaInput(type='text', name='fConfronta', required='', pattern='(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))')
+  .form-group.hConfronta
+    label(for='hConfronta') Hora de Confronta
+    input#hConfronta.form-control(type='time', required='', pattern='([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}', placeholder='00:00', name='hConfronta', title='Formato Incorrecto')
+  .form-group.fecha
+    label(for='fecha') Fecha Documento
+    input#fOficio.form-control.fechaInput(type='text', name='fOficio', required='', pattern='(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))')
+  .form-group.siglas
+    label(for='siglas') Siglas
+    input#siglas.form-control(type='text', placeholder='siglas', required='', name='siglas', title='Nombre Incorrecto o Caracteres maximos')
+  .form-group.numFolio
+    label(for='numFolio') Numero Documento
+    input#numFolio.form-control(type='text', name='numFolio', required='')
+    input(type='hidden', name='idVolante', value='${idVolante}')
+  .form-group.send
+    input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
+    button#cancelar.btn.btn-danger Cancelar

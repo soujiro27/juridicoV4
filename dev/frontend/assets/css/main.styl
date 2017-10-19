@@ -8,7 +8,12 @@
 
 vino=#65140F
 azul=#26bce0
-row = #DEEFFF
+row = #f1f2f2
+
+table
+    tr
+        cursor pointer
+
 div.buttonHide
     position absolute
     top 15px
@@ -143,10 +148,8 @@ div.contentVolante
 div.document-container
     div.inputs
         display flex
-        border-bottom
-        div.documento
-            width 20%
-            margin-right: 30px
+        border-bottom: 1px solid #afafaf
+        padding-bottom: 5px
         div.file
             position relative
             width: 300px
@@ -167,32 +170,109 @@ div.document-container
                 span
                     margin-right 21px
                     font-size: 16px
+    div.documento
+        width 20%
+        margin-right: 30px
+        padding-bottom: 45px
+        &-datos
+            display flex
+            align-items: center
 
-
-/*
-    div.datos
-        width: 45%
-        div.documento
-            margin-bottom 20px
-        div.file
-            position relative
-            width: 300px
-            input#imagen
-                position absolute
-                top 0
-                left 0
-                opacity: 0
-                width: 100%
-                padding: 8px
-            div
+div.irac
+    &-datos
+        width: 100%
+        display: flex
+        align-items: center
+        padding 3px
+        border-bottom 1px solid #afafaf
+        margin-bottom: 10px
+        div
+            display: flex
+            align-items: center
+            margin-right 30px
+            background-color: vino
+            width: 230px
+            padding 3px
+            border-radius: 10px
+            margin-bottom 15px
+            p.titulo
+                padding 5px
+                color white
+                margin-right: 10px
+            p.folio,p.numDocumento,p.remitente
+                padding 5px
+                background-color: white
+                color vino
+                border-radius: 5px
+    &-tabla
+        padding 5px
+        margin-bottom: 30px
+        table
+            padding 5px
+            border 1px solid #afafaf
+            thead
+                padding 5px
                 background-color: vino
                 color white
-                padding: 8px
-                span
-                    margin-right 21px
-                    font-size: 18px
-                    .titulo
-                        font-size: 15px !important
-    div.documento
-        width: 45%
-        */
+                text-align: center
+                th.idVolante
+                    display none
+            tbody
+                td#idObservacionDoctoJuridico
+                    display: none
+                tr:hover
+                    border-color vino !important
+                    box-shadow: 5px 5px 3px grey !important
+                    background-color: row
+
+    div.irac-botones
+        margin 15px auto 25px auto
+        button
+            margin-left 25px
+
+
+form#ObservacionesDoctosJuridico
+    div.datos
+        display: block !important
+    div.envio
+        display: block !important
+        margin-top 30px !important
+    div.observacion
+        width: 100% !important
+
+form#DocumentosSiglas
+    div.datos-llenado
+        display: flex !important
+        align-items: center
+        border-bottom: 1px solid #afafaf
+        padding-bottom: 25px
+        div
+            width: 30%
+            label
+                display: block !important
+    div.firmas
+        div.inputs
+            display: flex
+            align-items: center
+            div.firma-container
+                margin-right: 15px
+                border-radius: 10px
+                border 1px solid #afafaf
+                width: 300px
+                display: flex
+                align-items: center
+                padding 8px
+                input
+                    height: 21px
+                    width: 25px
+                div.user
+                    width: 30px
+                    margin-left: 5px
+                    i
+                        font-size: 25px
+                div.datos
+                    width: 220px
+    div.send
+        margin: 20px 5px
+        button
+            margin 0 10px

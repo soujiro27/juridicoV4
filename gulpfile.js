@@ -25,6 +25,16 @@ gulp.task('tables',function () {
 })
 
 
+
+gulp.task('tables',function () {
+    gulp.src('./dev/frontend/Templates/Documentos/*.pug')
+    .pipe(pug({
+        pretty:true
+    }))
+    .pipe(gulp.dest('./dev/frontend/utils/Templates'))
+})
+
+
 gulp.task('modals',function () {
     gulp.src('./dev/frontend/Templates/Modals/*.pug')
     .pipe(pug({
