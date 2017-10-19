@@ -15,7 +15,9 @@ const templates={
     DoctosTextos:require('./../../Templates/DoctosTextos.html'),
     SubTiposDocumentos:require('./../../Templates/SubTiposDocumentos.html'),
     Acciones:require('./../../Templates/Acciones.html'),
-    Volantes:require('./../../Templates/Volantes.html')
+    Volantes:require('./../../Templates/Volantes.html'),
+    VolantesDiversos:require('./../../Templates/volantesDiversos.html'),
+    documentos : require('./../../Templates/documentos.html')
 }
 
 /*--------instanciar cclearlases---------*/
@@ -66,9 +68,34 @@ page('/juridico/Volantes/add',function(ctx,next){
     addUtils.getDatosVolantes(templates.Volantes)
     .then(json=>{
         $('div#main-content').html(json)
+        $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
         addUtils.getSubTipoDocAuditoria()
         addUtils.notaInformativa()
+        addUtils.modalAuditoria();
         addUtils.hideButtons()
         addUtils.cancelar('Volantes')
     })
 })
+
+
+page('/juridico/VolantesDiversos/add',function(ctx,next){
+    addUtils.getDatosVolantes(templates.VolantesDiversos)
+    .then(json=>{
+        $('div#main-content').html(json)
+        $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+        addUtils.getSubTipoDocDiversos()
+        addUtils.notaInformativa()
+       
+        addUtils.hideButtons()
+        addUtils.cancelar('VolantesDiversos')
+    })
+})
+
+page('/juridico/DocumentosGral/add',function(ctx,next){
+    $('div#main-content').html(templates.documentos)
+    addUtils.nameFile()
+    addUtils.searchDocumento()
+    addUtils.hideButtons()
+    addUtils.cancelar('DocumentosGral')
+})
+

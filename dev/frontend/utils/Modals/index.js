@@ -1,12 +1,20 @@
 require("jquery-ui-browserify");
 const $ = require('jquery')
 const confirm = require('jquery-confirm')
+const co = require('co')
+const Promise = require('bluebird')
+
 
 const utils = require('./utils')
+const apiForm = require('./../../../apis/forms/index')
+
+const formApi = new apiForm()
+
+
 
 
 class Modals{
-    caracteres(template,datos){
+    updateCaracteres(template,datos){
         $.confirm({
             title: 'Actualizar Registro',
             theme:'modern',
@@ -33,9 +41,10 @@ class Modals{
     }
 
     notaInformativa(){
-        $.confirm({
-            title: '¿Contiene NOTA INFORMATICA?',
+        $.alert({
+            title: '¿Contiene NOTA INFORMATIVA?',
             theme:'modern',
+            content:'',
             buttons:{
                 confirm:{
                     btnClass:'btn-primary',
@@ -43,7 +52,7 @@ class Modals{
                     action:function(){
                         $('input#notaConfronta').val('SI')
                     }},
-                somethingElse:{
+                cancel:{
                     btnClass:'btn-danger',
                     text:'NO',
                     action:function(){
@@ -51,11 +60,42 @@ class Modals{
                     }}}})
     }
 
-    auditoria(){
-        
+    auditoria(template,anio){
         $.confirm({
-            title: '¿Contiene NOTA INFORMATICA?',
+            title: 'Seleccione el Numero de Auditoria',
             theme:'modern',
+            content: template,
+            buttons:{
+                confirm:{
+                    text: 'Aceptar',
+                    btnClass:'btn-success'
+                    
+                },
+                cancel:{
+                    text:'Cancelar',
+                    btnClass: 'btn-danger'
+                }
+            },
+            onOpenBefore:function(){
+                $('input#auditoria').keyup(function(){
+                    let cve = `ASCM/${$(this).val()}${anio}`
+                    let datosAuditoria = co(function *(){
+                        let datos = yield formApi.getAuditoria({clave:cve})
+                        let turnado = yield formApi.getTurnadoAuditoria({cveAuditoria:datos[0].auditoria})
+                        
+                        let table = utils.TableDatosAuditoria(datos)
+                        $('div.datosAuditoria').html(table)
+
+                        let tableTurnado = utils.tableTurnados(turnado)
+                        $('div.asignacion').html(tableTurnado)
+
+                        $('p#textoCveAuditoria').text(cve)
+                        $('input#cveAuditoria').val(datos[0].auditoria)
+                        $('input#idRemitente').val(datos[0].idArea)
+
+                    })
+                })
+            }
         })
     }
 

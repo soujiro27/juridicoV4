@@ -9,25 +9,12 @@ form#Volantes.form-inline(method='POST')
       select#subDocumento.form-control(name='idSubTipoDocumento', required='required')
         option(value="") Seleccione un Documento Primero
       input#notaConfronta(type='hidden', value='NO', name='notaConfronta')
-    .form-group.Promocion
-      label(for='subDocumento') Promocion de Accion
-      select#promocion.form-control(name='promocion', required='required')
-        option(value='')  Seleccione una Opción 
-        option(value='SI')  SI
-        option(value='NO')  NO 
     .form-group.extemporaneo
       label(for='extemporaneo') Extemporáneo
       select#extemporaneo.form-control(name='extemporaneo', required='required')
         option(value='')  Seleccione una Opción 
         option(value='SI')  SI
         option(value='NO')  NO 
-    .form-group.cveAuditoria
-      label(for='cveAuditoria') Auditoria
-      .addAuditoriaContainer
-        p#textoCveAuditoria Selecciona Una Auditoria
-        button#modalAuditoria.btn.btn-info
-          i.fa.fa-pencil-square-o(aria-hidden='true')
-        input#cveAuditoria(type='hidden', name='cveAuditoria', value='')
   .contentVolante
     .bloque1
       .form-group.Folio
@@ -55,7 +42,7 @@ form#Volantes.form-inline(method='POST')
     .bloque3
       .form-group.idRemitente
         label(for='idRemitente') Remitente
-        input#idRemitente.form-control(type='text', name='idRemitente', readonly='')
+        input#idRemitente.form-control(type='text', name='idRemitente')
       .form-group.Destinatario
         label(for='Destinatario') Destinatario
         input#Destinatario.form-control(type='text', name='destinatario', placeholder='Destinatario', pattern='[a-zA-Z._- ]', required='', title='Unicamente letras', value='DR. IVÁN DE JESÚS OLMOS CANSINO', readonly='')

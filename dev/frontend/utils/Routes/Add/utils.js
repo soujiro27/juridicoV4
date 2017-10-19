@@ -1,13 +1,18 @@
 const $ = require('jquery')
 const urls = require('./../../rutasAbsolutas')
 const apiForm = require('./../../../../apis/forms/index')
+const apiMain = require('./../../../../apis/Main/index')
 const co = require('co')
 const Promise = require('bluebird')
 const modals = require('./../../Modals/index')
 
 
 const formApi = new apiForm()
+const mainApi = new apiMain()
 const modal = new modals()
+
+
+
 
 const utils = {
     hideButtons,
@@ -20,12 +25,17 @@ const utils = {
     comboTurnados,
     comboAcciones,
     getSubTipoDocAuditoria,
-    notaInformativa
+    getSubTipoDocDiversos,
+    notaInformativa,
+    modalAuditoria,
+    nameFile,
+    searchDocumento
     
 }
 
-
-
+const templates = {
+    auditoria : require('./../../Templates/auditoria.html')
+}
 
 
 function hideButtons(){
@@ -148,6 +158,24 @@ function getSubTipoDocAuditoria(){
 }
 
 
+function getSubTipoDocDiversos(){
+    $('select#idDocumento').change(function(){
+        let val=$(this).val()
+        let subDocumentos = co(function * (){
+            let sub = yield formApi.getDatos('SubTiposDocumentosDiversos')
+            let opt='<option value="">Seleccione un Sub Documento</option>'
+            for(let x in sub){
+                if(val==sub[x].idTipoDocto){
+                    opt+=`<option value="${sub[x].idSubTipoDocumento}">${sub[x].nombre}</option>`
+                }
+            }
+            $('select#subDocumento').html(opt)
+        }) 
+       
+    })
+}
+
+
 function notaInformativa(){
     $('select#subDocumento').change(function(){
         let documento = $('select#idDocumento').val()
@@ -158,6 +186,63 @@ function notaInformativa(){
         
     })
 }
+
+function modalAuditoria(){
+    $('button#modalAuditoria').click(function(e){
+        e.preventDefault()
+        let datos = co(function * (){
+            let sesiones = yield mainApi.datosInicio()
+            let anio = sesiones.idCuentaActual
+            anio = '/'+anio.substring(6)
+            let template = templates.auditoria
+            template = template.replace(':cuenta',sesiones.cuenta).replace(':cta',anio)
+            modal.auditoria(template,anio)
+        })
+    })
+}
+
+
+
+function nameFile(){
+    $('input#imagen').change(function(){
+        let nombre = $(this).val()
+        if(nombre=='')
+        {
+            $('span.titulo').text('Selecciona un Archivo')
+        }else{
+
+            $('span.titulo').text(nombre)
+            let width = $('span.titulo').width()
+            width+=150
+            width = width + 'px'
+            $('div.file').css('width',width)
+        }
+    })
+}
+
+function searchDocumento(){
+    $('input#documento').keyup(function(){
+        let doc = $(this).val()
+        let docs = co(function *(){
+            let datos = yield formApi.getDocumentosAuditoria({documento:doc})
+            if(datos.length>0){
+                let nombre = datos[0].anexoDoc
+                let arreglo = nombre.split(".")
+                arreglo = arreglo[1].toUpperCase()
+                console.log('arreglo', arreglo);
+                if(arreglo=='PDF' ){
+                    $('div.icon').html(`<span><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>`)
+                }
+                $('div.nombre').html(`<span>${nombre}</p>`)
+            }   
+            else{
+
+            }
+        })
+    })
+}
+
+
 
 
 module.exports = utils

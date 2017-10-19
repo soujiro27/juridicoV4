@@ -8,7 +8,8 @@ class Utils{
         'SubTiposDocumentos' => 'JURIDICO',
         'Acciones' => 'JURIDICO',
         'DocumentosGral' => 'JURIDICO',
-        'Volantes' =>'JURIDICO'
+        'Volantes' =>'JURIDICO',
+        'VolantesDiversos' => 'JURIDICO'
     );
 
     public function conecta(){

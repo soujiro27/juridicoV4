@@ -27,5 +27,5 @@ page('/juridico/Caracteres/update/:campo/:id',function(ctx,next){
     let campo = ctx.params.campo
     let id = ctx.params.id
     let datos = utils.getSingleData(campo,id)
-    modal.caracteres(templates.Caracteres,datos)
+    modal.updateCaracteres(templates.Caracteres,datos)
  })

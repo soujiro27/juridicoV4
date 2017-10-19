@@ -2987,3 +2987,156 @@ div#headerText i {
 form#Volantes label {
   display: block !important;
 }
+div.jconfirm-box-container {
+  margin: 0 !important;
+  width: 100%;
+}
+div.headerVolante {
+  width: 100% !important;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #afafaf;
+  padding-bottom: 20px;
+}
+div.headerVolante div.idDocumento {
+  width: 17% !important;
+}
+div.headerVolante div.subDocumento {
+  width: 21% !important;
+}
+div.headerVolante div.Promocion,
+div.headerVolante div.extemporaneo,
+div.headerVolante div.cveAuditoria {
+  width: 17% !important;
+}
+div.headerVolante div.addAuditoriaContainer {
+  display: flex !important;
+  align-items: center;
+}
+div.headerVolante div.addAuditoriaContainer button {
+  margin-left: 10px;
+}
+div.auditoria-container div.cuenta {
+  margin-bottom: 10px;
+}
+div.auditoria-container div.search {
+  margin-bottom: 20px;
+}
+div.auditoria-container div.search span {
+  background-color: #65140f;
+  color: #fff;
+  padding: 5px;
+  margin: 0 8px;
+  border-radius: 5px;
+}
+div.auditoria-container div.datosAuditoria,
+div.auditoria-container div.asignacion {
+  width: 100%;
+  margin-bottom: 20px;
+}
+div.auditoria-container div.datosAuditoria table,
+div.auditoria-container div.asignacion table {
+  width: 100%;
+  border: 1px solid #afafaf;
+}
+div.auditoria-container div.datosAuditoria table thead,
+div.auditoria-container div.asignacion table thead {
+  background-color: #65140f;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+}
+div.auditoria-container div.datosAuditoria table thead th,
+div.auditoria-container div.asignacion table thead th {
+  text-align: center;
+}
+div.auditoria-container div.datosAuditoria table tbody td,
+div.auditoria-container div.asignacion table tbody td {
+  border: 1px solid #afafaf;
+}
+div.contentVolante {
+  width: 100% !important;
+  margin-bottom: 15px;
+  padding-bottom: 20px;
+}
+div.contentVolante div.bloque1,
+div.contentVolante div.bloque2,
+div.contentVolante div.bloque3,
+div.contentVolante div.bloque4 {
+  margin-bottom: 15px;
+}
+div.contentVolante div.form-group {
+  width: 20%;
+}
+div.contentVolante div.Destinatario {
+  width: 23% !important;
+}
+div.contentVolante div.Destinatario input {
+  width: 100%;
+}
+div.contentVolante div.Asunto {
+  width: 100% !important;
+}
+div.contentVolante div.Asunto textarea {
+  width: 90%;
+}
+div.contentVolante div.idTurnado {
+  width: 45% !important;
+}
+div.document-container div.inputs {
+  display: flex;
+}
+div.document-container div.inputs div.documento {
+  width: 20%;
+  margin-right: 30px;
+}
+div.document-container div.inputs div.file {
+  position: relative;
+  width: 300px;
+  margin-top: 26px;
+}
+div.document-container div.inputs div.file input#imagen {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  padding: 5px;
+}
+div.document-container div.inputs div.file div {
+  background-color: #65140f;
+  color: #fff;
+  padding: 5px;
+  border-radius: 7px;
+}
+div.document-container div.inputs div.file div span {
+  margin-right: 21px;
+  font-size: 16px;
+}
+/*
+    div.datos
+        width: 45%
+        div.documento
+            margin-bottom 20px
+        div.file
+            position relative
+            width: 300px
+            input#imagen
+                position absolute
+                top 0
+                left 0
+                opacity: 0
+                width: 100%
+                padding: 8px
+            div
+                background-color: vino
+                color white
+                padding: 8px
+                span
+                    margin-right 21px
+                    font-size: 18px
+                    .titulo
+                        font-size: 15px !important
+    div.documento
+        width: 45%
+        */

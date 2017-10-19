@@ -77,6 +77,11 @@ $app->get('/table/DocumentosGral',function() use ($app){
     $tables->DocumentosGral();
 });
 
+$app->get('/table/VolantesDiversos',function() use ($app){
+    $tables = new Tables();
+    $tables->VolantesDiversos();
+});
+
 
 
 /*------------------------------------------------------*/
@@ -137,7 +142,23 @@ $app->get('/datos/catalogos/SubTiposDocumentosDiversos',function() use ($app){
 $app->get('/datos/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getAuditorias($app->request->get());
-})
+});
+
+
+$app->get('/turnado/auditoria',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getTurnadoAuditorias($app->request->get());
+});
+
+/*--------------------------------------------------------*/
+
+/*---------------------- Obtiene los Documentos ----------*/
+
+$app->get('/documentos/auditoria',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getDocumentosAuditoria($app->request->get());
+    
+});
 
 /*--------------------------------------------------------*/
 

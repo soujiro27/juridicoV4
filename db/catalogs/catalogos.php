@@ -75,6 +75,51 @@ class Catalogos{
         echo json_encode($res);
     }
 
+
+    public function getAuditorias($datos){
+        $cuenta=$_SESSION['idCuentaActual'];
+        $clave = $datos['clave'];
+        $db = $this->conecta();
+        $query = "SELECT a.idAuditoria auditoria,ta.nombre tipo, COALESCE(convert(varchar(20),a.clave),convert(varchar(20),a.idAuditoria)) claveAuditoria,
+        dbo.lstSujetosByAuditoria(a.idAuditoria) sujeto, a.idArea, a.rubros
+        FROM sia_programas p
+        INNER JOIN sia_auditorias a on p.idCuenta=a.idCuenta and p.idPrograma=a.idPrograma
+        INNER JOIN sia_areas ar on a.idArea=ar.idArea
+        left join sia_VolantesDocumentos vd on a.idAuditoria=vd.cveAuditoria
+        LEFT JOIN sia_tiposauditoria ta on a.tipoAuditoria= ta.idTipoAuditoria
+        WHERE a.idCuenta='$cuenta' and a.clave='$clave' GROUP BY 
+        a.idAuditoria, a.clave,ta.nombre,a.idProceso,a.idEtapa,ar.nombre, a.idArea, a.rubros";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
+
+    public function getTurnadoAuditorias($datos){
+        $cveAuditoria = $datos['cveAuditoria'];
+        $db = $this->conecta();
+        $query = "select sub.nombre, v.idTurnado as turnado from sia_VolantesDocumentos vd
+        inner join sia_Volantes v on vd.idVolante=v.idVolante
+        inner join sia_catSubTiposDocumentos sub on vd.idSubTipoDocumento = sub.idSubTipoDocumento
+        where cveAuditoria='$cveAuditoria'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
+
+    public function getDocumentosAuditoria($datos){
+        $documento = $datos['documento'];
+        $db = $this->conecta();
+        $query = "select anexoDoc from sia_Volantes where numDocumento='$documento'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
+
+
+
 }
 
 

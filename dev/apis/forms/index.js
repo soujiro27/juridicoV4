@@ -23,4 +23,30 @@ module.exports = class FormApi{
         })
         return datos
     }
+
+    getTurnadoAuditoria(clave){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/turnado/auditoria`,
+                data:clave,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
+
+    getDocumentosAuditoria(documento){
+        let datos = new Promise(resolve =>{
+            $.get({
+                url:`/documentos/auditoria`,
+                data:documento,
+                success: function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return datos
+    }
 }

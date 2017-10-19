@@ -7,9 +7,18 @@ const utils = {
     removeSend,
     caracteres,
     isEmptyInput,
-    sendDataUpdate
+    sendDataUpdate,
+    TableDatosAuditoria,
+    tableTurnados
 
 }
+
+
+const templates = {
+    datosAuditoria : require('./../Templates/datosAuditoria.html'),
+    datosTurnado :  require('./../Templates/datosTurnado.html')
+}
+
 
 function removeSend(){
     $('div.send').remove()
@@ -41,5 +50,43 @@ function sendDataUpdate(datos, ruta){
     //manda los datos con el api y respuesta de la api
     location.href = urls.inicio + ruta
 }
+
+function TableDatosAuditoria(datos){
+    let template = templates.datosAuditoria
+    let campos = `<tr><td>${datos[0].sujeto}</td><td>${datos[0].rubros}</td><td>${datos[0].tipo}</td></tr>`
+    let res = template.replace(':datos',campos)
+    return res
+    
+}
+
+function tableTurnados(datos){
+   let body
+    if (datos.length>0){
+       body = `<tr>`
+       for(let x in datos){
+           if(datos[x].nombre=='IRAC'){
+               body += `<td>${datos[x].turnado}</td>`
+           }
+           else if(datos[x].nombre == 'CONFRONTA'){
+                body += `<td>${datos[x].turnado}</td>`
+           }
+           else if(datos[x].nombre == 'IFA'){
+            body += `<td>${datos[x].turnado}</td>`
+           }
+           else{
+            body += `<td>No Asignado</td>`
+           }
+       }
+       body += `</tr>`
+   }
+   else{
+       body = `<tr><td>No Asignado</td><td>No Asignado</td><td>No Asignado</td></tr>`
+   }
+   let template = templates.datosTurnado
+   let res = template.replace(':datos',body)
+   return res
+   
+}
+
 
 module.exports = utils

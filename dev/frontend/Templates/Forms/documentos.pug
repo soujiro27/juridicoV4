@@ -1,0 +1,22 @@
+.document-container
+    .datos
+        form(id="documentosJur", enctype="multipart/form-data")
+            div.inputs
+                .form-group.documento
+                    label.form-control-label(for='documento') Numero Documento
+                    input#documento.form-control(type='text', placeholder='Numero Documento', required, name='nombre')
+                .form-group.file
+                    input(type="file" name="anexoDoc" id="imagen" required)
+                    div
+                        span
+                            i.fa.fa-upload(aria-hidden='true')
+                        span.titulo Selecciona Archivo
+            .documento
+                div
+                    p Documento Asignado
+                div.documento-datos
+                    div.icon
+                    div.nombre
+            .form-group.send
+                input.btn.btn-info(type='submit', value='Guardar')
+                button#cancelar.btn.btn-danger.btn-sm Cancelar
