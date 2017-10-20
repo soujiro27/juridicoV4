@@ -3240,3 +3240,22 @@ form#DocumentosSiglas div.send {
 form#DocumentosSiglas div.send button {
   margin: 0 10px;
 }
+form#confrontasJuridico .group-nota {
+  display: block;
+  margin-bottom: 15px;
+}
+form#confrontasJuridico .group-datos {
+  display: block;
+  margin-bottom: 15px;
+}
+form#confrontasJuridico .group-firmas {
+  display: block;
+  margin-bottom: 15px;
+}
+form#confrontasJuridico .group-send {
+  display: block;
+  margin-bottom: 15px;
+}
+form#confrontasJuridico div label {
+  display: block;
+}

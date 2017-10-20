@@ -46,6 +46,8 @@ class Catalogos{
         $sql = $db->prepare($query);
         $sql->execute();
         $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        $gral = array ('idArea' => 'DGAJ', 'nombre' => 'DIRECCIÓN GENERAL DE ASUNTOS JURIDICOS');
+        array_push($res,$gral);
         echo json_encode($res);
     }
 
