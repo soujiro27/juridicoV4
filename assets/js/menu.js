@@ -6,14 +6,14 @@ var cont = 0;
 var datos = void 0;
 
 $.get({
-  url: '/Sessions',
+  url: 'Get/Sessions',
   async: false,
   success: function success(json) {
     datos = JSON.parse(json);
   }
 });
 
-var rutaAbsoluta = '/juridico/';
+var rutaAbsoluta = '/SIA/juridico/';
 
 $('a#CuentaPublica').append('<span>' + datos.cuenta + '</span>');
 $('h2#tipo').text(datos.ruta);
@@ -30,7 +30,7 @@ if (nUsr != "" && nCampana != "") {
 
   $.ajax({
     type: 'GET',
-    url: '/lstModulosByUsuarioCampana/' + nCampana,
+    url: 'get/lstModulosByUsuarioCampana/' + nCampana,
     success: function success(response) {
       var jsonData = JSON.parse(response);
 

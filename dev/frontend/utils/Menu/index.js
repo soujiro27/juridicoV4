@@ -3,19 +3,18 @@ let cont=0
 let datos
 
 $.get({
-  url:'/Sessions',
+  url:'Get/Sessions',
   async:false,
   success: function(json){
       datos = JSON.parse(json)
   }
 })
 
-const rutaAbsoluta='/juridico/'
+const rutaAbsoluta='/SIA/juridico/'
 
 $('a#CuentaPublica').append('<span>'+datos.cuenta+'</span>')
 $('h2#tipo').text(datos.ruta)
 $('b#usuario').text(datos.userName)
-
 
 
 var nUsr=datos.idUsuario
@@ -30,7 +29,7 @@ if(nUsr!="" && nCampana!=""){
   
   $.ajax({
     type: 'GET',
-    url: '/lstModulosByUsuarioCampana/' + nCampana,
+    url: 'get/lstModulosByUsuarioCampana/' + nCampana,
     success: function(response) {
       var jsonData = JSON.parse(response);
            

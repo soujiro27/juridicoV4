@@ -1,10 +1,10 @@
 form#Caracteres(method='POST')
   .form-group.siglas
     label.form-control-label(for='siglas') Siglas
-    input#siglas.form-control(type='text', placeholder='siglas', required='', pattern='[A-Za-z]', name='siglas', title='Inserta una Sigla')
+    input#siglas.form-control(type='text', placeholder='siglas', required='', pattern='[A-Za-z]{1-5}', name='siglas', title='Inserta una Sigla')
   .form-group.nombre
     label.form-control-label(for='nombre') Nombre
-    input#nombre.form-control(type='text', placeholder='Nombre', required='', pattern='[A-Za-z]', name='nombre', title='Nombre Incorrecto o Caracteres maximos')
+    input#nombre.form-control(type='text', placeholder='Nombre', required='', pattern='[A-Za-z]{1-20}', name='nombre', title='Nombre Incorrecto o Caracteres maximos')
   .error
     p.error
   .form-group.send

@@ -4,7 +4,7 @@ module.exports = class Tables{
         getTable(ruta){
             let data = new Promise (resolve =>{
                 $.get({
-                    url:'/table/' + ruta,
+                    url:'table/' + ruta,
                     success:function(json){
                         resolve(JSON.parse(json))
                     }
@@ -16,7 +16,7 @@ module.exports = class Tables{
         getTableOrder(ruta,datos){
             let data = new Promise (resolve =>{
                 $.get({
-                    url:'/table/Order/' + ruta,
+                    url:'table/Order/' + ruta,
                     data:datos,
                     success:function(json){
                         resolve(JSON.parse(json))

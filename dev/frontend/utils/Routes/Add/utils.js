@@ -34,7 +34,8 @@ const utils = {
     newObservacion,
     cedulaIrac,
     buildFirmas,
-    clickFirmas
+    clickFirmas,
+    insert
     
 }
 
@@ -351,6 +352,23 @@ function clickFirmas(){
             })
         }
     })
+}
+
+
+function insert(ruta){
+ $('form#'+ruta).submit(function(e){
+     e.preventDefault()
+     let datos = $(this).serializeArray()
+     let send = co(function *(){
+         let envio = yield formApi.insertCatalogo(ruta,datos)
+         console.log('envio', envio);
+       if(envio.Error == 'Registro Duplicado'){
+           modal.errorMsg('Registro Duplicado')
+       }else{
+        location.href = urls.inicio + ruta
+       }
+     })
+ })   
 }
 
 

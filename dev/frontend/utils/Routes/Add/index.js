@@ -26,29 +26,32 @@ const templates={
 
 
 
-page('/juridico/Caracteres/add',function(ctx,next){
+page('/SIA/juridico/Caracteres/add',function(ctx,next){
     $('div#main-content').html(templates.Caracteres)
     addUtils.hideButtons()
     addUtils.cancelar('Caracteres')
+    addUtils.insert('Caracteres')
 })
 
 
-page('/juridico/DoctosTextos/add',function(ctx,next){
+page('/SIA/juridico/DoctosTextos/add',function(ctx,next){
     addUtils.getDatosDoctosTexto(templates.DoctosTextos)
     .then(json=>{
         $('div#main-content').html(json)
         addUtils.getSubTipoDoc()
         CKEDITOR.disableAutoInline=true
         CKEDITOR.replace('texto')
+        addUtils.insert('DoctosTextos')
         addUtils.hideButtons()
         addUtils.cancelar('DoctosTextos')
     })
 })
 
-page('/juridico/SubTiposDocumentos/add',function(ctx,next){
+page('/SIA/juridico/SubTiposDocumentos/add',function(ctx,next){
     addUtils.getDatosDoctosTexto(templates.SubTiposDocumentos)
     .then(json => {
         $('div#main-content').html(json)
+        addUtils.insert('SubTiposDocumentos')
         addUtils.hideButtons()
         addUtils.cancelar('SubTiposDocumentos')
         $('#test').prop('indeterminate', true)
@@ -57,15 +60,16 @@ page('/juridico/SubTiposDocumentos/add',function(ctx,next){
 })
 
 
-page('/juridico/Acciones/add',function(ctx,next){
+page('/SIA/juridico/Acciones/add',function(ctx,next){
     $('div#main-content').html(templates.Acciones)
+    addUtils.insert('Acciones')
     addUtils.hideButtons()
-    addUtils.cancelar('Caracteres')
+    addUtils.cancelar('Acciones')
 })
 
 
 
-page('/juridico/Volantes/add',function(ctx,next){
+page('/SIA/juridico/Volantes/add',function(ctx,next){
     addUtils.getDatosVolantes(templates.Volantes)
     .then(json=>{
         $('div#main-content').html(json)
@@ -79,7 +83,7 @@ page('/juridico/Volantes/add',function(ctx,next){
 })
 
 
-page('/juridico/VolantesDiversos/add',function(ctx,next){
+page('/SIA/juridico/VolantesDiversos/add',function(ctx,next){
     addUtils.getDatosVolantes(templates.VolantesDiversos)
     .then(json=>{
         $('div#main-content').html(json)
@@ -92,7 +96,7 @@ page('/juridico/VolantesDiversos/add',function(ctx,next){
     })
 })
 
-page('/juridico/DocumentosGral/add',function(ctx,next){
+page('/SIA/juridico/DocumentosGral/add',function(ctx,next){
     $('div#main-content').html(templates.documentos)
     addUtils.nameFile()
     addUtils.searchDocumento()
@@ -100,7 +104,7 @@ page('/juridico/DocumentosGral/add',function(ctx,next){
     addUtils.cancelar('DocumentosGral')
 })
 
-page('/juridico/Irac/add/idVolante/:id',function(ctx,next){
+page('/SIA/juridico/Irac/add/idVolante/:id',function(ctx,next){
     let index = co(function*(){
         let template = yield addUtils.loadObservaciones(ctx.params.id)
         $('div#main-content').html(template)
@@ -111,7 +115,7 @@ page('/juridico/Irac/add/idVolante/:id',function(ctx,next){
     })
 })
 
-page('/juridico/confrontasJuridico/add/idVolante/:id',function(ctx,next){
+page('/SIA/juridico/confrontasJuridico/add/idVolante/:id',function(ctx,next){
     let template = templates.confronta
     $('div#main-content').html(template)
     addUtils.hideButtons()

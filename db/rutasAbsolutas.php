@@ -8,7 +8,8 @@
         'conexion' => 'src/conexion.php',
         'utils' => 'juridico/db/utils/',
         'tables' => 'juridico/db/tables/',
-        'catalogos' => 'juridico/db/catalogs/'
+        'catalogos' => 'juridico/db/catalogs/',
+        'insert' => 'juridico/db/insert/'
     );
 
 

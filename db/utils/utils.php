@@ -3,17 +3,17 @@
 class Utils{
 
     private $roles = array(
-        'Caracteres' => 'JURIDICO',
-        'DoctosTextos' => 'JURIDICO',
-        'SubTiposDocumentos' => 'JURIDICO',
-        'Acciones' => 'JURIDICO',
-        'DocumentosGral' => 'JURIDICO',
-        'Volantes' =>'JURIDICO',
-        'VolantesDiversos' => 'JURIDICO',
-        'Irac' => 'JURIDICO-ATN',
-        'confrontasJuridico' => 'JURIDICO-ATN',
-        'Ifa' => 'JURIDICO-ATN',
-        'Documentos' => 'JURIDICO-ATN'
+        'Caracteres' => 'JURIDICO-RECEPCION',
+        'DoctosTextos' => 'JURIDICO-RECEPCION',
+        'SubTiposDocumentos' => 'JURIDICO-RECEPCION',
+        'Acciones' => 'JURIDICO-RECEPCION',
+        'DocumentosGral' => 'JURIDICO-RECEPCION',
+        'Volantes' =>'JURIDICO-RECEPCION',
+        'VolantesDiversos' => 'JURIDICO-RECEPCION',
+        'Irac' => 'JURIDICO-DIRECCION',
+        'confrontasJuridico' => 'JURIDICO-DIRECCION',
+        'Ifa' => 'JURIDICO-DIRECCION',
+        'Documentos' => 'JURIDICO-DIRECCION'
     );
 
     public function conecta(){
@@ -38,12 +38,12 @@ class Utils{
         $roles = $this->roles;
         if(!array_key_exists($modulo,$roles)){
            
-           $app->redirect('/dashboard');
+           $app->redirect('/SIA/dashboard');
            return False;
         }else{
             if($roles[$modulo]!=$res[0]['idRol']) {
                 
-                $app->redirect('/dashboard');
+                $app->redirect('/SIA/dashboard');
                 return False;
             }
         }

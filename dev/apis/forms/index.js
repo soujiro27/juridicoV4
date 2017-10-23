@@ -2,7 +2,7 @@ module.exports = class FormApi{
     getDatos(tipo){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/datos/catalogos/${tipo}`,
+                url:`datos/catalogos/${tipo}`,
                 success: function(json){
                     resolve(JSON.parse(json))
                 }
@@ -14,7 +14,7 @@ module.exports = class FormApi{
     getAuditoria(clave){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/datos/auditoria`,
+                url:`datos/auditoria`,
                 data:clave,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -27,7 +27,7 @@ module.exports = class FormApi{
     getTurnadoAuditoria(clave){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/turnado/auditoria`,
+                url:`turnado/auditoria`,
                 data:clave,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -40,7 +40,7 @@ module.exports = class FormApi{
     getDocumentosAuditoria(documento){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/documentos/auditoria`,
+                url:`documentos/auditoria`,
                 data:documento,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -53,7 +53,7 @@ module.exports = class FormApi{
     getObservaciones(volante){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/observaciones/irac`,
+                url:`observaciones/irac`,
                 data:volante,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -67,7 +67,7 @@ module.exports = class FormApi{
     getObservacionesById(id){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/observaciones/id`,
+                url:`observaciones/id`,
                 data:id,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -80,7 +80,7 @@ module.exports = class FormApi{
     getIracById(id){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/irac/id`,
+                url:`irac/id`,
                 data:id,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -93,7 +93,7 @@ module.exports = class FormApi{
     getDocumentosSiglas(id){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/documentosSiglas/id`,
+                url:`documentosSiglas/id`,
                 data:id,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -106,7 +106,7 @@ module.exports = class FormApi{
     getPersonalFirma(id){
         let datos = new Promise(resolve =>{
             $.get({
-                url:`/irac/firmas`,
+                url:`irac/firmas`,
                 data:id,
                 success: function(json){
                     resolve(JSON.parse(json))
@@ -114,5 +114,22 @@ module.exports = class FormApi{
             })
         })
         return datos
+    }
+
+
+
+
+
+    insertCatalogo(ruta,datos){
+        let insert = new Promise ( resolve => {
+            $.post({
+                url: `Insert`,
+                data:datos,
+                success:function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return insert
     }
 }

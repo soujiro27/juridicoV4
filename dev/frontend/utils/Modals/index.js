@@ -99,6 +99,14 @@ class Modals{
         })
     }
 
+    errorMsg(msg){
+        $.alert({
+            theme : 'supervan',
+            title : 'Error',
+            content : msg
+        })
+    }
+
 }
 
 

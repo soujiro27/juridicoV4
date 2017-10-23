@@ -2,11 +2,11 @@
 <form id="Caracteres" method="POST">
   <div class="form-group siglas">
     <label class="form-control-label" for="siglas">Siglas</label>
-    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]" name="siglas" title="Inserta una Sigla"/>
+    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]{1-5}" name="siglas" title="Inserta una Sigla"/>
   </div>
   <div class="form-group nombre">
     <label class="form-control-label" for="nombre">Nombre</label>
-    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>
+    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]{1-20}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>
   </div>
   <div class="error">
     <p class="error"></p>

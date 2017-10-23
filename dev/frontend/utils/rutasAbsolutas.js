@@ -1,5 +1,5 @@
 const rutas = {
-    inicio: '/juridico/'
+    inicio: '/SIA/juridico/'
 }
 
 module.exports = rutas

@@ -2,6 +2,18 @@
     
     class Tables{
 
+
+        public function __construct($modulo){
+            if($modulo=='Caracteres'){$this->Caracteres();}
+            elseif ($modulo == 'DoctosTextos') { $this->DoctosTextos(); }
+            elseif ($modulo == 'SubTiposDocumentos') { $this->SubTiposDocumentos();}
+            elseif ($modulo == 'Acciones') { $this->Acciones();}
+            elseif ($modulo == 'Volantes') { $this->Volantes(); }
+            elseif( $modulo == 'DocumentosGral') { $this->DocumentosGral();}
+            elseif( $modulo == 'Volantes') { $this->Volantes(); }
+        }
+        
+
         public function conecta(){
             try{
                 require_once 'juridico/db/rutasAbsolutas.php';

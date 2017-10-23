@@ -9,6 +9,7 @@ require_once $rutas['utils'].'utils.php';
 require_once $rutas['tables'].'tables.php';
 require_once $rutas['tables'].'tablesOrder.php';
 require_once $rutas['catalogos'].'catalogos.php';
+require_once $rutas['insert'].'Insert.php';
 
 /*-----------Render Principal ------------------*/
 $app->get('/'.$rutas['inicio'].':modulo',function($modulo) use ($app){
@@ -20,7 +21,7 @@ $app->get('/'.$rutas['inicio'].':modulo',function($modulo) use ($app){
 /*---------------------------------------------*/
 
 /*--------------- Datos de Sessiones ----------*/
-$app->get('/Sessions',function(){
+$app->get('/juridico(/:modulo)/Get/Sessions',function(){
 
     
     $datos = array(
@@ -44,61 +45,35 @@ $app->get('/Sessions',function(){
 
 /*----------------- Rutas Tablas ---------------*/
 
-$app->get('/table/Caracteres',function() use ($app){
-    $tables = new Tables();
-    $tables->Caracteres();
+$app->get('/juridico/table/:modulo',function($modulo) use ($app){
+    $tables = new Tables($modulo);
+    
 });
 
 
-$app->get('/table/Acciones',function() use ($app){
-    $tables = new Tables();
-    $tables->Acciones();
-});
 
-
-$app->get('/table/DoctosTextos',function() use ($app){
-    $tables = new Tables();
-    $tables->DoctosTextos();
-});
-
-$app->get('/table/SubTiposDocumentos',function() use ($app){
-    $tables = new Tables();
-    $tables->SubTiposDocumentos();
-});
-
-$app->get('/table/Volantes',function() use ($app){
-    $tables = new Tables();
-    $tables->Volantes();
-});
-
-
-$app->get('/table/DocumentosGral',function() use ($app){
-    $tables = new Tables();
-    $tables->DocumentosGral();
-});
-
-$app->get('/table/VolantesDiversos',function() use ($app){
+$app->get('/juridico/table/VolantesDiversos',function() use ($app){
     $tables = new Tables();
     $tables->VolantesDiversos();
 });
 
 
-$app->get('/table/Irac',function() use ($app){
+$app->get('/juridico/table/Irac',function() use ($app){
     $tables = new Tables();
     $tables->irac();
 });
 
-$app->get('/table/confrontasJuridico',function() use ($app){
+$app->get('/juridico/table/confrontasJuridico',function() use ($app){
     $tables = new Tables();
     $tables->confronta();
 });
 
-$app->get('/table/Ifa',function() use ($app){
+$app->get('/juridico/table/Ifa',function() use ($app){
     $tables = new Tables();
     $tables->ifa();
 });
 
-$app->get('/table/Documentos',function() use ($app){
+$app->get('/juridico/table/Documentos',function() use ($app){
     $tables = new Tables();
     $tables->documentos();
 });
@@ -108,7 +83,7 @@ $app->get('/table/Documentos',function() use ($app){
 
 
 /*----------------- Tablas Ordenadas -------------------*/
-$app->get('/table/Order/Volantes',function() use ($app){
+$app->get('/juridico/table/Order/Volantes',function() use ($app){
     $tables = new TablesOrder();
     $tables->Volantes($app->request->get());
 });
@@ -120,37 +95,37 @@ $app->get('/table/Order/Volantes',function() use ($app){
 
 
 /*---------------- Rutas para obtener datos de los Catalogos-------------*/
-$app->get('/datos/catalogos/tiposDocumentos',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/tiposDocumentos',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getTiposDocumentos();
 });
 
-$app->get('/datos/catalogos/subTiposDocumentos',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/subTiposDocumentos',function($modulo) use ($app){
     $catalogos = new Catalogos();
     $catalogos->getSubTiposDocumentos();
 });
 
-$app->get('/datos/catalogos/caracteres',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/caracteres',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getCaracteres();
 });
 
-$app->get('/datos/catalogos/turnados',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/turnados',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getTurnados();
 });
 
-$app->get('/datos/catalogos/acciones',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/acciones',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getAcciones();
 });
 
-$app->get('/datos/catalogos/SubTiposDocumentosAuditoria',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/SubTiposDocumentosAuditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getSubTiposDocumentosAuditoria();
 });
 
-$app->get('/datos/catalogos/SubTiposDocumentosDiversos',function() use ($app){
+$app->get('/juridico/:modulo/datos/catalogos/SubTiposDocumentosDiversos',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getSubTiposDocumentosDiversos();
 });
@@ -158,13 +133,13 @@ $app->get('/datos/catalogos/SubTiposDocumentosDiversos',function() use ($app){
 
 /*---------------- OBtiene los datos de la auditoria -----*/
 
-$app->get('/datos/auditoria',function() use ($app){
+$app->get('/juridico/datos/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getAuditorias($app->request->get());
 });
 
 
-$app->get('/turnado/auditoria',function() use ($app){
+$app->get('/juridico/turnado/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getTurnadoAuditorias($app->request->get());
 });
@@ -173,7 +148,7 @@ $app->get('/turnado/auditoria',function() use ($app){
 
 /*---------------------- Obtiene los Documentos ----------*/
 
-$app->get('/documentos/auditoria',function() use ($app){
+$app->get('/juridico/documentos/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getDocumentosAuditoria($app->request->get());
     
@@ -185,32 +160,51 @@ $app->get('/documentos/auditoria',function() use ($app){
 
 /*--------- Obtienes las observaciones de irac e ifa -----*/
 
-$app->get('/observaciones/irac',function() use ($app){
+$app->get('/juridico/observaciones/irac',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getObservacionesIrac($app->request->get());
 });
 
-$app->get('/observaciones/id',function() use ($app){
+$app->get('/juridico/observaciones/id',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getObservacionesById($app->request->get());
 });
 
 
-$app->get('/irac/id',function() use ($app){
+$app->get('/juridico/irac/id',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getIracByID($app->request->get());
 });
 
-$app->get('/documentosSiglas/id',function() use ($app){
+$app->get('/juridico/documentosSiglas/id',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getDocumentosSiglas($app->request->get());
 });
 
-$app->get('/irac/firmas',function() use ($app){
+$app->get('/juridico/irac/firmas',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getPersonalFirma($app->request->get());
 });
 
 /*--------------------------------------------------------*/
+
+
+
+/*----------- Insercion ---------------------------------*/
+
+$app->post('/juridico/:modulo/Insert',function($modulo) use ($app){
+    $insert = new Insert($modulo,$app->request->post());
+   
+});
+
+/*-------------------------------------------------------*/
+
+
+
+
+
+
+
+
 
 ?>
