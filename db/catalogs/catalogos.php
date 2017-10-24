@@ -185,6 +185,22 @@ class Catalogos{
 
     }
 
+    public function getDatoUpdate($modulo,$datos){
+        $campo = $datos['campo'];
+        $id = $datos['id'];
+        if($modulo != 'Volantes' ){
+            $modulo = 'Cat'.$modulo;
+        }
+        $db = $this->conecta();
+        $query="select * from sia_$modulo where $campo = '$id' ";
+        //echo $query;
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+
+    }
+
 }
 
 

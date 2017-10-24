@@ -35,7 +35,8 @@ const utils = {
     cedulaIrac,
     buildFirmas,
     clickFirmas,
-    insert
+    insert,
+    uploadFileAll
     
 }
 
@@ -361,15 +362,53 @@ function insert(ruta){
      let datos = $(this).serializeArray()
      let send = co(function *(){
          let envio = yield formApi.insertCatalogo(ruta,datos)
-         console.log('envio', envio);
        if(envio.Error == 'Registro Duplicado'){
            modal.errorMsg('Registro Duplicado')
-       }else{
-        location.href = urls.inicio + ruta
+       }else if (envio.Error == 'El Numero de Folio Y SubFolio ya se encuentra Asignado'){
+           modal.errorMsg('El Numero de Folio Y SubFolio ya se encuentra Asignado')
+        }
+        else{
+            location.href = urls.inicio + ruta
+
        }
      })
  })   
 }
+
+
+
+function uploadFileAll(){
+    let self=this
+    $('form#documentosJur').on('submit',function(e){
+        e.preventDefault()
+         var formData = new FormData($(this)[0]);
+            $.ajax({
+        url: '/juridico/insertAll/uploadFile',  
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+           // message = $("<span class='before'>Subiendo la imagen, por favor espere...</span>");
+            //showMessage(message)        
+        },
+      
+        success: function(json){
+          let data=JSON.parse(json)
+          self.statusInsertRegister(data,ruta)
+        },
+     
+        error: function(){
+            alert('ocurrio un eror')
+        }
+    });
+    })
+}
+
+
+
+
 
 
 module.exports = utils

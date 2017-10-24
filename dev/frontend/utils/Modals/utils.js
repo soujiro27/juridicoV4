@@ -1,5 +1,7 @@
 const $ = require('jquery')
 const urls = require('./../rutasAbsolutas')
+const co = require('co')
+const Promise = require('bluebird')
 
 
 
@@ -26,9 +28,9 @@ function removeSend(){
 
 function caracteres(datos){
     
-    $('div.nombre').append(`<input type="hidden" name="${datos.campo}" value="${datos.idCaracter}" />`)
-    $('input#siglas').val(datos.siglas)
-    $('input#nombre').val(datos.nombre)
+    $('div.nombre').append(`<input type="hidden" name="${datos[0].campo}" value="${datos[0].idCaracter}" />`)
+    $('input#siglas').val(datos[0].siglas)
+    $('input#nombre').val(datos[0].nombre)
 }
 
 
@@ -47,7 +49,7 @@ function isEmptyInput(datos){
 
 function sendDataUpdate(datos, ruta){
     let empty = isEmptyInput(datos)
-    //manda los datos con el api y respuesta de la api
+    let 
     location.href = urls.inicio + ruta
 }
 

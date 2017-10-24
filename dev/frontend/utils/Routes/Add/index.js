@@ -77,6 +77,7 @@ page('/SIA/juridico/Volantes/add',function(ctx,next){
         addUtils.getSubTipoDocAuditoria()
         addUtils.notaInformativa()
         addUtils.modalAuditoria();
+        addUtils.insert('Volantes')
         addUtils.hideButtons()
         addUtils.cancelar('Volantes')
     })
@@ -90,7 +91,7 @@ page('/SIA/juridico/VolantesDiversos/add',function(ctx,next){
         $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
         addUtils.getSubTipoDocDiversos()
         addUtils.notaInformativa()
-       
+        addUtils.insert('VolantesDiversos')
         addUtils.hideButtons()
         addUtils.cancelar('VolantesDiversos')
     })
@@ -100,6 +101,7 @@ page('/SIA/juridico/DocumentosGral/add',function(ctx,next){
     $('div#main-content').html(templates.documentos)
     addUtils.nameFile()
     addUtils.searchDocumento()
+    addUtils.uploadFileAll()
     addUtils.hideButtons()
     addUtils.cancelar('DocumentosGral')
 })

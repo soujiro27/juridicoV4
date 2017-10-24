@@ -23,9 +23,12 @@ const modal = new modals()
 
 /*----------page--------------*/
 
-page('/juridico/Caracteres/update/:campo/:id',function(ctx,next){
+page('/SIA/juridico/Caracteres/update/:campo/:id',function(ctx,next){
     let campo = ctx.params.campo
     let id = ctx.params.id
-    let datos = utils.getSingleData(campo,id)
-    modal.updateCaracteres(templates.Caracteres,datos)
+    utils.getSingleData(campo,id)
+    .then(json =>{
+        modal.updateCaracteres(templates.Caracteres,json)
+
+    })
  })

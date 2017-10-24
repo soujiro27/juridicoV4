@@ -15,6 +15,7 @@ const formApi = new apiForm()
 
 class Modals{
     updateCaracteres(template,datos){
+       
         $.confirm({
             title: 'Actualizar Registro',
             theme:'modern',

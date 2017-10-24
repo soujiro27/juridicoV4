@@ -10,6 +10,7 @@ require_once $rutas['tables'].'tables.php';
 require_once $rutas['tables'].'tablesOrder.php';
 require_once $rutas['catalogos'].'catalogos.php';
 require_once $rutas['insert'].'Insert.php';
+require_once $rutas['update'].'Update.php';
 
 /*-----------Render Principal ------------------*/
 $app->get('/'.$rutas['inicio'].':modulo',function($modulo) use ($app){
@@ -95,7 +96,7 @@ $app->get('/juridico/table/Order/Volantes',function() use ($app){
 
 
 /*---------------- Rutas para obtener datos de los Catalogos-------------*/
-$app->get('/juridico/:modulo/datos/catalogos/tiposDocumentos',function() use ($app){
+$app->get('/juridico(/:modulo)/datos/catalogos/tiposDocumentos',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getTiposDocumentos();
 });
@@ -133,13 +134,13 @@ $app->get('/juridico/:modulo/datos/catalogos/SubTiposDocumentosDiversos',functio
 
 /*---------------- OBtiene los datos de la auditoria -----*/
 
-$app->get('/juridico/datos/auditoria',function() use ($app){
+$app->get('/juridico(/:modulo)/datos/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getAuditorias($app->request->get());
 });
 
 
-$app->get('/juridico/turnado/auditoria',function() use ($app){
+$app->get('/juridico(/:modulo)/turnado/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getTurnadoAuditorias($app->request->get());
 });
@@ -148,7 +149,7 @@ $app->get('/juridico/turnado/auditoria',function() use ($app){
 
 /*---------------------- Obtiene los Documentos ----------*/
 
-$app->get('/juridico/documentos/auditoria',function() use ($app){
+$app->get('/juridico(/:modulo)/documentos/auditoria',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getDocumentosAuditoria($app->request->get());
     
@@ -201,7 +202,45 @@ $app->post('/juridico/:modulo/Insert',function($modulo) use ($app){
 
 
 
+/*---------------- Update -------------------------------*/
 
+$app->post('/juridico/:modulo/Update',function($modulo) use ($app){
+    $insert = new Update($modulo,$app->request->post());
+   
+});
+
+$app->get('/juridico(/:modulo)/update(/:dato)/datos',function($modulo) use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getDatoUpdate($modulo,$app->request->get());
+    
+});
+
+/*-------------------------------------------------------*/
+
+
+
+/*--------------------- Upload de Archivos -------------*/
+
+$app->post('/juridico/insertAll/uploadFile',function() use ($app){
+    
+       $controller = new Insert();
+       $numDoc=$app->request->post();
+       $numDoc=$numDoc['numDocumento'];
+      
+       $res=$controller->isFileExistAll('Volantes',$numDoc);
+           $file=$_FILES['anexoDoc']['name'];
+           $nombre=str_replace('/','-',$numDoc);
+           $file=explode('.',$file);
+           $nameComplete=$nombre.'.'.$file[1];
+           if ($file && move_uploaded_file($_FILES['anexoDoc']['tmp_name'],"./juridico/files/".$nombre.'.'.$file[1])){
+               $controllerUpdate= new UpdateController();
+               $datos=array('anexoDoc'=>$nameComplete,'idVolante'=>$res);
+            
+               $controllerUpdate->updateFile('Volantes',$datos);
+           }
+     
+   });
+/*------------------------------------------------------*/
 
 
 

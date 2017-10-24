@@ -11,6 +11,7 @@
             elseif ($modulo == 'Volantes') { $this->Volantes(); }
             elseif( $modulo == 'DocumentosGral') { $this->DocumentosGral();}
             elseif( $modulo == 'Volantes') { $this->Volantes(); }
+            elseif ($modulo == 'VolantesDiversos') { $this->VolantesDiversos(); }
         }
         
 
@@ -83,14 +84,12 @@
         public function VolantesDiversos(){
             $db = $this->conecta();
             $query = "select v.idVolante, v.folio, v.subfolio, v.numDocumento as Numero_Documento, v.idRemitente as Remitente, v.idTurnado as Turnado, v.fRecepcion as Recepcion,  v.extemporaneo, 
-            a.clave,
             sub.nombre as Documento,
             t.estadoProceso as Estado,
             v.estatus
             from sia_VolantesDocumentos vd
             inner join sia_Volantes v on vd.idVolante=v.idVolante
             inner join sia_turnosJuridico t on v.idVolante=t.idVolante
-            inner join sia_auditorias a on vd.cveAuditoria=a.idAuditoria
             inner join sia_catSubTiposDocumentos sub on vd.idSubTipoDocumento=sub.idSubTipoDocumento
             where sub.auditoria = 'NO'";
             $sql = $db->prepare($query);

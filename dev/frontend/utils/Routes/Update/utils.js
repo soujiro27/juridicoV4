@@ -1,23 +1,24 @@
 const $ = require('jquery')
+const api = require('./../../../../apis/Update/index')
+const co = require('co')
+const Promise = require('bluebird')
+
+
+const update = new api()
 
 const utils = {
     getSingleData,
     
 }
 
-const datos = {
-    idCaracter: '1023',
-    siglas: 'U',
-    nombre: 'URGENTE',
-    estatus: 'ACTIVO'
-    
-}
 
 
 function getSingleData(campo,id){
-    let data = datos //api
-    data['campo'] = campo
-    return data
+    let datos = co(function *(){
+        let data = yield update.getData(campo,id)
+        return data
+    })
+    return datos
 }
 
 

@@ -2987,7 +2987,8 @@ div#headerText i {
   margin-left: 8px;
   font-size: 15px !important;
 }
-form#Volantes label {
+form#Volantes label,
+form#VolantesDiversos label {
   display: block !important;
 }
 div.jconfirm-box-container {

@@ -29,6 +29,54 @@ module.exports = function () {
 }();
 
 },{}],2:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+module.exports = function () {
+    function UpdateApi() {
+        _classCallCheck(this, UpdateApi);
+    }
+
+    _createClass(UpdateApi, [{
+        key: 'update',
+        value: function update(datos) {
+            var promise = new Promise(function (resolve) {
+                $.post({
+                    url: 'Update',
+                    data: datos,
+                    success: function success(json) {
+                        resolve(JSON.parse(json));
+                    }
+                });
+            });
+            return promise;
+        }
+    }, {
+        key: 'getData',
+        value: function getData(campo, id) {
+            var promesa = new Promise(function (resolve) {
+                $.get({
+                    url: 'datos',
+                    data: {
+                        campo: campo,
+                        id: id
+                    },
+                    success: function success(json) {
+                        resolve(JSON.parse(json));
+                    }
+                });
+            });
+            return promesa;
+        }
+    }]);
+
+    return UpdateApi;
+}();
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -184,7 +232,7 @@ module.exports = function () {
     return FormApi;
 }();
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -229,7 +277,7 @@ module.exports = function () {
     return Tables;
 }();
 
-},{"jquery":202}],4:[function(require,module,exports){
+},{"jquery":203}],5:[function(require,module,exports){
 'use strict';
 
 /*---------node_modules ---------*/
@@ -277,7 +325,7 @@ var test = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 
 page();
 
-},{"./../apis/Main/index":1,"./utils/Routes/Add/index":7,"./utils/Routes/Update/index":9,"./utils/Tables/index":11,"./utils/Tables/utils":12,"babelify-es6-polyfill":30,"bluebird":33,"co":37,"jquery":202,"page":206}],5:[function(require,module,exports){
+},{"./../apis/Main/index":1,"./utils/Routes/Add/index":8,"./utils/Routes/Update/index":10,"./utils/Tables/index":12,"./utils/Tables/utils":13,"babelify-es6-polyfill":31,"bluebird":34,"co":38,"jquery":203,"page":207}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -303,6 +351,7 @@ var Modals = function () {
     _createClass(Modals, [{
         key: 'updateCaracteres',
         value: function updateCaracteres(template, datos) {
+            console.log('datos', datos);
             $.confirm({
                 title: 'Actualizar Registro',
                 theme: 'modern',
@@ -424,7 +473,7 @@ var Modals = function () {
 
 module.exports = Modals;
 
-},{"./../../../apis/forms/index":2,"./utils":6,"bluebird":33,"co":37,"jquery":202,"jquery-confirm":199,"jquery-ui-browserify":201}],6:[function(require,module,exports){
+},{"./../../../apis/forms/index":3,"./utils":7,"bluebird":34,"co":38,"jquery":203,"jquery-confirm":200,"jquery-ui-browserify":202}],7:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -451,9 +500,9 @@ function removeSend() {
 
 function caracteres(datos) {
 
-    $('div.nombre').append('<input type="hidden" name="' + datos.campo + '" value="' + datos.idCaracter + '" />');
-    $('input#siglas').val(datos.siglas);
-    $('input#nombre').val(datos.nombre);
+    $('div.nombre').append('<input type="hidden" name="' + datos[0].campo + '" value="' + datos[0].idCaracter + '" />');
+    $('input#siglas').val(datos[0].siglas);
+    $('input#nombre').val(datos[0].nombre);
 }
 
 function isEmptyInput(datos) {
@@ -508,7 +557,7 @@ function tableTurnados(datos) {
 
 module.exports = utils;
 
-},{"./../Templates/datosAuditoria.html":21,"./../Templates/datosTurnado.html":22,"./../rutasAbsolutas":29,"jquery":202}],7:[function(require,module,exports){
+},{"./../Templates/datosAuditoria.html":22,"./../Templates/datosTurnado.html":23,"./../rutasAbsolutas":30,"jquery":203}],8:[function(require,module,exports){
 'use strict';
 
 window.CKEDITOR_BASEPATH = 'node_modules/ckeditor/';
@@ -578,6 +627,7 @@ page('/SIA/juridico/Volantes/add', function (ctx, next) {
         addUtils.getSubTipoDocAuditoria();
         addUtils.notaInformativa();
         addUtils.modalAuditoria();
+        addUtils.insert('Volantes');
         addUtils.hideButtons();
         addUtils.cancelar('Volantes');
     });
@@ -589,7 +639,7 @@ page('/SIA/juridico/VolantesDiversos/add', function (ctx, next) {
         $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
         addUtils.getSubTipoDocDiversos();
         addUtils.notaInformativa();
-
+        addUtils.insert('VolantesDiversos');
         addUtils.hideButtons();
         addUtils.cancelar('VolantesDiversos');
     });
@@ -599,6 +649,7 @@ page('/SIA/juridico/DocumentosGral/add', function (ctx, next) {
     $('div#main-content').html(templates.documentos);
     addUtils.nameFile();
     addUtils.searchDocumento();
+    addUtils.uploadFileAll();
     addUtils.hideButtons();
     addUtils.cancelar('DocumentosGral');
 });
@@ -637,7 +688,7 @@ page('/SIA/juridico/confrontasJuridico/add/idVolante/:id', function (ctx, next) 
     addUtils.cancelar('confrontasJuridico');
 });
 
-},{"./../../Templates/Acciones.html":13,"./../../Templates/Caracteres.html":14,"./../../Templates/DoctosTextos.html":15,"./../../Templates/SubTiposDocumentos.html":16,"./../../Templates/Volantes.html":17,"./../../Templates/confronta.html":20,"./../../Templates/documentos.html":23,"./../../Templates/volantesDiversos.html":28,"./utils":8,"bluebird":33,"ckeditor":36,"co":37,"jquery":202,"page":206}],8:[function(require,module,exports){
+},{"./../../Templates/Acciones.html":14,"./../../Templates/Caracteres.html":15,"./../../Templates/DoctosTextos.html":16,"./../../Templates/SubTiposDocumentos.html":17,"./../../Templates/Volantes.html":18,"./../../Templates/confronta.html":21,"./../../Templates/documentos.html":24,"./../../Templates/volantesDiversos.html":29,"./utils":9,"bluebird":34,"ckeditor":37,"co":38,"jquery":203,"page":207}],9:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -674,7 +725,8 @@ var utils = {
     cedulaIrac: cedulaIrac,
     buildFirmas: buildFirmas,
     clickFirmas: clickFirmas,
-    insert: insert
+    insert: insert,
+    uploadFileAll: uploadFileAll
 
 };
 
@@ -1173,14 +1225,15 @@ function insert(ruta) {
                         case 2:
                             envio = _context11.sent;
 
-                            console.log('envio', envio);
                             if (envio.Error == 'Registro Duplicado') {
                                 modal.errorMsg('Registro Duplicado');
+                            } else if (envio.Error == 'El Numero de Folio Y SubFolio ya se encuentra Asignado') {
+                                modal.errorMsg('El Numero de Folio Y SubFolio ya se encuentra Asignado');
                             } else {
                                 location.href = urls.inicio + ruta;
                             }
 
-                        case 5:
+                        case 4:
                         case 'end':
                             return _context11.stop();
                     }
@@ -1190,9 +1243,38 @@ function insert(ruta) {
     });
 }
 
+function uploadFileAll() {
+    var self = this;
+    $('form#documentosJur').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            url: '/juridico/insertAll/uploadFile',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function beforeSend() {
+                // message = $("<span class='before'>Subiendo la imagen, por favor espere...</span>");
+                //showMessage(message)        
+            },
+
+            success: function success(json) {
+                var data = JSON.parse(json);
+                self.statusInsertRegister(data, ruta);
+            },
+
+            error: function error() {
+                alert('ocurrio un eror');
+            }
+        });
+    });
+}
+
 module.exports = utils;
 
-},{"./../../../../apis/Main/index":1,"./../../../../apis/forms/index":2,"./../../Modals/index":5,"./../../Tables/utils":12,"./../../Templates/auditoria.html":18,"./../../Templates/cedulaIrac.html":19,"./../../Templates/firmas.html":24,"./../../Templates/irac.html":25,"./../../Templates/observacion.html":26,"./../../rutasAbsolutas":29,"bluebird":33,"co":37,"jquery":202}],9:[function(require,module,exports){
+},{"./../../../../apis/Main/index":1,"./../../../../apis/forms/index":3,"./../../Modals/index":6,"./../../Tables/utils":13,"./../../Templates/auditoria.html":19,"./../../Templates/cedulaIrac.html":20,"./../../Templates/firmas.html":25,"./../../Templates/irac.html":26,"./../../Templates/observacion.html":27,"./../../rutasAbsolutas":30,"bluebird":34,"co":38,"jquery":203}],10:[function(require,module,exports){
 'use strict';
 
 window.CKEDITOR_BASEPATH = 'node_modules/ckeditor/';
@@ -1218,40 +1300,56 @@ var modal = new modals();
 
 /*----------page--------------*/
 
-page('/juridico/Caracteres/update/:campo/:id', function (ctx, next) {
+page('/SIA/juridico/Caracteres/update/:campo/:id', function (ctx, next) {
     var campo = ctx.params.campo;
     var id = ctx.params.id;
-    var datos = utils.getSingleData(campo, id);
-    modal.updateCaracteres(templates.Caracteres, datos);
+    utils.getSingleData(campo, id).then(function (json) {
+        modal.updateCaracteres(templates.Caracteres, json);
+    });
 });
 
-},{"./../../Modals/index":5,"./../../Templates/Acciones.html":13,"./../../Templates/Caracteres.html":14,"./../../Templates/DoctosTextos.html":15,"./../../Templates/SubTiposDocumentos.html":16,"./utils.js":10,"ckeditor":36,"jquery":202,"page":206}],10:[function(require,module,exports){
+},{"./../../Modals/index":6,"./../../Templates/Acciones.html":14,"./../../Templates/Caracteres.html":15,"./../../Templates/DoctosTextos.html":16,"./../../Templates/SubTiposDocumentos.html":17,"./utils.js":11,"ckeditor":37,"jquery":203,"page":207}],11:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
+var api = require('./../../../../apis/Update/index');
+var co = require('co');
+var Promise = require('bluebird');
+
+var update = new api();
 
 var utils = {
     getSingleData: getSingleData
 
 };
 
-var datos = {
-    idCaracter: '1023',
-    siglas: 'U',
-    nombre: 'URGENTE',
-    estatus: 'ACTIVO'
-
-};
-
 function getSingleData(campo, id) {
-    var data = datos; //api
-    data['campo'] = campo;
-    return data;
+    var datos = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var data;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        _context.next = 2;
+                        return update.getData(campo, id);
+
+                    case 2:
+                        data = _context.sent;
+                        return _context.abrupt('return', data);
+
+                    case 4:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, _callee, this);
+    }));
+    return datos;
 }
 
 module.exports = utils;
 
-},{"jquery":202}],11:[function(require,module,exports){
+},{"./../../../../apis/Update/index":2,"bluebird":34,"co":38,"jquery":203}],12:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1291,7 +1389,7 @@ var Tables = function () {
 
 module.exports = Tables;
 
-},{"./../Templates/table.html":27,"./utils":12,"jquery":202}],12:[function(require,module,exports){
+},{"./../Templates/table.html":28,"./utils":13,"jquery":203}],13:[function(require,module,exports){
 'use strict';
 
 var yo = require('yo-yo');
@@ -1395,39 +1493,39 @@ function redirect(ruta, campo, id) {
 
 module.exports = utils;
 
-},{"./../../../apis/tables/index":3,"./../Templates/table.html":27,"./../rutasAbsolutas":29,"jquery":202,"page":206,"yo-yo":209}],13:[function(require,module,exports){
+},{"./../../../apis/tables/index":4,"./../Templates/table.html":28,"./../rutasAbsolutas":30,"jquery":203,"page":207,"yo-yo":210}],14:[function(require,module,exports){
 module.exports = '\n<form id="Acciones" method="POST">\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre </label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,10}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
-},{}],14:[function(require,module,exports){
-module.exports = '\n<form id="Caracteres" method="POST">\n  <div class="form-group siglas">\n    <label class="form-control-label" for="siglas">Siglas</label>\n    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]{1-5}" name="siglas" title="Inserta una Sigla"/>\n  </div>\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]{1-20}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="error">\n    <p class="error"></p>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-info" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],15:[function(require,module,exports){
-module.exports = '\n<form id="DoctosTextos" method="POST">\n  <div class="form-group idDocumento">\n    <label class="form-control-label" for="idDocumento">Tipo de Documento</label>\n    <input id="tipo" type="hidden" name="tipo" value="JURIDICO"/>\n    <input id="nombre" type="hidden" name="nombre" value="TEXTO-JURIDICO"/>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group subDocumento">\n    <label class="form-control-label" for="subDocumento">Tipo de SubDocumento</label>\n    <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required"></select>\n  </div>\n  <div class="form-group texto">\n    <label class="form-control-label" for="texto">Texto</label>\n    <textarea class="form-control" id="texto" rows="3" name="texto" required="" placeholder="texto"></textarea>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form id="Caracteres" method="POST">\n  <div class="form-group siglas">\n    <label class="form-control-label" for="siglas">Siglas</label>\n    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]{1-5}" name="siglas" title="Inserta una Sigla"/>\n  </div>\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]{1-20}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="error">\n    <p class="error"></p>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-info" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],16:[function(require,module,exports){
-module.exports = '\n<form id="SubTiposDocumentos" method="POST">\n  <div class="form-group idDocumento">\n    <label for="idDocumento" clas="form-control-label">Tipo de Documento</label>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group nombre">\n    <label for="nombre" clas="form-control-label">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group auditoria">\n    <label for="auditoria" clas="form-control-label">Datos Auditoria</label>\n    <select class="form-control" id="auditoria" name="auditoria" required="required" aria-describedby="passwordHelpBlock">\n      <option value=""> Seleccione una Opción </option>\n      <option value="SI">SI</option>\n      <option value="NO">NO</option>\n    </select><small class="form-text text-muted" id="passwordHelpBlock">El Documento Requiere de Datos de una Auditoria</small>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form id="DoctosTextos" method="POST">\n  <div class="form-group idDocumento">\n    <label class="form-control-label" for="idDocumento">Tipo de Documento</label>\n    <input id="tipo" type="hidden" name="tipo" value="JURIDICO"/>\n    <input id="nombre" type="hidden" name="nombre" value="TEXTO-JURIDICO"/>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group subDocumento">\n    <label class="form-control-label" for="subDocumento">Tipo de SubDocumento</label>\n    <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required"></select>\n  </div>\n  <div class="form-group texto">\n    <label class="form-control-label" for="texto">Texto</label>\n    <textarea class="form-control" id="texto" rows="3" name="texto" required="" placeholder="texto"></textarea>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],17:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="Volantes" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group Promocion">\n      <label for="subDocumento">Promocion de Accion</label>\n      <select class="form-control" id="promocion" name="promocion" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group cveAuditoria">\n      <label for="cveAuditoria">Auditoria</label>\n      <div class="addAuditoriaContainer">\n        <p id="textoCveAuditoria">Selecciona Una Auditoria</p>\n        <button class="btn btn-info" id="modalAuditoria"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>\n        <input id="cveAuditoria" type="hidden" name="cveAuditoria" value=""/>\n      </div>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente" readonly=""/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form id="SubTiposDocumentos" method="POST">\n  <div class="form-group idDocumento">\n    <label for="idDocumento" clas="form-control-label">Tipo de Documento</label>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group nombre">\n    <label for="nombre" clas="form-control-label">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group auditoria">\n    <label for="auditoria" clas="form-control-label">Datos Auditoria</label>\n    <select class="form-control" id="auditoria" name="auditoria" required="required" aria-describedby="passwordHelpBlock">\n      <option value=""> Seleccione una Opción </option>\n      <option value="SI">SI</option>\n      <option value="NO">NO</option>\n    </select><small class="form-text text-muted" id="passwordHelpBlock">El Documento Requiere de Datos de una Auditoria</small>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],18:[function(require,module,exports){
-module.exports = '\n<div class="auditoria-container">\n  <div class="auditoria">\n    <div class="cuenta">\n      <p class="cuenta">:cuenta</p>\n    </div>\n    <div class="search"><span>ASCM/</span>\n      <input id="auditoria" type="text" name="auditoria"/><span>:cta</span>\n    </div>\n  </div>\n  <div class="datosAuditoria"></div>\n  <div class="asignacion"></div>\n</div>';
+module.exports = '\n<form class="form-inline" id="Volantes" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group Promocion">\n      <label for="subDocumento">Promocion de Accion</label>\n      <select class="form-control" id="promocion" name="promocion" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group cveAuditoria">\n      <label for="cveAuditoria">Auditoria</label>\n      <div class="addAuditoriaContainer">\n        <p id="textoCveAuditoria">Selecciona Una Auditoria</p>\n        <button class="btn btn-info" id="modalAuditoria"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>\n        <input id="cveAuditoria" type="hidden" name="cveAuditoria" value=""/>\n      </div>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente" readonly=""/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],19:[function(require,module,exports){
-module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
+module.exports = '\n<div class="auditoria-container">\n  <div class="auditoria">\n    <div class="cuenta">\n      <p class="cuenta">:cuenta</p>\n    </div>\n    <div class="search"><span>ASCM/</span>\n      <input id="auditoria" type="text" name="auditoria"/><span>:cta</span>\n    </div>\n  </div>\n  <div class="datosAuditoria"></div>\n  <div class="asignacion"></div>\n</div>';
 },{}],20:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="confrontasJuridico" method="POST">\n  <div class="group-nota">\n    <div class="form-group notaInformativa">\n      <label for="notaInformativa">nota Informativa</label>\n      <input class="form-control" id="notaInformativa" type="text" placeholder="nota Informativa" name="notaInformativa"/>\n    </div>\n  </div>\n  <div class="group-datos">\n    <div class="form-group nombre">\n      <label for="nombre">Nombre</label>\n      <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombreResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group cargo">\n      <label for="cargo">Cargo</label>\n      <input class="form-control" id="cargo" type="text" placeholder="cargo" required="" pattern="[A-Za-z].{1,49}" name="cargoResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fConfronta">\n      <label for="fConfronta">Fecha Confronta</label>\n      <input class="form-control fechaInput" id="fConfronta" type="text" name="fConfronta" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n    <div class="form-group hConfronta">\n      <label for="hConfronta">Hora de Confronta</label>\n      <input class="form-control" id="hConfronta" type="time" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" name="hConfronta" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fecha">\n      <label for="fecha">Fecha Documento</label>\n      <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n  </div>\n  <div class="group-firmas">\n    <div class="form-group siglas">\n      <label for="siglas">Siglas</label>\n      <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" name="siglas" title="Nombre Incorrecto o Caracteres maximos"/>\n    </div>\n    <div class="form-group numFolio">\n      <label for="numFolio">Numero Documento</label>\n      <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      <input type="hidden" name="idVolante" value="${idVolante}"/>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
 },{}],21:[function(require,module,exports){
-module.exports = '\n<table class="datosAuditoria">\n  <thead>\n    <tr>\n      <th>Sujeto</th>\n      <th>Rubros</th>\n      <th>Tipo</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
+module.exports = '\n<form class="form-inline" id="confrontasJuridico" method="POST">\n  <div class="group-nota">\n    <div class="form-group notaInformativa">\n      <label for="notaInformativa">nota Informativa</label>\n      <input class="form-control" id="notaInformativa" type="text" placeholder="nota Informativa" name="notaInformativa"/>\n    </div>\n  </div>\n  <div class="group-datos">\n    <div class="form-group nombre">\n      <label for="nombre">Nombre</label>\n      <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombreResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group cargo">\n      <label for="cargo">Cargo</label>\n      <input class="form-control" id="cargo" type="text" placeholder="cargo" required="" pattern="[A-Za-z].{1,49}" name="cargoResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fConfronta">\n      <label for="fConfronta">Fecha Confronta</label>\n      <input class="form-control fechaInput" id="fConfronta" type="text" name="fConfronta" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n    <div class="form-group hConfronta">\n      <label for="hConfronta">Hora de Confronta</label>\n      <input class="form-control" id="hConfronta" type="time" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" name="hConfronta" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fecha">\n      <label for="fecha">Fecha Documento</label>\n      <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n  </div>\n  <div class="group-firmas">\n    <div class="form-group siglas">\n      <label for="siglas">Siglas</label>\n      <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" name="siglas" title="Nombre Incorrecto o Caracteres maximos"/>\n    </div>\n    <div class="form-group numFolio">\n      <label for="numFolio">Numero Documento</label>\n      <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      <input type="hidden" name="idVolante" value="${idVolante}"/>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],22:[function(require,module,exports){
-module.exports = '\n<table class="datosTurnado">\n  <thead>\n    <tr>\n      <th>Irac</th>\n      <th>Confronta</th>\n      <th>Ifa</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
+module.exports = '\n<table class="datosAuditoria">\n  <thead>\n    <tr>\n      <th>Sujeto</th>\n      <th>Rubros</th>\n      <th>Tipo</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
 },{}],23:[function(require,module,exports){
-module.exports = '\n<div class="document-container">\n  <div class="datos">\n    <form id="documentosJur" enctype="multipart/form-data">\n      <div class="inputs">\n        <div class="form-group documento">\n          <label class="form-control-label" for="documento">Numero Documento</label>\n          <input class="form-control" id="documento" type="text" placeholder="Numero Documento" required="required" name="nombre"/>\n        </div>\n        <div class="form-group file">\n          <input type="file" name="anexoDoc" id="imagen" required="required"/>\n          <div><span><i class="fa fa-upload" aria-hidden="true"></i></span><span class="titulo">Selecciona Archivo</span></div>\n        </div>\n      </div>\n      <div class="documento">\n        <div>\n          <p>Documento Asignado</p>\n        </div>\n        <div class="documento-datos">\n          <div class="icon"><img src="../img/file.png"/></div>\n          <div class="nombre">\n            <p>Sin Documentos</p>\n          </div>\n        </div>\n      </div>\n      <div class="form-group send">\n        <input class="btn btn-info" type="submit" value="Guardar"/>\n        <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n      </div>\n    </form>\n  </div>\n</div>';
+module.exports = '\n<table class="datosTurnado">\n  <thead>\n    <tr>\n      <th>Irac</th>\n      <th>Confronta</th>\n      <th>Ifa</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
 },{}],24:[function(require,module,exports){
-module.exports = '\n<div class="firma-container">\n  <input id="idFirma" type="checkbox" name="idPuesto" value=":idPuesto"/>\n  <div class="user"><i class="fa fa-user" aria-hidden="true"></i></div>\n  <div class="datos">\n    <p>:nombre</p>\n    <p>:puesto</p>\n  </div>\n</div>';
+module.exports = '\n<div class="document-container">\n  <div class="datos">\n    <form id="documentosJur" enctype="multipart/form-data">\n      <div class="inputs">\n        <div class="form-group documento">\n          <label class="form-control-label" for="documento">Numero Documento</label>\n          <input class="form-control" id="documento" type="text" placeholder="Numero Documento" required="required" name="nombre"/>\n        </div>\n        <div class="form-group file">\n          <input type="file" name="anexoDoc" id="imagen" required="required"/>\n          <div><span><i class="fa fa-upload" aria-hidden="true"></i></span><span class="titulo">Selecciona Archivo</span></div>\n        </div>\n      </div>\n      <div class="documento">\n        <div>\n          <p>Documento Asignado</p>\n        </div>\n        <div class="documento-datos">\n          <div class="icon"><img src="../img/file.png"/></div>\n          <div class="nombre">\n            <p>Sin Documentos</p>\n          </div>\n        </div>\n      </div>\n      <div class="form-group send">\n        <input class="btn btn-info" type="submit" value="Guardar"/>\n        <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n      </div>\n    </form>\n  </div>\n</div>';
 },{}],25:[function(require,module,exports){
-module.exports = '\n<div class="irac">\n  <div class="irac-datos">\n    <div class="irac-datos-folio">\n      <p class="titulo">Folio:</p>\n      <p class="folio">:folio</p>\n    </div>\n    <div class="irac-datos-numDocumento">\n      <p class="titulo">Numero de Documento</p>\n      <p class="numDocumento">:numDocumento</p>\n    </div>\n    <div class="irac-datos-remitente">\n      <p class="titulo">Remitente</p>\n      <p class="remitente">:remitente</p>\n    </div>\n  </div>\n  <div class="irac-tabla">\n    <table class="observaciones table">\n      <thead>\n        <tr>\n          <th class="idVolante">IdVolante</th>\n          <th>Pagina</th>\n          <th>Parrafo</th>\n          <th>Observacion</th>\n          <th>Estatus</th>\n        </tr>\n      </thead>\n      <tbody>:body</tbody>\n    </table>\n  </div>\n  <div class="irac-botones">\n    <button class="btn btn-info" id="add">Agregar Observacion</button>\n    <button class="btn btn-warning" id="cedula">Generar Cedula</button>\n    <button class="btn btn-warning" id="print">Imprimir Cedula</button>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</div>';
+module.exports = '\n<div class="firma-container">\n  <input id="idFirma" type="checkbox" name="idPuesto" value=":idPuesto"/>\n  <div class="user"><i class="fa fa-user" aria-hidden="true"></i></div>\n  <div class="datos">\n    <p>:nombre</p>\n    <p>:puesto</p>\n  </div>\n</div>';
 },{}],26:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="ObservacionesDoctosJuridico" method="POST">\n  <div class="datos">\n    <div class="form-group pagina">\n      <label for="text">Hoja</label>\n      <input class="form-control" id="pagina" type="text" name="pagina" required=""/>\n      <input type="hidden" name="idVolante" value=":idVolante"/>\n      <input type="hidden" name="cveAuditoria" value=":cveAuditoria"/>\n      <input type="hidden" name="idSubTipoDocumento" value=":idSubDoc:"/>\n    </div>\n    <div class="form-group parrafo">\n      <label for="parrafo">Parrafo</label>\n      <input class="form-control" id="parrafo" type="text" name="parrafo" required=""/>\n    </div>\n  </div>\n  <div class="form-group observacion">\n    <label for="observacion">Observacion</label>\n    <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>\n  </div>\n  <div class="envio">\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </div>\n</form>';
+module.exports = '\n<div class="irac">\n  <div class="irac-datos">\n    <div class="irac-datos-folio">\n      <p class="titulo">Folio:</p>\n      <p class="folio">:folio</p>\n    </div>\n    <div class="irac-datos-numDocumento">\n      <p class="titulo">Numero de Documento</p>\n      <p class="numDocumento">:numDocumento</p>\n    </div>\n    <div class="irac-datos-remitente">\n      <p class="titulo">Remitente</p>\n      <p class="remitente">:remitente</p>\n    </div>\n  </div>\n  <div class="irac-tabla">\n    <table class="observaciones table">\n      <thead>\n        <tr>\n          <th class="idVolante">IdVolante</th>\n          <th>Pagina</th>\n          <th>Parrafo</th>\n          <th>Observacion</th>\n          <th>Estatus</th>\n        </tr>\n      </thead>\n      <tbody>:body</tbody>\n    </table>\n  </div>\n  <div class="irac-botones">\n    <button class="btn btn-info" id="add">Agregar Observacion</button>\n    <button class="btn btn-warning" id="cedula">Generar Cedula</button>\n    <button class="btn btn-warning" id="print">Imprimir Cedula</button>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</div>';
 },{}],27:[function(require,module,exports){
-module.exports = '\n<table class="table  principal" id="table-main">\n  <thead>:headers</thead>\n  <tbody>:body</tbody>\n</table>';
+module.exports = '\n<form class="form-inline" id="ObservacionesDoctosJuridico" method="POST">\n  <div class="datos">\n    <div class="form-group pagina">\n      <label for="text">Hoja</label>\n      <input class="form-control" id="pagina" type="text" name="pagina" required=""/>\n      <input type="hidden" name="idVolante" value=":idVolante"/>\n      <input type="hidden" name="cveAuditoria" value=":cveAuditoria"/>\n      <input type="hidden" name="idSubTipoDocumento" value=":idSubDoc:"/>\n    </div>\n    <div class="form-group parrafo">\n      <label for="parrafo">Parrafo</label>\n      <input class="form-control" id="parrafo" type="text" name="parrafo" required=""/>\n    </div>\n  </div>\n  <div class="form-group observacion">\n    <label for="observacion">Observacion</label>\n    <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>\n  </div>\n  <div class="envio">\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </div>\n</form>';
 },{}],28:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="Volantes" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente"/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<table class="table  principal" id="table-main">\n  <thead>:headers</thead>\n  <tbody>:body</tbody>\n</table>';
 },{}],29:[function(require,module,exports){
+module.exports = '\n<form class="form-inline" id="VolantesDiversos" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente"/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+},{}],30:[function(require,module,exports){
 'use strict';
 
 var rutas = {
@@ -1436,7 +1534,7 @@ var rutas = {
 
 module.exports = rutas;
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1450,7 +1548,7 @@ if (global._babelPolyfill) {
 
 global._babelPolyfill = true;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./shim.js":31,"regenerator/runtime":208}],31:[function(require,module,exports){
+},{"./shim.js":32,"regenerator/runtime":209}],32:[function(require,module,exports){
 require('core-js/modules/es5');
 require('core-js/modules/es6.symbol');
 require('core-js/modules/es6.object.assign');
@@ -1539,7 +1637,7 @@ require('core-js/modules/es6.reflect.prevent-extensions');
 require('core-js/modules/es6.reflect.set');
 require('core-js/modules/es6.reflect.set-prototype-of');
 module.exports = require('core-js/modules/$.core');
-},{"core-js/modules/$.core":48,"core-js/modules/es5":107,"core-js/modules/es6.array.copy-within":108,"core-js/modules/es6.array.fill":109,"core-js/modules/es6.array.find":111,"core-js/modules/es6.array.find-index":110,"core-js/modules/es6.array.from":112,"core-js/modules/es6.array.iterator":113,"core-js/modules/es6.array.of":114,"core-js/modules/es6.array.species":115,"core-js/modules/es6.function.has-instance":116,"core-js/modules/es6.function.name":117,"core-js/modules/es6.map":118,"core-js/modules/es6.math.acosh":119,"core-js/modules/es6.math.asinh":120,"core-js/modules/es6.math.atanh":121,"core-js/modules/es6.math.cbrt":122,"core-js/modules/es6.math.clz32":123,"core-js/modules/es6.math.cosh":124,"core-js/modules/es6.math.expm1":125,"core-js/modules/es6.math.fround":126,"core-js/modules/es6.math.hypot":127,"core-js/modules/es6.math.imul":128,"core-js/modules/es6.math.log10":129,"core-js/modules/es6.math.log1p":130,"core-js/modules/es6.math.log2":131,"core-js/modules/es6.math.sign":132,"core-js/modules/es6.math.sinh":133,"core-js/modules/es6.math.tanh":134,"core-js/modules/es6.math.trunc":135,"core-js/modules/es6.number.constructor":136,"core-js/modules/es6.number.epsilon":137,"core-js/modules/es6.number.is-finite":138,"core-js/modules/es6.number.is-integer":139,"core-js/modules/es6.number.is-nan":140,"core-js/modules/es6.number.is-safe-integer":141,"core-js/modules/es6.number.max-safe-integer":142,"core-js/modules/es6.number.min-safe-integer":143,"core-js/modules/es6.number.parse-float":144,"core-js/modules/es6.number.parse-int":145,"core-js/modules/es6.object.assign":146,"core-js/modules/es6.object.freeze":147,"core-js/modules/es6.object.get-own-property-descriptor":148,"core-js/modules/es6.object.get-own-property-names":149,"core-js/modules/es6.object.get-prototype-of":150,"core-js/modules/es6.object.is":154,"core-js/modules/es6.object.is-extensible":151,"core-js/modules/es6.object.is-frozen":152,"core-js/modules/es6.object.is-sealed":153,"core-js/modules/es6.object.keys":155,"core-js/modules/es6.object.prevent-extensions":156,"core-js/modules/es6.object.seal":157,"core-js/modules/es6.object.set-prototype-of":158,"core-js/modules/es6.object.to-string":159,"core-js/modules/es6.promise":160,"core-js/modules/es6.reflect.apply":161,"core-js/modules/es6.reflect.construct":162,"core-js/modules/es6.reflect.define-property":163,"core-js/modules/es6.reflect.delete-property":164,"core-js/modules/es6.reflect.enumerate":165,"core-js/modules/es6.reflect.get":168,"core-js/modules/es6.reflect.get-own-property-descriptor":166,"core-js/modules/es6.reflect.get-prototype-of":167,"core-js/modules/es6.reflect.has":169,"core-js/modules/es6.reflect.is-extensible":170,"core-js/modules/es6.reflect.own-keys":171,"core-js/modules/es6.reflect.prevent-extensions":172,"core-js/modules/es6.reflect.set":174,"core-js/modules/es6.reflect.set-prototype-of":173,"core-js/modules/es6.regexp.constructor":175,"core-js/modules/es6.regexp.flags":176,"core-js/modules/es6.regexp.match":177,"core-js/modules/es6.regexp.replace":178,"core-js/modules/es6.regexp.search":179,"core-js/modules/es6.regexp.split":180,"core-js/modules/es6.set":181,"core-js/modules/es6.string.code-point-at":182,"core-js/modules/es6.string.ends-with":183,"core-js/modules/es6.string.from-code-point":184,"core-js/modules/es6.string.includes":185,"core-js/modules/es6.string.iterator":186,"core-js/modules/es6.string.raw":187,"core-js/modules/es6.string.repeat":188,"core-js/modules/es6.string.starts-with":189,"core-js/modules/es6.string.trim":190,"core-js/modules/es6.symbol":191,"core-js/modules/es6.weak-map":192,"core-js/modules/es6.weak-set":193}],32:[function(require,module,exports){
+},{"core-js/modules/$.core":49,"core-js/modules/es5":108,"core-js/modules/es6.array.copy-within":109,"core-js/modules/es6.array.fill":110,"core-js/modules/es6.array.find":112,"core-js/modules/es6.array.find-index":111,"core-js/modules/es6.array.from":113,"core-js/modules/es6.array.iterator":114,"core-js/modules/es6.array.of":115,"core-js/modules/es6.array.species":116,"core-js/modules/es6.function.has-instance":117,"core-js/modules/es6.function.name":118,"core-js/modules/es6.map":119,"core-js/modules/es6.math.acosh":120,"core-js/modules/es6.math.asinh":121,"core-js/modules/es6.math.atanh":122,"core-js/modules/es6.math.cbrt":123,"core-js/modules/es6.math.clz32":124,"core-js/modules/es6.math.cosh":125,"core-js/modules/es6.math.expm1":126,"core-js/modules/es6.math.fround":127,"core-js/modules/es6.math.hypot":128,"core-js/modules/es6.math.imul":129,"core-js/modules/es6.math.log10":130,"core-js/modules/es6.math.log1p":131,"core-js/modules/es6.math.log2":132,"core-js/modules/es6.math.sign":133,"core-js/modules/es6.math.sinh":134,"core-js/modules/es6.math.tanh":135,"core-js/modules/es6.math.trunc":136,"core-js/modules/es6.number.constructor":137,"core-js/modules/es6.number.epsilon":138,"core-js/modules/es6.number.is-finite":139,"core-js/modules/es6.number.is-integer":140,"core-js/modules/es6.number.is-nan":141,"core-js/modules/es6.number.is-safe-integer":142,"core-js/modules/es6.number.max-safe-integer":143,"core-js/modules/es6.number.min-safe-integer":144,"core-js/modules/es6.number.parse-float":145,"core-js/modules/es6.number.parse-int":146,"core-js/modules/es6.object.assign":147,"core-js/modules/es6.object.freeze":148,"core-js/modules/es6.object.get-own-property-descriptor":149,"core-js/modules/es6.object.get-own-property-names":150,"core-js/modules/es6.object.get-prototype-of":151,"core-js/modules/es6.object.is":155,"core-js/modules/es6.object.is-extensible":152,"core-js/modules/es6.object.is-frozen":153,"core-js/modules/es6.object.is-sealed":154,"core-js/modules/es6.object.keys":156,"core-js/modules/es6.object.prevent-extensions":157,"core-js/modules/es6.object.seal":158,"core-js/modules/es6.object.set-prototype-of":159,"core-js/modules/es6.object.to-string":160,"core-js/modules/es6.promise":161,"core-js/modules/es6.reflect.apply":162,"core-js/modules/es6.reflect.construct":163,"core-js/modules/es6.reflect.define-property":164,"core-js/modules/es6.reflect.delete-property":165,"core-js/modules/es6.reflect.enumerate":166,"core-js/modules/es6.reflect.get":169,"core-js/modules/es6.reflect.get-own-property-descriptor":167,"core-js/modules/es6.reflect.get-prototype-of":168,"core-js/modules/es6.reflect.has":170,"core-js/modules/es6.reflect.is-extensible":171,"core-js/modules/es6.reflect.own-keys":172,"core-js/modules/es6.reflect.prevent-extensions":173,"core-js/modules/es6.reflect.set":175,"core-js/modules/es6.reflect.set-prototype-of":174,"core-js/modules/es6.regexp.constructor":176,"core-js/modules/es6.regexp.flags":177,"core-js/modules/es6.regexp.match":178,"core-js/modules/es6.regexp.replace":179,"core-js/modules/es6.regexp.search":180,"core-js/modules/es6.regexp.split":181,"core-js/modules/es6.set":182,"core-js/modules/es6.string.code-point-at":183,"core-js/modules/es6.string.ends-with":184,"core-js/modules/es6.string.from-code-point":185,"core-js/modules/es6.string.includes":186,"core-js/modules/es6.string.iterator":187,"core-js/modules/es6.string.raw":188,"core-js/modules/es6.string.repeat":189,"core-js/modules/es6.string.starts-with":190,"core-js/modules/es6.string.trim":191,"core-js/modules/es6.symbol":192,"core-js/modules/es6.weak-map":193,"core-js/modules/es6.weak-set":194}],33:[function(require,module,exports){
 var document = require('global/document')
 var hyperx = require('hyperx')
 var onload = require('on-load')
@@ -1694,7 +1792,7 @@ module.exports = hyperx(belCreateElement, {comments: true})
 module.exports.default = module.exports
 module.exports.createElement = belCreateElement
 
-},{"global/document":194,"hyperx":197,"on-load":205}],33:[function(require,module,exports){
+},{"global/document":195,"hyperx":198,"on-load":206}],34:[function(require,module,exports){
 (function (process,global){
 /* @preserve
  * The MIT License (MIT)
@@ -7320,9 +7418,9 @@ module.exports = ret;
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":35}],34:[function(require,module,exports){
+},{"_process":36}],35:[function(require,module,exports){
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -7508,7 +7606,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /*
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
@@ -8591,7 +8689,7 @@ CKEDITOR.tools.removeFunction(this._.frameLoadedHandler);f&&f.getParent()?(f.cle
 CKEDITOR.config.skin="moono-lisa",function(){var a=function(a,b){var c=CKEDITOR.getUrl("plugins/"+b);a=a.split(",");for(var e=0;e<a.length;e++)CKEDITOR.skin.icons[a[e]]={path:c,offset:-a[++e],bgsize:a[++e]}};CKEDITOR.env.hidpi?a("about,0,,bold,24,,italic,48,,strike,72,,subscript,96,,superscript,120,,underline,144,,bidiltr,168,,bidirtl,192,,blockquote,216,,copy-rtl,240,,copy,264,,cut-rtl,288,,cut,312,,paste-rtl,336,,paste,360,,codesnippet,384,,bgcolor,408,,textcolor,432,,copyformatting,456,,creatediv,480,,docprops-rtl,504,,docprops,528,,embed,552,,embedsemantic,576,,find-rtl,600,,find,624,,replace,648,,flash,672,,button,696,,checkbox,720,,form,744,,hiddenfield,768,,imagebutton,792,,radio,816,,select-rtl,840,,select,864,,textarea-rtl,888,,textarea,912,,textfield-rtl,936,,textfield,960,,horizontalrule,984,,iframe,1008,,image,1032,,indent-rtl,1056,,indent,1080,,outdent-rtl,1104,,outdent,1128,,justifyblock,1152,,justifycenter,1176,,justifyleft,1200,,justifyright,1224,,language,1248,,anchor-rtl,1272,,anchor,1296,,link,1320,,unlink,1344,,bulletedlist-rtl,1368,,bulletedlist,1392,,numberedlist-rtl,1416,,numberedlist,1440,,mathjax,1464,,maximize,1488,,newpage-rtl,1512,,newpage,1536,,pagebreak-rtl,1560,,pagebreak,1584,,pastefromword-rtl,1608,,pastefromword,1632,,pastetext-rtl,1656,,pastetext,1680,,placeholder,1704,,preview-rtl,1728,,preview,1752,,print,1776,,removeformat,1800,,save,1824,,scayt,1848,,selectall,1872,,showblocks-rtl,1896,,showblocks,1920,,smiley,1944,,source-rtl,1968,,source,1992,,sourcedialog-rtl,2016,,sourcedialog,2040,,specialchar,2064,,table,2088,,templates-rtl,2112,,templates,2136,,uicolor,2160,,redo-rtl,2184,,redo,2208,,undo-rtl,2232,,undo,2256,,simplebox,4560,auto,spellchecker,2304,",
 "icons_hidpi.png"):a("about,0,auto,bold,24,auto,italic,48,auto,strike,72,auto,subscript,96,auto,superscript,120,auto,underline,144,auto,bidiltr,168,auto,bidirtl,192,auto,blockquote,216,auto,copy-rtl,240,auto,copy,264,auto,cut-rtl,288,auto,cut,312,auto,paste-rtl,336,auto,paste,360,auto,codesnippet,384,auto,bgcolor,408,auto,textcolor,432,auto,copyformatting,456,auto,creatediv,480,auto,docprops-rtl,504,auto,docprops,528,auto,embed,552,auto,embedsemantic,576,auto,find-rtl,600,auto,find,624,auto,replace,648,auto,flash,672,auto,button,696,auto,checkbox,720,auto,form,744,auto,hiddenfield,768,auto,imagebutton,792,auto,radio,816,auto,select-rtl,840,auto,select,864,auto,textarea-rtl,888,auto,textarea,912,auto,textfield-rtl,936,auto,textfield,960,auto,horizontalrule,984,auto,iframe,1008,auto,image,1032,auto,indent-rtl,1056,auto,indent,1080,auto,outdent-rtl,1104,auto,outdent,1128,auto,justifyblock,1152,auto,justifycenter,1176,auto,justifyleft,1200,auto,justifyright,1224,auto,language,1248,auto,anchor-rtl,1272,auto,anchor,1296,auto,link,1320,auto,unlink,1344,auto,bulletedlist-rtl,1368,auto,bulletedlist,1392,auto,numberedlist-rtl,1416,auto,numberedlist,1440,auto,mathjax,1464,auto,maximize,1488,auto,newpage-rtl,1512,auto,newpage,1536,auto,pagebreak-rtl,1560,auto,pagebreak,1584,auto,pastefromword-rtl,1608,auto,pastefromword,1632,auto,pastetext-rtl,1656,auto,pastetext,1680,auto,placeholder,1704,auto,preview-rtl,1728,auto,preview,1752,auto,print,1776,auto,removeformat,1800,auto,save,1824,auto,scayt,1848,auto,selectall,1872,auto,showblocks-rtl,1896,auto,showblocks,1920,auto,smiley,1944,auto,source-rtl,1968,auto,source,1992,auto,sourcedialog-rtl,2016,auto,sourcedialog,2040,auto,specialchar,2064,auto,table,2088,auto,templates-rtl,2112,auto,templates,2136,auto,uicolor,2160,auto,redo-rtl,2184,auto,redo,2208,auto,undo-rtl,2232,auto,undo,2256,auto,simplebox,2280,auto,spellchecker,2304,auto",
 "icons.png")}())})();
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 
 /**
  * slice() reference.
@@ -8830,18 +8928,18 @@ function isObject(val) {
   return Object == val.constructor;
 }
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = function(it){
   if(typeof it != 'function')throw TypeError(it + ' is not a function!');
   return it;
 };
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var isObject = require('./$.is-object');
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
-},{"./$.is-object":68}],40:[function(require,module,exports){
+},{"./$.is-object":69}],41:[function(require,module,exports){
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = require('./$.to-iobject')
@@ -8863,7 +8961,7 @@ module.exports = function(IS_INCLUDES){
     } return !IS_INCLUDES && -1;
   };
 };
-},{"./$.to-index":98,"./$.to-iobject":100,"./$.to-length":101}],41:[function(require,module,exports){
+},{"./$.to-index":99,"./$.to-iobject":101,"./$.to-length":102}],42:[function(require,module,exports){
 // 0 -> Array#forEach
 // 1 -> Array#map
 // 2 -> Array#filter
@@ -8906,7 +9004,7 @@ module.exports = function(TYPE){
     return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
   };
 };
-},{"./$.ctx":49,"./$.iobject":65,"./$.to-length":101,"./$.to-object":102}],42:[function(require,module,exports){
+},{"./$.ctx":50,"./$.iobject":66,"./$.to-length":102,"./$.to-object":103}],43:[function(require,module,exports){
 // 19.1.2.1 Object.assign(target, source, ...)
 var toObject = require('./$.to-object')
   , IObject  = require('./$.iobject')
@@ -8927,7 +9025,7 @@ module.exports = Object.assign || function assign(target, source){
   }
   return T;
 };
-},{"./$.enum-keys":53,"./$.iobject":65,"./$.to-object":102}],43:[function(require,module,exports){
+},{"./$.enum-keys":54,"./$.iobject":66,"./$.to-object":103}],44:[function(require,module,exports){
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = require('./$.cof')
   , TAG = require('./$.wks')('toStringTag')
@@ -8944,13 +9042,13 @@ module.exports = function(it){
     // ES3 arguments fallback
     : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
 };
-},{"./$.cof":44,"./$.wks":105}],44:[function(require,module,exports){
+},{"./$.cof":45,"./$.wks":106}],45:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 'use strict';
 var $            = require('./$')
   , hide         = require('./$.hide')
@@ -9109,7 +9207,7 @@ module.exports = {
     species(require('./$.core')[NAME]); // for wrapper
   }
 };
-},{"./$":76,"./$.core":48,"./$.ctx":49,"./$.defined":51,"./$.for-of":58,"./$.has":61,"./$.hide":62,"./$.is-object":68,"./$.iter-define":72,"./$.iter-step":74,"./$.mix":80,"./$.species":89,"./$.strict-new":90,"./$.support-desc":95,"./$.uid":103}],46:[function(require,module,exports){
+},{"./$":77,"./$.core":49,"./$.ctx":50,"./$.defined":52,"./$.for-of":59,"./$.has":62,"./$.hide":63,"./$.is-object":69,"./$.iter-define":73,"./$.iter-step":75,"./$.mix":81,"./$.species":90,"./$.strict-new":91,"./$.support-desc":96,"./$.uid":104}],47:[function(require,module,exports){
 'use strict';
 var hide         = require('./$.hide')
   , anObject     = require('./$.an-object')
@@ -9195,7 +9293,7 @@ module.exports = {
   frozenStore: frozenStore,
   WEAK: WEAK
 };
-},{"./$.an-object":39,"./$.array-methods":41,"./$.for-of":58,"./$.has":61,"./$.hide":62,"./$.is-object":68,"./$.mix":80,"./$.strict-new":90,"./$.uid":103}],47:[function(require,module,exports){
+},{"./$.an-object":40,"./$.array-methods":42,"./$.for-of":59,"./$.has":62,"./$.hide":63,"./$.is-object":69,"./$.mix":81,"./$.strict-new":91,"./$.uid":104}],48:[function(require,module,exports){
 'use strict';
 var global     = require('./$.global')
   , $def       = require('./$.def')
@@ -9262,10 +9360,10 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 
   return C;
 };
-},{"./$.def":50,"./$.for-of":58,"./$.global":60,"./$.iter-buggy":69,"./$.iter-detect":73,"./$.mix":80,"./$.redef":84,"./$.strict-new":90,"./$.tag":96}],48:[function(require,module,exports){
+},{"./$.def":51,"./$.for-of":59,"./$.global":61,"./$.iter-buggy":70,"./$.iter-detect":74,"./$.mix":81,"./$.redef":85,"./$.strict-new":91,"./$.tag":97}],49:[function(require,module,exports){
 var core = module.exports = {};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 // optional / simple context binding
 var aFunction = require('./$.a-function');
 module.exports = function(fn, that, length){
@@ -9285,7 +9383,7 @@ module.exports = function(fn, that, length){
       return fn.apply(that, arguments);
     };
 };
-},{"./$.a-function":38}],50:[function(require,module,exports){
+},{"./$.a-function":39}],51:[function(require,module,exports){
 var global     = require('./$.global')
   , core       = require('./$.core')
   , hide       = require('./$.hide')
@@ -9328,13 +9426,13 @@ $def.P = 8;  // proto
 $def.B = 16; // bind
 $def.W = 32; // wrap
 module.exports = $def;
-},{"./$.core":48,"./$.global":60,"./$.hide":62,"./$.redef":84}],51:[function(require,module,exports){
+},{"./$.core":49,"./$.global":61,"./$.hide":63,"./$.redef":85}],52:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var isObject = require('./$.is-object')
   , document = require('./$.global').document
   // in old IE typeof document.createElement is 'object'
@@ -9342,7 +9440,7 @@ var isObject = require('./$.is-object')
 module.exports = function(it){
   return is ? document.createElement(it) : {};
 };
-},{"./$.global":60,"./$.is-object":68}],53:[function(require,module,exports){
+},{"./$.global":61,"./$.is-object":69}],54:[function(require,module,exports){
 // all enumerable object keys, includes symbols
 var $ = require('./$');
 module.exports = function(it){
@@ -9357,12 +9455,12 @@ module.exports = function(it){
   }
   return keys;
 };
-},{"./$":76}],54:[function(require,module,exports){
+},{"./$":77}],55:[function(require,module,exports){
 // 20.2.2.14 Math.expm1(x)
 module.exports = Math.expm1 || function expm1(x){
   return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
 };
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -9370,7 +9468,7 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 'use strict';
 module.exports = function(KEY, length, exec){
   var defined  = require('./$.defined')
@@ -9392,7 +9490,7 @@ module.exports = function(KEY, length, exec){
     );
   }
 };
-},{"./$.defined":51,"./$.fails":55,"./$.hide":62,"./$.redef":84,"./$.wks":105}],57:[function(require,module,exports){
+},{"./$.defined":52,"./$.fails":56,"./$.hide":63,"./$.redef":85,"./$.wks":106}],58:[function(require,module,exports){
 'use strict';
 // 21.2.5.3 get RegExp.prototype.flags
 var anObject = require('./$.an-object');
@@ -9406,7 +9504,7 @@ module.exports = function(){
   if(that.sticky)result += 'y';
   return result;
 };
-},{"./$.an-object":39}],58:[function(require,module,exports){
+},{"./$.an-object":40}],59:[function(require,module,exports){
 var ctx         = require('./$.ctx')
   , call        = require('./$.iter-call')
   , isArrayIter = require('./$.is-array-iter')
@@ -9426,7 +9524,7 @@ module.exports = function(iterable, entries, fn, that){
     call(iterator, f, step.value, entries);
   }
 };
-},{"./$.an-object":39,"./$.ctx":49,"./$.is-array-iter":66,"./$.iter-call":70,"./$.to-length":101,"./core.get-iterator-method":106}],59:[function(require,module,exports){
+},{"./$.an-object":40,"./$.ctx":50,"./$.is-array-iter":67,"./$.iter-call":71,"./$.to-length":102,"./core.get-iterator-method":107}],60:[function(require,module,exports){
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toString  = {}.toString
   , toIObject = require('./$.to-iobject')
@@ -9447,16 +9545,16 @@ module.exports.get = function getOwnPropertyNames(it){
   if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
   return getNames(toIObject(it));
 };
-},{"./$":76,"./$.to-iobject":100}],60:[function(require,module,exports){
+},{"./$":77,"./$.to-iobject":101}],61:[function(require,module,exports){
 var global = typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 module.exports = global;
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var hasOwnProperty = {}.hasOwnProperty;
 module.exports = function(it, key){
   return hasOwnProperty.call(it, key);
 };
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var $          = require('./$')
   , createDesc = require('./$.property-desc');
 module.exports = require('./$.support-desc') ? function(object, key, value){
@@ -9465,9 +9563,9 @@ module.exports = require('./$.support-desc') ? function(object, key, value){
   object[key] = value;
   return object;
 };
-},{"./$":76,"./$.property-desc":83,"./$.support-desc":95}],63:[function(require,module,exports){
+},{"./$":77,"./$.property-desc":84,"./$.support-desc":96}],64:[function(require,module,exports){
 module.exports = require('./$.global').document && document.documentElement;
-},{"./$.global":60}],64:[function(require,module,exports){
+},{"./$.global":61}],65:[function(require,module,exports){
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
 module.exports = function(fn, args, that){
   var un = that === undefined;
@@ -9484,35 +9582,35 @@ module.exports = function(fn, args, that){
                       : fn.call(that, args[0], args[1], args[2], args[3]);
   } return              fn.apply(that, args);
 };
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 // indexed object, fallback for non-array-like ES3 strings
 var cof = require('./$.cof');
 module.exports = 0 in Object('z') ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-},{"./$.cof":44}],66:[function(require,module,exports){
+},{"./$.cof":45}],67:[function(require,module,exports){
 // check on default Array iterator
 var Iterators = require('./$.iterators')
   , ITERATOR  = require('./$.wks')('iterator');
 module.exports = function(it){
   return (Iterators.Array || Array.prototype[ITERATOR]) === it;
 };
-},{"./$.iterators":75,"./$.wks":105}],67:[function(require,module,exports){
+},{"./$.iterators":76,"./$.wks":106}],68:[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var isObject = require('./$.is-object')
   , floor    = Math.floor;
 module.exports = function isInteger(it){
   return !isObject(it) && isFinite(it) && floor(it) === it;
 };
-},{"./$.is-object":68}],68:[function(require,module,exports){
+},{"./$.is-object":69}],69:[function(require,module,exports){
 // http://jsperf.com/core-js-isobject
 module.exports = function(it){
   return it !== null && (typeof it == 'object' || typeof it == 'function');
 };
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 // Safari has buggy iterators w/o `next`
 module.exports = 'keys' in [] && !('next' in [].keys());
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 // call something on iterator step with safe closing on error
 var anObject = require('./$.an-object');
 module.exports = function(iterator, fn, value, entries){
@@ -9525,7 +9623,7 @@ module.exports = function(iterator, fn, value, entries){
     throw e;
   }
 };
-},{"./$.an-object":39}],71:[function(require,module,exports){
+},{"./$.an-object":40}],72:[function(require,module,exports){
 'use strict';
 var $ = require('./$')
   , IteratorPrototype = {};
@@ -9537,7 +9635,7 @@ module.exports = function(Constructor, NAME, next){
   Constructor.prototype = $.create(IteratorPrototype, {next: require('./$.property-desc')(1,next)});
   require('./$.tag')(Constructor, NAME + ' Iterator');
 };
-},{"./$":76,"./$.hide":62,"./$.property-desc":83,"./$.tag":96,"./$.wks":105}],72:[function(require,module,exports){
+},{"./$":77,"./$.hide":63,"./$.property-desc":84,"./$.tag":97,"./$.wks":106}],73:[function(require,module,exports){
 'use strict';
 var LIBRARY         = require('./$.library')
   , $def            = require('./$.def')
@@ -9587,7 +9685,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE)
     } else $def($def.P + $def.F * require('./$.iter-buggy'), NAME, methods);
   }
 };
-},{"./$":76,"./$.def":50,"./$.has":61,"./$.hide":62,"./$.iter-buggy":69,"./$.iter-create":71,"./$.iterators":75,"./$.library":78,"./$.redef":84,"./$.tag":96,"./$.wks":105}],73:[function(require,module,exports){
+},{"./$":77,"./$.def":51,"./$.has":62,"./$.hide":63,"./$.iter-buggy":70,"./$.iter-create":72,"./$.iterators":76,"./$.library":79,"./$.redef":85,"./$.tag":97,"./$.wks":106}],74:[function(require,module,exports){
 var SYMBOL_ITERATOR = require('./$.wks')('iterator')
   , SAFE_CLOSING    = false;
 try {
@@ -9607,13 +9705,13 @@ module.exports = function(exec){
   } catch(e){ /* empty */ }
   return safe;
 };
-},{"./$.wks":105}],74:[function(require,module,exports){
+},{"./$.wks":106}],75:[function(require,module,exports){
 module.exports = function(done, value){
   return {value: value, done: !!done};
 };
-},{}],75:[function(require,module,exports){
-module.exports = {};
 },{}],76:[function(require,module,exports){
+module.exports = {};
+},{}],77:[function(require,module,exports){
 var $Object = Object;
 module.exports = {
   create:     $Object.create,
@@ -9627,7 +9725,7 @@ module.exports = {
   getSymbols: $Object.getOwnPropertySymbols,
   each:       [].forEach
 };
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 var $         = require('./$')
   , toIObject = require('./$.to-iobject');
 module.exports = function(object, el){
@@ -9638,20 +9736,20 @@ module.exports = function(object, el){
     , key;
   while(length > index)if(O[key = keys[index++]] === el)return key;
 };
-},{"./$":76,"./$.to-iobject":100}],78:[function(require,module,exports){
+},{"./$":77,"./$.to-iobject":101}],79:[function(require,module,exports){
 module.exports = false;
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 // 20.2.2.20 Math.log1p(x)
 module.exports = Math.log1p || function log1p(x){
   return (x = +x) > -1e-8 && x < 1e-8 ? x - x * x / 2 : Math.log(1 + x);
 };
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var $redef = require('./$.redef');
 module.exports = function(target, src){
   for(var key in src)$redef(target, key, src[key]);
   return target;
 };
-},{"./$.redef":84}],81:[function(require,module,exports){
+},{"./$.redef":85}],82:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
 module.exports = function(KEY, exec){
   var $def = require('./$.def')
@@ -9660,7 +9758,7 @@ module.exports = function(KEY, exec){
   exp[KEY] = exec(fn);
   $def($def.S + $def.F * require('./$.fails')(function(){ fn(1); }), 'Object', exp);
 };
-},{"./$.core":48,"./$.def":50,"./$.fails":55}],82:[function(require,module,exports){
+},{"./$.core":49,"./$.def":51,"./$.fails":56}],83:[function(require,module,exports){
 // all object keys, includes non-enumerable and symbols
 var $        = require('./$')
   , anObject = require('./$.an-object');
@@ -9669,7 +9767,7 @@ module.exports = function ownKeys(it){
     , getSymbols = $.getSymbols;
   return getSymbols ? keys.concat(getSymbols(it)) : keys;
 };
-},{"./$":76,"./$.an-object":39}],83:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40}],84:[function(require,module,exports){
 module.exports = function(bitmap, value){
   return {
     enumerable  : !(bitmap & 1),
@@ -9678,7 +9776,7 @@ module.exports = function(bitmap, value){
     value       : value
   };
 };
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 // add fake Function#toString
 // for correct work wrapped methods / constructors with methods like LoDash isNative
 var global    = require('./$.global')
@@ -9706,11 +9804,11 @@ require('./$.core').inspectSource = function(it){
 })(Function.prototype, TO_STRING, function toString(){
   return typeof this == 'function' && this[SRC] || $toString.call(this);
 });
-},{"./$.core":48,"./$.global":60,"./$.hide":62,"./$.uid":103}],85:[function(require,module,exports){
+},{"./$.core":49,"./$.global":61,"./$.hide":63,"./$.uid":104}],86:[function(require,module,exports){
 module.exports = Object.is || function is(x, y){
   return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
 };
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var getDesc  = require('./$').getDesc
@@ -9737,19 +9835,19 @@ module.exports = {
     : undefined),
   check: check
 };
-},{"./$":76,"./$.an-object":39,"./$.ctx":49,"./$.is-object":68}],87:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.ctx":50,"./$.is-object":69}],88:[function(require,module,exports){
 var global = require('./$.global')
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
   return store[key] || (store[key] = {});
 };
-},{"./$.global":60}],88:[function(require,module,exports){
+},{"./$.global":61}],89:[function(require,module,exports){
 // 20.2.2.28 Math.sign(x)
 module.exports = Math.sign || function sign(x){
   return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
 };
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 'use strict';
 var $       = require('./$')
   , SPECIES = require('./$.wks')('species');
@@ -9759,12 +9857,12 @@ module.exports = function(C){
     get: function(){ return this; }
   });
 };
-},{"./$":76,"./$.support-desc":95,"./$.wks":105}],90:[function(require,module,exports){
+},{"./$":77,"./$.support-desc":96,"./$.wks":106}],91:[function(require,module,exports){
 module.exports = function(it, Constructor, name){
   if(!(it instanceof Constructor))throw TypeError(name + ": use the 'new' operator!");
   return it;
 };
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 // true  -> String#at
 // false -> String#codePointAt
 var toInteger = require('./$.to-integer')
@@ -9783,7 +9881,7 @@ module.exports = function(TO_STRING){
         : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
   };
 };
-},{"./$.defined":51,"./$.to-integer":99}],92:[function(require,module,exports){
+},{"./$.defined":52,"./$.to-integer":100}],93:[function(require,module,exports){
 // helper for String#{startsWith, endsWith, includes}
 var defined = require('./$.defined')
   , cof     = require('./$.cof');
@@ -9792,7 +9890,7 @@ module.exports = function(that, searchString, NAME){
   if(cof(searchString) == 'RegExp')throw TypeError('String#' + NAME + " doesn't accept regex!");
   return String(defined(that));
 };
-},{"./$.cof":44,"./$.defined":51}],93:[function(require,module,exports){
+},{"./$.cof":45,"./$.defined":52}],94:[function(require,module,exports){
 'use strict';
 var toInteger = require('./$.to-integer')
   , defined   = require('./$.defined');
@@ -9805,7 +9903,7 @@ module.exports = function repeat(count){
   for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
   return res;
 };
-},{"./$.defined":51,"./$.to-integer":99}],94:[function(require,module,exports){
+},{"./$.defined":52,"./$.to-integer":100}],95:[function(require,module,exports){
 // 1 -> String#trimLeft
 // 2 -> String#trimRight
 // 3 -> String#trim
@@ -9832,12 +9930,12 @@ module.exports = function(KEY, exec){
     return !!spaces[KEY]() || non[KEY]() != non;
   }), 'String', exp);
 };
-},{"./$.def":50,"./$.defined":51,"./$.fails":55}],95:[function(require,module,exports){
+},{"./$.def":51,"./$.defined":52,"./$.fails":56}],96:[function(require,module,exports){
 // Thank's IE8 for his funny defineProperty
 module.exports = !require('./$.fails')(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
-},{"./$.fails":55}],96:[function(require,module,exports){
+},{"./$.fails":56}],97:[function(require,module,exports){
 var has  = require('./$.has')
   , hide = require('./$.hide')
   , TAG  = require('./$.wks')('toStringTag');
@@ -9845,7 +9943,7 @@ var has  = require('./$.has')
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))hide(it, TAG, tag);
 };
-},{"./$.has":61,"./$.hide":62,"./$.wks":105}],97:[function(require,module,exports){
+},{"./$.has":62,"./$.hide":63,"./$.wks":106}],98:[function(require,module,exports){
 'use strict';
 var ctx                = require('./$.ctx')
   , invoke             = require('./$.invoke')
@@ -9922,7 +10020,7 @@ module.exports = {
   set:   setTask,
   clear: clearTask
 };
-},{"./$.cof":44,"./$.ctx":49,"./$.dom-create":52,"./$.global":60,"./$.html":63,"./$.invoke":64}],98:[function(require,module,exports){
+},{"./$.cof":45,"./$.ctx":50,"./$.dom-create":53,"./$.global":61,"./$.html":64,"./$.invoke":65}],99:[function(require,module,exports){
 var toInteger = require('./$.to-integer')
   , max       = Math.max
   , min       = Math.min;
@@ -9930,61 +10028,61 @@ module.exports = function(index, length){
   index = toInteger(index);
   return index < 0 ? max(index + length, 0) : min(index, length);
 };
-},{"./$.to-integer":99}],99:[function(require,module,exports){
+},{"./$.to-integer":100}],100:[function(require,module,exports){
 // 7.1.4 ToInteger
 var ceil  = Math.ceil
   , floor = Math.floor;
 module.exports = function(it){
   return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
 };
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./$.iobject')
   , defined = require('./$.defined');
 module.exports = function(it){
   return IObject(defined(it));
 };
-},{"./$.defined":51,"./$.iobject":65}],101:[function(require,module,exports){
+},{"./$.defined":52,"./$.iobject":66}],102:[function(require,module,exports){
 // 7.1.15 ToLength
 var toInteger = require('./$.to-integer')
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
-},{"./$.to-integer":99}],102:[function(require,module,exports){
+},{"./$.to-integer":100}],103:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./$.defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./$.defined":51}],103:[function(require,module,exports){
+},{"./$.defined":52}],104:[function(require,module,exports){
 var id = 0
   , px = Math.random();
 module.exports = function(key){
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 // 22.1.3.31 Array.prototype[@@unscopables]
 var UNSCOPABLES = require('./$.wks')('unscopables');
 if(!(UNSCOPABLES in []))require('./$.hide')(Array.prototype, UNSCOPABLES, {});
 module.exports = function(key){
   [][UNSCOPABLES][key] = true;
 };
-},{"./$.hide":62,"./$.wks":105}],105:[function(require,module,exports){
+},{"./$.hide":63,"./$.wks":106}],106:[function(require,module,exports){
 var store  = require('./$.shared')('wks')
   , Symbol = require('./$.global').Symbol;
 module.exports = function(name){
   return store[name] || (store[name] =
     Symbol && Symbol[name] || (Symbol || require('./$.uid'))('Symbol.' + name));
 };
-},{"./$.global":60,"./$.shared":87,"./$.uid":103}],106:[function(require,module,exports){
+},{"./$.global":61,"./$.shared":88,"./$.uid":104}],107:[function(require,module,exports){
 var classof   = require('./$.classof')
   , ITERATOR  = require('./$.wks')('iterator')
   , Iterators = require('./$.iterators');
 module.exports = require('./$.core').getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
 };
-},{"./$.classof":43,"./$.core":48,"./$.iterators":75,"./$.wks":105}],107:[function(require,module,exports){
+},{"./$.classof":44,"./$.core":49,"./$.iterators":76,"./$.wks":106}],108:[function(require,module,exports){
 'use strict';
 var $                = require('./$')
   , SUPPORT_DESC     = require('./$.support-desc')
@@ -10260,7 +10358,7 @@ $def($def.P + $def.F * brokenDate, 'Date', {
       ':' + lz(d.getUTCSeconds()) + '.' + (m > 99 ? m : '0' + lz(m)) + 'Z';
   }
 });
-},{"./$":76,"./$.a-function":38,"./$.an-object":39,"./$.array-includes":40,"./$.array-methods":41,"./$.cof":44,"./$.def":50,"./$.dom-create":52,"./$.fails":55,"./$.has":61,"./$.html":63,"./$.invoke":64,"./$.iobject":65,"./$.is-object":68,"./$.property-desc":83,"./$.support-desc":95,"./$.to-index":98,"./$.to-integer":99,"./$.to-iobject":100,"./$.to-length":101,"./$.to-object":102,"./$.uid":103}],108:[function(require,module,exports){
+},{"./$":77,"./$.a-function":39,"./$.an-object":40,"./$.array-includes":41,"./$.array-methods":42,"./$.cof":45,"./$.def":51,"./$.dom-create":53,"./$.fails":56,"./$.has":62,"./$.html":64,"./$.invoke":65,"./$.iobject":66,"./$.is-object":69,"./$.property-desc":84,"./$.support-desc":96,"./$.to-index":99,"./$.to-integer":100,"./$.to-iobject":101,"./$.to-length":102,"./$.to-object":103,"./$.uid":104}],109:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toObject = require('./$.to-object')
@@ -10291,7 +10389,7 @@ $def($def.P, 'Array', {
   }
 });
 require('./$.unscope')('copyWithin');
-},{"./$.def":50,"./$.to-index":98,"./$.to-length":101,"./$.to-object":102,"./$.unscope":104}],109:[function(require,module,exports){
+},{"./$.def":51,"./$.to-index":99,"./$.to-length":102,"./$.to-object":103,"./$.unscope":105}],110:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toObject = require('./$.to-object')
@@ -10310,7 +10408,7 @@ $def($def.P, 'Array', {
   }
 });
 require('./$.unscope')('fill');
-},{"./$.def":50,"./$.to-index":98,"./$.to-length":101,"./$.to-object":102,"./$.unscope":104}],110:[function(require,module,exports){
+},{"./$.def":51,"./$.to-index":99,"./$.to-length":102,"./$.to-object":103,"./$.unscope":105}],111:[function(require,module,exports){
 'use strict';
 // 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 var KEY    = 'findIndex'
@@ -10325,7 +10423,7 @@ $def($def.P + $def.F * forced, 'Array', {
   }
 });
 require('./$.unscope')(KEY);
-},{"./$.array-methods":41,"./$.def":50,"./$.unscope":104}],111:[function(require,module,exports){
+},{"./$.array-methods":42,"./$.def":51,"./$.unscope":105}],112:[function(require,module,exports){
 'use strict';
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 var KEY    = 'find'
@@ -10340,7 +10438,7 @@ $def($def.P + $def.F * forced, 'Array', {
   }
 });
 require('./$.unscope')(KEY);
-},{"./$.array-methods":41,"./$.def":50,"./$.unscope":104}],112:[function(require,module,exports){
+},{"./$.array-methods":42,"./$.def":51,"./$.unscope":105}],113:[function(require,module,exports){
 'use strict';
 var ctx         = require('./$.ctx')
   , $def        = require('./$.def')
@@ -10374,7 +10472,7 @@ $def($def.S + $def.F * !require('./$.iter-detect')(function(iter){ Array.from(it
     return result;
   }
 });
-},{"./$.ctx":49,"./$.def":50,"./$.is-array-iter":66,"./$.iter-call":70,"./$.iter-detect":73,"./$.to-length":101,"./$.to-object":102,"./core.get-iterator-method":106}],113:[function(require,module,exports){
+},{"./$.ctx":50,"./$.def":51,"./$.is-array-iter":67,"./$.iter-call":71,"./$.iter-detect":74,"./$.to-length":102,"./$.to-object":103,"./core.get-iterator-method":107}],114:[function(require,module,exports){
 'use strict';
 var setUnscope = require('./$.unscope')
   , step       = require('./$.iter-step')
@@ -10409,7 +10507,7 @@ Iterators.Arguments = Iterators.Array;
 setUnscope('keys');
 setUnscope('values');
 setUnscope('entries');
-},{"./$.iter-define":72,"./$.iter-step":74,"./$.iterators":75,"./$.to-iobject":100,"./$.unscope":104}],114:[function(require,module,exports){
+},{"./$.iter-define":73,"./$.iter-step":75,"./$.iterators":76,"./$.to-iobject":101,"./$.unscope":105}],115:[function(require,module,exports){
 'use strict';
 var $def = require('./$.def');
 $def($def.S, 'Array', {
@@ -10423,9 +10521,9 @@ $def($def.S, 'Array', {
     return result;
   }
 });
-},{"./$.def":50}],115:[function(require,module,exports){
+},{"./$.def":51}],116:[function(require,module,exports){
 require('./$.species')(Array);
-},{"./$.species":89}],116:[function(require,module,exports){
+},{"./$.species":90}],117:[function(require,module,exports){
 'use strict';
 var $             = require('./$')
   , isObject      = require('./$.is-object')
@@ -10439,7 +10537,7 @@ if(!(HAS_INSTANCE in FunctionProto))$.setDesc(FunctionProto, HAS_INSTANCE, {valu
   while(O = $.getProto(O))if(this.prototype === O)return true;
   return false;
 }});
-},{"./$":76,"./$.is-object":68,"./$.wks":105}],117:[function(require,module,exports){
+},{"./$":77,"./$.is-object":69,"./$.wks":106}],118:[function(require,module,exports){
 var setDesc    = require('./$').setDesc
   , createDesc = require('./$.property-desc')
   , has        = require('./$.has')
@@ -10456,7 +10554,7 @@ NAME in FProto || require('./$.support-desc') && setDesc(FProto, NAME, {
     return name;
   }
 });
-},{"./$":76,"./$.has":61,"./$.property-desc":83,"./$.support-desc":95}],118:[function(require,module,exports){
+},{"./$":77,"./$.has":62,"./$.property-desc":84,"./$.support-desc":96}],119:[function(require,module,exports){
 'use strict';
 var strong = require('./$.collection-strong');
 
@@ -10474,7 +10572,7 @@ require('./$.collection')('Map', function(get){
     return strong.def(this, key === 0 ? 0 : key, value);
   }
 }, strong, true);
-},{"./$.collection":47,"./$.collection-strong":45}],119:[function(require,module,exports){
+},{"./$.collection":48,"./$.collection-strong":46}],120:[function(require,module,exports){
 // 20.2.2.3 Math.acosh(x)
 var $def   = require('./$.def')
   , log1p  = require('./$.log1p')
@@ -10489,7 +10587,7 @@ $def($def.S + $def.F * !($acosh && Math.floor($acosh(Number.MAX_VALUE)) == 710),
       : log1p(x - 1 + sqrt(x - 1) * sqrt(x + 1));
   }
 });
-},{"./$.def":50,"./$.log1p":79}],120:[function(require,module,exports){
+},{"./$.def":51,"./$.log1p":80}],121:[function(require,module,exports){
 // 20.2.2.5 Math.asinh(x)
 var $def = require('./$.def');
 
@@ -10498,7 +10596,7 @@ function asinh(x){
 }
 
 $def($def.S, 'Math', {asinh: asinh});
-},{"./$.def":50}],121:[function(require,module,exports){
+},{"./$.def":51}],122:[function(require,module,exports){
 // 20.2.2.7 Math.atanh(x)
 var $def = require('./$.def');
 
@@ -10507,7 +10605,7 @@ $def($def.S, 'Math', {
     return (x = +x) == 0 ? x : Math.log((1 + x) / (1 - x)) / 2;
   }
 });
-},{"./$.def":50}],122:[function(require,module,exports){
+},{"./$.def":51}],123:[function(require,module,exports){
 // 20.2.2.9 Math.cbrt(x)
 var $def = require('./$.def')
   , sign = require('./$.sign');
@@ -10517,7 +10615,7 @@ $def($def.S, 'Math', {
     return sign(x = +x) * Math.pow(Math.abs(x), 1 / 3);
   }
 });
-},{"./$.def":50,"./$.sign":88}],123:[function(require,module,exports){
+},{"./$.def":51,"./$.sign":89}],124:[function(require,module,exports){
 // 20.2.2.11 Math.clz32(x)
 var $def = require('./$.def');
 
@@ -10526,7 +10624,7 @@ $def($def.S, 'Math', {
     return (x >>>= 0) ? 31 - Math.floor(Math.log(x + 0.5) * Math.LOG2E) : 32;
   }
 });
-},{"./$.def":50}],124:[function(require,module,exports){
+},{"./$.def":51}],125:[function(require,module,exports){
 // 20.2.2.12 Math.cosh(x)
 var $def = require('./$.def')
   , exp  = Math.exp;
@@ -10536,12 +10634,12 @@ $def($def.S, 'Math', {
     return (exp(x = +x) + exp(-x)) / 2;
   }
 });
-},{"./$.def":50}],125:[function(require,module,exports){
+},{"./$.def":51}],126:[function(require,module,exports){
 // 20.2.2.14 Math.expm1(x)
 var $def = require('./$.def');
 
 $def($def.S, 'Math', {expm1: require('./$.expm1')});
-},{"./$.def":50,"./$.expm1":54}],126:[function(require,module,exports){
+},{"./$.def":51,"./$.expm1":55}],127:[function(require,module,exports){
 // 20.2.2.16 Math.fround(x)
 var $def  = require('./$.def')
   , sign  = require('./$.sign')
@@ -10568,7 +10666,7 @@ $def($def.S, 'Math', {
     return $sign * result;
   }
 });
-},{"./$.def":50,"./$.sign":88}],127:[function(require,module,exports){
+},{"./$.def":51,"./$.sign":89}],128:[function(require,module,exports){
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
 var $def = require('./$.def')
   , abs  = Math.abs;
@@ -10594,7 +10692,7 @@ $def($def.S, 'Math', {
     return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
   }
 });
-},{"./$.def":50}],128:[function(require,module,exports){
+},{"./$.def":51}],129:[function(require,module,exports){
 // 20.2.2.18 Math.imul(x, y)
 var $def = require('./$.def');
 
@@ -10611,7 +10709,7 @@ $def($def.S + $def.F * require('./$.fails')(function(){
     return 0 | xl * yl + ((UINT16 & xn >>> 16) * yl + xl * (UINT16 & yn >>> 16) << 16 >>> 0);
   }
 });
-},{"./$.def":50,"./$.fails":55}],129:[function(require,module,exports){
+},{"./$.def":51,"./$.fails":56}],130:[function(require,module,exports){
 // 20.2.2.21 Math.log10(x)
 var $def = require('./$.def');
 
@@ -10620,12 +10718,12 @@ $def($def.S, 'Math', {
     return Math.log(x) / Math.LN10;
   }
 });
-},{"./$.def":50}],130:[function(require,module,exports){
+},{"./$.def":51}],131:[function(require,module,exports){
 // 20.2.2.20 Math.log1p(x)
 var $def = require('./$.def');
 
 $def($def.S, 'Math', {log1p: require('./$.log1p')});
-},{"./$.def":50,"./$.log1p":79}],131:[function(require,module,exports){
+},{"./$.def":51,"./$.log1p":80}],132:[function(require,module,exports){
 // 20.2.2.22 Math.log2(x)
 var $def = require('./$.def');
 
@@ -10634,12 +10732,12 @@ $def($def.S, 'Math', {
     return Math.log(x) / Math.LN2;
   }
 });
-},{"./$.def":50}],132:[function(require,module,exports){
+},{"./$.def":51}],133:[function(require,module,exports){
 // 20.2.2.28 Math.sign(x)
 var $def = require('./$.def');
 
 $def($def.S, 'Math', {sign: require('./$.sign')});
-},{"./$.def":50,"./$.sign":88}],133:[function(require,module,exports){
+},{"./$.def":51,"./$.sign":89}],134:[function(require,module,exports){
 // 20.2.2.30 Math.sinh(x)
 var $def  = require('./$.def')
   , expm1 = require('./$.expm1')
@@ -10652,7 +10750,7 @@ $def($def.S, 'Math', {
       : (exp(x - 1) - exp(-x - 1)) * (Math.E / 2);
   }
 });
-},{"./$.def":50,"./$.expm1":54}],134:[function(require,module,exports){
+},{"./$.def":51,"./$.expm1":55}],135:[function(require,module,exports){
 // 20.2.2.33 Math.tanh(x)
 var $def  = require('./$.def')
   , expm1 = require('./$.expm1')
@@ -10665,7 +10763,7 @@ $def($def.S, 'Math', {
     return a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (exp(x) + exp(-x));
   }
 });
-},{"./$.def":50,"./$.expm1":54}],135:[function(require,module,exports){
+},{"./$.def":51,"./$.expm1":55}],136:[function(require,module,exports){
 // 20.2.2.34 Math.trunc(x)
 var $def = require('./$.def');
 
@@ -10674,7 +10772,7 @@ $def($def.S, 'Math', {
     return (it > 0 ? Math.floor : Math.ceil)(it);
   }
 });
-},{"./$.def":50}],136:[function(require,module,exports){
+},{"./$.def":51}],137:[function(require,module,exports){
 'use strict';
 var $          = require('./$')
   , global     = require('./$.global')
@@ -10728,12 +10826,12 @@ if(!($Number('0o1') && $Number('0b1'))){
   proto.constructor = $Number;
   require('./$.redef')(global, NUMBER, $Number);
 }
-},{"./$":76,"./$.cof":44,"./$.fails":55,"./$.global":60,"./$.has":61,"./$.is-object":68,"./$.redef":84,"./$.support-desc":95}],137:[function(require,module,exports){
+},{"./$":77,"./$.cof":45,"./$.fails":56,"./$.global":61,"./$.has":62,"./$.is-object":69,"./$.redef":85,"./$.support-desc":96}],138:[function(require,module,exports){
 // 20.1.2.1 Number.EPSILON
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {EPSILON: Math.pow(2, -52)});
-},{"./$.def":50}],138:[function(require,module,exports){
+},{"./$.def":51}],139:[function(require,module,exports){
 // 20.1.2.2 Number.isFinite(number)
 var $def      = require('./$.def')
   , _isFinite = require('./$.global').isFinite;
@@ -10743,12 +10841,12 @@ $def($def.S, 'Number', {
     return typeof it == 'number' && _isFinite(it);
   }
 });
-},{"./$.def":50,"./$.global":60}],139:[function(require,module,exports){
+},{"./$.def":51,"./$.global":61}],140:[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {isInteger: require('./$.is-integer')});
-},{"./$.def":50,"./$.is-integer":67}],140:[function(require,module,exports){
+},{"./$.def":51,"./$.is-integer":68}],141:[function(require,module,exports){
 // 20.1.2.4 Number.isNaN(number)
 var $def = require('./$.def');
 
@@ -10757,7 +10855,7 @@ $def($def.S, 'Number', {
     return number != number;
   }
 });
-},{"./$.def":50}],141:[function(require,module,exports){
+},{"./$.def":51}],142:[function(require,module,exports){
 // 20.1.2.5 Number.isSafeInteger(number)
 var $def      = require('./$.def')
   , isInteger = require('./$.is-integer')
@@ -10768,31 +10866,31 @@ $def($def.S, 'Number', {
     return isInteger(number) && abs(number) <= 0x1fffffffffffff;
   }
 });
-},{"./$.def":50,"./$.is-integer":67}],142:[function(require,module,exports){
+},{"./$.def":51,"./$.is-integer":68}],143:[function(require,module,exports){
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
-},{"./$.def":50}],143:[function(require,module,exports){
+},{"./$.def":51}],144:[function(require,module,exports){
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
-},{"./$.def":50}],144:[function(require,module,exports){
+},{"./$.def":51}],145:[function(require,module,exports){
 // 20.1.2.12 Number.parseFloat(string)
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {parseFloat: parseFloat});
-},{"./$.def":50}],145:[function(require,module,exports){
+},{"./$.def":51}],146:[function(require,module,exports){
 // 20.1.2.13 Number.parseInt(string, radix)
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {parseInt: parseInt});
-},{"./$.def":50}],146:[function(require,module,exports){
+},{"./$.def":51}],147:[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
 var $def = require('./$.def');
 $def($def.S, 'Object', {assign: require('./$.assign')});
-},{"./$.assign":42,"./$.def":50}],147:[function(require,module,exports){
+},{"./$.assign":43,"./$.def":51}],148:[function(require,module,exports){
 // 19.1.2.5 Object.freeze(O)
 var isObject = require('./$.is-object');
 
@@ -10801,7 +10899,7 @@ require('./$.object-sap')('freeze', function($freeze){
     return $freeze && isObject(it) ? $freeze(it) : it;
   };
 });
-},{"./$.is-object":68,"./$.object-sap":81}],148:[function(require,module,exports){
+},{"./$.is-object":69,"./$.object-sap":82}],149:[function(require,module,exports){
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject = require('./$.to-iobject');
 
@@ -10810,12 +10908,12 @@ require('./$.object-sap')('getOwnPropertyDescriptor', function($getOwnPropertyDe
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
-},{"./$.object-sap":81,"./$.to-iobject":100}],149:[function(require,module,exports){
+},{"./$.object-sap":82,"./$.to-iobject":101}],150:[function(require,module,exports){
 // 19.1.2.7 Object.getOwnPropertyNames(O)
 require('./$.object-sap')('getOwnPropertyNames', function(){
   return require('./$.get-names').get;
 });
-},{"./$.get-names":59,"./$.object-sap":81}],150:[function(require,module,exports){
+},{"./$.get-names":60,"./$.object-sap":82}],151:[function(require,module,exports){
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = require('./$.to-object');
 
@@ -10824,7 +10922,7 @@ require('./$.object-sap')('getPrototypeOf', function($getPrototypeOf){
     return $getPrototypeOf(toObject(it));
   };
 });
-},{"./$.object-sap":81,"./$.to-object":102}],151:[function(require,module,exports){
+},{"./$.object-sap":82,"./$.to-object":103}],152:[function(require,module,exports){
 // 19.1.2.11 Object.isExtensible(O)
 var isObject = require('./$.is-object');
 
@@ -10833,7 +10931,7 @@ require('./$.object-sap')('isExtensible', function($isExtensible){
     return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
   };
 });
-},{"./$.is-object":68,"./$.object-sap":81}],152:[function(require,module,exports){
+},{"./$.is-object":69,"./$.object-sap":82}],153:[function(require,module,exports){
 // 19.1.2.12 Object.isFrozen(O)
 var isObject = require('./$.is-object');
 
@@ -10842,7 +10940,7 @@ require('./$.object-sap')('isFrozen', function($isFrozen){
     return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
   };
 });
-},{"./$.is-object":68,"./$.object-sap":81}],153:[function(require,module,exports){
+},{"./$.is-object":69,"./$.object-sap":82}],154:[function(require,module,exports){
 // 19.1.2.13 Object.isSealed(O)
 var isObject = require('./$.is-object');
 
@@ -10851,13 +10949,13 @@ require('./$.object-sap')('isSealed', function($isSealed){
     return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
   };
 });
-},{"./$.is-object":68,"./$.object-sap":81}],154:[function(require,module,exports){
+},{"./$.is-object":69,"./$.object-sap":82}],155:[function(require,module,exports){
 // 19.1.3.10 Object.is(value1, value2)
 var $def = require('./$.def');
 $def($def.S, 'Object', {
   is: require('./$.same')
 });
-},{"./$.def":50,"./$.same":85}],155:[function(require,module,exports){
+},{"./$.def":51,"./$.same":86}],156:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./$.to-object');
 
@@ -10866,7 +10964,7 @@ require('./$.object-sap')('keys', function($keys){
     return $keys(toObject(it));
   };
 });
-},{"./$.object-sap":81,"./$.to-object":102}],156:[function(require,module,exports){
+},{"./$.object-sap":82,"./$.to-object":103}],157:[function(require,module,exports){
 // 19.1.2.15 Object.preventExtensions(O)
 var isObject = require('./$.is-object');
 
@@ -10875,7 +10973,7 @@ require('./$.object-sap')('preventExtensions', function($preventExtensions){
     return $preventExtensions && isObject(it) ? $preventExtensions(it) : it;
   };
 });
-},{"./$.is-object":68,"./$.object-sap":81}],157:[function(require,module,exports){
+},{"./$.is-object":69,"./$.object-sap":82}],158:[function(require,module,exports){
 // 19.1.2.17 Object.seal(O)
 var isObject = require('./$.is-object');
 
@@ -10884,11 +10982,11 @@ require('./$.object-sap')('seal', function($seal){
     return $seal && isObject(it) ? $seal(it) : it;
   };
 });
-},{"./$.is-object":68,"./$.object-sap":81}],158:[function(require,module,exports){
+},{"./$.is-object":69,"./$.object-sap":82}],159:[function(require,module,exports){
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $def = require('./$.def');
 $def($def.S, 'Object', {setPrototypeOf: require('./$.set-proto').set});
-},{"./$.def":50,"./$.set-proto":86}],159:[function(require,module,exports){
+},{"./$.def":51,"./$.set-proto":87}],160:[function(require,module,exports){
 'use strict';
 // 19.1.3.6 Object.prototype.toString()
 var classof = require('./$.classof')
@@ -10899,7 +10997,7 @@ if(test + '' != '[object z]'){
     return '[object ' + classof(this) + ']';
   }, true);
 }
-},{"./$.classof":43,"./$.redef":84,"./$.wks":105}],160:[function(require,module,exports){
+},{"./$.classof":44,"./$.redef":85,"./$.wks":106}],161:[function(require,module,exports){
 'use strict';
 var $          = require('./$')
   , LIBRARY    = require('./$.library')
@@ -11163,7 +11261,7 @@ $def($def.S + $def.F * !(useNative && require('./$.iter-detect')(function(iter){
     });
   }
 });
-},{"./$":76,"./$.a-function":38,"./$.an-object":39,"./$.classof":43,"./$.core":48,"./$.ctx":49,"./$.def":50,"./$.for-of":58,"./$.global":60,"./$.is-object":68,"./$.iter-detect":73,"./$.library":78,"./$.mix":80,"./$.same":85,"./$.set-proto":86,"./$.species":89,"./$.strict-new":90,"./$.support-desc":95,"./$.tag":96,"./$.task":97,"./$.uid":103,"./$.wks":105}],161:[function(require,module,exports){
+},{"./$":77,"./$.a-function":39,"./$.an-object":40,"./$.classof":44,"./$.core":49,"./$.ctx":50,"./$.def":51,"./$.for-of":59,"./$.global":61,"./$.is-object":69,"./$.iter-detect":74,"./$.library":79,"./$.mix":81,"./$.same":86,"./$.set-proto":87,"./$.species":90,"./$.strict-new":91,"./$.support-desc":96,"./$.tag":97,"./$.task":98,"./$.uid":104,"./$.wks":106}],162:[function(require,module,exports){
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 var $def   = require('./$.def')
   , _apply = Function.apply;
@@ -11173,7 +11271,7 @@ $def($def.S, 'Reflect', {
     return _apply.call(target, thisArgument, argumentsList);
   }
 });
-},{"./$.def":50}],162:[function(require,module,exports){
+},{"./$.def":51}],163:[function(require,module,exports){
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
 var $         = require('./$')
   , $def      = require('./$.def')
@@ -11206,7 +11304,7 @@ $def($def.S, 'Reflect', {
     return isObject(result) ? result : instance;
   }
 });
-},{"./$":76,"./$.a-function":38,"./$.an-object":39,"./$.core":48,"./$.def":50,"./$.is-object":68}],163:[function(require,module,exports){
+},{"./$":77,"./$.a-function":39,"./$.an-object":40,"./$.core":49,"./$.def":51,"./$.is-object":69}],164:[function(require,module,exports){
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
 var $        = require('./$')
   , $def     = require('./$.def')
@@ -11226,7 +11324,7 @@ $def($def.S + $def.F * require('./$.fails')(function(){
     }
   }
 });
-},{"./$":76,"./$.an-object":39,"./$.def":50,"./$.fails":55}],164:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.fails":56}],165:[function(require,module,exports){
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
 var $def     = require('./$.def')
   , getDesc  = require('./$').getDesc
@@ -11238,7 +11336,7 @@ $def($def.S, 'Reflect', {
     return desc && !desc.configurable ? false : delete target[propertyKey];
   }
 });
-},{"./$":76,"./$.an-object":39,"./$.def":50}],165:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51}],166:[function(require,module,exports){
 'use strict';
 // 26.1.5 Reflect.enumerate(target)
 var $def     = require('./$.def')
@@ -11265,7 +11363,7 @@ $def($def.S, 'Reflect', {
     return new Enumerate(target);
   }
 });
-},{"./$.an-object":39,"./$.def":50,"./$.iter-create":71}],166:[function(require,module,exports){
+},{"./$.an-object":40,"./$.def":51,"./$.iter-create":72}],167:[function(require,module,exports){
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
 var $        = require('./$')
   , $def     = require('./$.def')
@@ -11276,7 +11374,7 @@ $def($def.S, 'Reflect', {
     return $.getDesc(anObject(target), propertyKey);
   }
 });
-},{"./$":76,"./$.an-object":39,"./$.def":50}],167:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51}],168:[function(require,module,exports){
 // 26.1.8 Reflect.getPrototypeOf(target)
 var $def     = require('./$.def')
   , getProto = require('./$').getProto
@@ -11287,7 +11385,7 @@ $def($def.S, 'Reflect', {
     return getProto(anObject(target));
   }
 });
-},{"./$":76,"./$.an-object":39,"./$.def":50}],168:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51}],169:[function(require,module,exports){
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
 var $        = require('./$')
   , has      = require('./$.has')
@@ -11308,7 +11406,7 @@ function get(target, propertyKey/*, receiver*/){
 }
 
 $def($def.S, 'Reflect', {get: get});
-},{"./$":76,"./$.an-object":39,"./$.def":50,"./$.has":61,"./$.is-object":68}],169:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.has":62,"./$.is-object":69}],170:[function(require,module,exports){
 // 26.1.9 Reflect.has(target, propertyKey)
 var $def = require('./$.def');
 
@@ -11317,7 +11415,7 @@ $def($def.S, 'Reflect', {
     return propertyKey in target;
   }
 });
-},{"./$.def":50}],170:[function(require,module,exports){
+},{"./$.def":51}],171:[function(require,module,exports){
 // 26.1.10 Reflect.isExtensible(target)
 var $def          = require('./$.def')
   , anObject      = require('./$.an-object')
@@ -11329,12 +11427,12 @@ $def($def.S, 'Reflect', {
     return $isExtensible ? $isExtensible(target) : true;
   }
 });
-},{"./$.an-object":39,"./$.def":50}],171:[function(require,module,exports){
+},{"./$.an-object":40,"./$.def":51}],172:[function(require,module,exports){
 // 26.1.11 Reflect.ownKeys(target)
 var $def = require('./$.def');
 
 $def($def.S, 'Reflect', {ownKeys: require('./$.own-keys')});
-},{"./$.def":50,"./$.own-keys":82}],172:[function(require,module,exports){
+},{"./$.def":51,"./$.own-keys":83}],173:[function(require,module,exports){
 // 26.1.12 Reflect.preventExtensions(target)
 var $def               = require('./$.def')
   , anObject           = require('./$.an-object')
@@ -11351,7 +11449,7 @@ $def($def.S, 'Reflect', {
     }
   }
 });
-},{"./$.an-object":39,"./$.def":50}],173:[function(require,module,exports){
+},{"./$.an-object":40,"./$.def":51}],174:[function(require,module,exports){
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $def     = require('./$.def')
   , setProto = require('./$.set-proto');
@@ -11367,7 +11465,7 @@ if(setProto)$def($def.S, 'Reflect', {
     }
   }
 });
-},{"./$.def":50,"./$.set-proto":86}],174:[function(require,module,exports){
+},{"./$.def":51,"./$.set-proto":87}],175:[function(require,module,exports){
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
 var $          = require('./$')
   , has        = require('./$.has')
@@ -11397,7 +11495,7 @@ function set(target, propertyKey, V/*, receiver*/){
 }
 
 $def($def.S, 'Reflect', {set: set});
-},{"./$":76,"./$.an-object":39,"./$.def":50,"./$.has":61,"./$.is-object":68,"./$.property-desc":83}],175:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.has":62,"./$.is-object":69,"./$.property-desc":84}],176:[function(require,module,exports){
 var $       = require('./$')
   , global  = require('./$.global')
   , cof     = require('./$.cof')
@@ -11440,14 +11538,14 @@ if(require('./$.support-desc')){
 }
 
 require('./$.species')($RegExp);
-},{"./$":76,"./$.cof":44,"./$.flags":57,"./$.global":60,"./$.redef":84,"./$.species":89,"./$.support-desc":95}],176:[function(require,module,exports){
+},{"./$":77,"./$.cof":45,"./$.flags":58,"./$.global":61,"./$.redef":85,"./$.species":90,"./$.support-desc":96}],177:[function(require,module,exports){
 // 21.2.5.3 get RegExp.prototype.flags()
 var $ = require('./$');
 if(require('./$.support-desc') && /./g.flags != 'g')$.setDesc(RegExp.prototype, 'flags', {
   configurable: true,
   get: require('./$.flags')
 });
-},{"./$":76,"./$.flags":57,"./$.support-desc":95}],177:[function(require,module,exports){
+},{"./$":77,"./$.flags":58,"./$.support-desc":96}],178:[function(require,module,exports){
 // @@match logic
 require('./$.fix-re-wks')('match', 1, function(defined, MATCH){
   // 21.1.3.11 String.prototype.match(regexp)
@@ -11458,7 +11556,7 @@ require('./$.fix-re-wks')('match', 1, function(defined, MATCH){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
   };
 });
-},{"./$.fix-re-wks":56}],178:[function(require,module,exports){
+},{"./$.fix-re-wks":57}],179:[function(require,module,exports){
 // @@replace logic
 require('./$.fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
   // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
@@ -11471,7 +11569,7 @@ require('./$.fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
       : $replace.call(String(O), searchValue, replaceValue);
   };
 });
-},{"./$.fix-re-wks":56}],179:[function(require,module,exports){
+},{"./$.fix-re-wks":57}],180:[function(require,module,exports){
 // @@search logic
 require('./$.fix-re-wks')('search', 1, function(defined, SEARCH){
   // 21.1.3.15 String.prototype.search(regexp)
@@ -11482,7 +11580,7 @@ require('./$.fix-re-wks')('search', 1, function(defined, SEARCH){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
   };
 });
-},{"./$.fix-re-wks":56}],180:[function(require,module,exports){
+},{"./$.fix-re-wks":57}],181:[function(require,module,exports){
 // @@split logic
 require('./$.fix-re-wks')('split', 2, function(defined, SPLIT, $split){
   // 21.1.3.17 String.prototype.split(separator, limit)
@@ -11495,7 +11593,7 @@ require('./$.fix-re-wks')('split', 2, function(defined, SPLIT, $split){
       : $split.call(String(O), separator, limit);
   };
 });
-},{"./$.fix-re-wks":56}],181:[function(require,module,exports){
+},{"./$.fix-re-wks":57}],182:[function(require,module,exports){
 'use strict';
 var strong = require('./$.collection-strong');
 
@@ -11508,7 +11606,7 @@ require('./$.collection')('Set', function(get){
     return strong.def(this, value = value === 0 ? 0 : value, value);
   }
 }, strong);
-},{"./$.collection":47,"./$.collection-strong":45}],182:[function(require,module,exports){
+},{"./$.collection":48,"./$.collection-strong":46}],183:[function(require,module,exports){
 'use strict';
 var $def = require('./$.def')
   , $at  = require('./$.string-at')(false);
@@ -11518,7 +11616,7 @@ $def($def.P, 'String', {
     return $at(this, pos);
   }
 });
-},{"./$.def":50,"./$.string-at":91}],183:[function(require,module,exports){
+},{"./$.def":51,"./$.string-at":92}],184:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toLength = require('./$.to-length')
@@ -11536,7 +11634,7 @@ $def($def.P + $def.F * !require('./$.fails')(function(){ 'q'.endsWith(/./); }), 
     return that.slice(end - search.length, end) === search;
   }
 });
-},{"./$.def":50,"./$.fails":55,"./$.string-context":92,"./$.to-length":101}],184:[function(require,module,exports){
+},{"./$.def":51,"./$.fails":56,"./$.string-context":93,"./$.to-length":102}],185:[function(require,module,exports){
 var $def    = require('./$.def')
   , toIndex = require('./$.to-index')
   , fromCharCode = String.fromCharCode
@@ -11560,7 +11658,7 @@ $def($def.S + $def.F * (!!$fromCodePoint && $fromCodePoint.length != 1), 'String
     } return res.join('');
   }
 });
-},{"./$.def":50,"./$.to-index":98}],185:[function(require,module,exports){
+},{"./$.def":51,"./$.to-index":99}],186:[function(require,module,exports){
 'use strict';
 var $def    = require('./$.def')
   , context = require('./$.string-context');
@@ -11571,7 +11669,7 @@ $def($def.P, 'String', {
     return !!~context(this, searchString, 'includes').indexOf(searchString, arguments[1]);
   }
 });
-},{"./$.def":50,"./$.string-context":92}],186:[function(require,module,exports){
+},{"./$.def":51,"./$.string-context":93}],187:[function(require,module,exports){
 'use strict';
 var $at  = require('./$.string-at')(true);
 
@@ -11589,7 +11687,7 @@ require('./$.iter-define')(String, 'String', function(iterated){
   this._i += point.length;
   return {value: point, done: false};
 });
-},{"./$.iter-define":72,"./$.string-at":91}],187:[function(require,module,exports){
+},{"./$.iter-define":73,"./$.string-at":92}],188:[function(require,module,exports){
 var $def      = require('./$.def')
   , toIObject = require('./$.to-iobject')
   , toLength  = require('./$.to-length');
@@ -11608,14 +11706,14 @@ $def($def.S, 'String', {
     } return res.join('');
   }
 });
-},{"./$.def":50,"./$.to-iobject":100,"./$.to-length":101}],188:[function(require,module,exports){
+},{"./$.def":51,"./$.to-iobject":101,"./$.to-length":102}],189:[function(require,module,exports){
 var $def = require('./$.def');
 
 $def($def.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
   repeat: require('./$.string-repeat')
 });
-},{"./$.def":50,"./$.string-repeat":93}],189:[function(require,module,exports){
+},{"./$.def":51,"./$.string-repeat":94}],190:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toLength = require('./$.to-length')
@@ -11631,7 +11729,7 @@ $def($def.P + $def.F * !require('./$.fails')(function(){ 'q'.startsWith(/./); })
     return that.slice(index, index + search.length) === search;
   }
 });
-},{"./$.def":50,"./$.fails":55,"./$.string-context":92,"./$.to-length":101}],190:[function(require,module,exports){
+},{"./$.def":51,"./$.fails":56,"./$.string-context":93,"./$.to-length":102}],191:[function(require,module,exports){
 'use strict';
 // 21.1.3.25 String.prototype.trim()
 require('./$.string-trim')('trim', function($trim){
@@ -11639,7 +11737,7 @@ require('./$.string-trim')('trim', function($trim){
     return $trim(this, 3);
   };
 });
-},{"./$.string-trim":94}],191:[function(require,module,exports){
+},{"./$.string-trim":95}],192:[function(require,module,exports){
 'use strict';
 // ECMAScript 6 symbols shim
 var $              = require('./$')
@@ -11835,7 +11933,7 @@ setTag($Symbol, 'Symbol');
 setTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setTag(global.JSON, 'JSON', true);
-},{"./$":76,"./$.an-object":39,"./$.def":50,"./$.enum-keys":53,"./$.get-names":59,"./$.global":60,"./$.has":61,"./$.keyof":77,"./$.library":78,"./$.property-desc":83,"./$.redef":84,"./$.shared":87,"./$.support-desc":95,"./$.tag":96,"./$.to-iobject":100,"./$.uid":103,"./$.wks":105}],192:[function(require,module,exports){
+},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.enum-keys":54,"./$.get-names":60,"./$.global":61,"./$.has":62,"./$.keyof":78,"./$.library":79,"./$.property-desc":84,"./$.redef":85,"./$.shared":88,"./$.support-desc":96,"./$.tag":97,"./$.to-iobject":101,"./$.uid":104,"./$.wks":106}],193:[function(require,module,exports){
 'use strict';
 var $            = require('./$')
   , weak         = require('./$.collection-weak')
@@ -11878,7 +11976,7 @@ if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
     });
   });
 }
-},{"./$":76,"./$.collection":47,"./$.collection-weak":46,"./$.has":61,"./$.is-object":68,"./$.redef":84}],193:[function(require,module,exports){
+},{"./$":77,"./$.collection":48,"./$.collection-weak":47,"./$.has":62,"./$.is-object":69,"./$.redef":85}],194:[function(require,module,exports){
 'use strict';
 var weak = require('./$.collection-weak');
 
@@ -11891,7 +11989,7 @@ require('./$.collection')('WeakSet', function(get){
     return weak.def(this, value, true);
   }
 }, weak, false, true);
-},{"./$.collection":47,"./$.collection-weak":46}],194:[function(require,module,exports){
+},{"./$.collection":48,"./$.collection-weak":47}],195:[function(require,module,exports){
 (function (global){
 var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
@@ -11912,7 +12010,7 @@ if (typeof document !== 'undefined') {
 module.exports = doccy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"min-document":34}],195:[function(require,module,exports){
+},{"min-document":35}],196:[function(require,module,exports){
 (function (global){
 var win;
 
@@ -11929,7 +12027,7 @@ if (typeof window !== "undefined") {
 module.exports = win;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],196:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 module.exports = attributeToProperty
 
 var transform = {
@@ -11950,7 +12048,7 @@ function attributeToProperty (h) {
   }
 }
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var attrToProp = require('hyperscript-attribute-to-property')
 
 var VAR = 0, TEXT = 1, OPEN = 2, CLOSE = 3, ATTR = 4
@@ -12233,12 +12331,12 @@ var closeRE = RegExp('^(' + [
 ].join('|') + ')(?:[\.#][a-zA-Z0-9\u007F-\uFFFF_:-]+)*$')
 function selfClosing (tag) { return closeRE.test(tag) }
 
-},{"hyperscript-attribute-to-property":196}],198:[function(require,module,exports){
+},{"hyperscript-attribute-to-property":197}],199:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 /*!
  * jquery-confirm v3.3.2 (http://craftpip.github.io/jquery-confirm/)
  * Author: Boniface Pereira
@@ -12249,7 +12347,7 @@ module.exports = Array.isArray || function (arr) {
  * Licensed under MIT (https://github.com/craftpip/jquery-confirm/blob/master/LICENSE)
  */
 if(typeof jQuery==="undefined"){throw new Error("jquery-confirm requires jQuery");}var jconfirm,Jconfirm;(function($,window){$.fn.confirm=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false};}$(this).each(function(){var $this=$(this);if($this.attr("jc-attached")){console.warn("jConfirm has already been attached to this element ",$this[0]);return;}$this.on("click",function(e){e.preventDefault();var jcOption=$.extend({},options);if($this.attr("data-title")){jcOption.title=$this.attr("data-title");}if($this.attr("data-content")){jcOption.content=$this.attr("data-content");}if(typeof jcOption.buttons=="undefined"){jcOption.buttons={};}jcOption["$target"]=$this;if($this.attr("href")&&Object.keys(jcOption.buttons).length==0){var buttons=$.extend(true,{},jconfirm.pluginDefaults.defaultButtons,(jconfirm.defaults||{}).defaultButtons||{});var firstBtn=Object.keys(buttons)[0];jcOption.buttons=buttons;jcOption.buttons[firstBtn].action=function(){location.href=$this.attr("href");};}jcOption.closeIcon=false;var instance=$.confirm(jcOption);});$this.attr("jc-attached",true);});return $(this);};$.confirm=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false};}var putDefaultButtons=!(options.buttons==false);if(typeof options.buttons!="object"){options.buttons={};}if(Object.keys(options.buttons).length==0&&putDefaultButtons){var buttons=$.extend(true,{},jconfirm.pluginDefaults.defaultButtons,(jconfirm.defaults||{}).defaultButtons||{});options.buttons=buttons;}return jconfirm(options);};$.alert=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false};}var putDefaultButtons=!(options.buttons==false);if(typeof options.buttons!="object"){options.buttons={};}if(Object.keys(options.buttons).length==0&&putDefaultButtons){var buttons=$.extend(true,{},jconfirm.pluginDefaults.defaultButtons,(jconfirm.defaults||{}).defaultButtons||{});var firstBtn=Object.keys(buttons)[0];options.buttons[firstBtn]=buttons[firstBtn];}return jconfirm(options);};$.dialog=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false,closeIcon:function(){}};}options.buttons={};if(typeof options.closeIcon=="undefined"){options.closeIcon=function(){};}options.confirmKeys=[13];return jconfirm(options);};jconfirm=function(options){if(typeof options==="undefined"){options={};}var pluginOptions=$.extend(true,{},jconfirm.pluginDefaults);if(jconfirm.defaults){pluginOptions=$.extend(true,pluginOptions,jconfirm.defaults);}pluginOptions=$.extend(true,{},pluginOptions,options);var instance=new Jconfirm(pluginOptions);jconfirm.instances.push(instance);return instance;};Jconfirm=function(options){$.extend(this,options);this._init();};Jconfirm.prototype={_init:function(){var that=this;if(!jconfirm.instances.length){jconfirm.lastFocused=$("body").find(":focus");}this._id=Math.round(Math.random()*99999);this.contentParsed=$(document.createElement("div"));if(!this.lazyOpen){setTimeout(function(){that.open();},0);}},_buildHTML:function(){var that=this;this._parseAnimation(this.animation,"o");this._parseAnimation(this.closeAnimation,"c");this._parseBgDismissAnimation(this.backgroundDismissAnimation);this._parseColumnClass(this.columnClass);this._parseTheme(this.theme);this._parseType(this.type);var template=$(this.template);template.find(".jconfirm-box").addClass(this.animationParsed).addClass(this.backgroundDismissAnimationParsed).addClass(this.typeParsed);if(this.typeAnimated){template.find(".jconfirm-box").addClass("jconfirm-type-animated");}if(this.useBootstrap){template.find(".jc-bs3-row").addClass(this.bootstrapClasses.row);template.find(".jc-bs3-row").addClass("justify-content-md-center justify-content-sm-center justify-content-xs-center justify-content-lg-center");template.find(".jconfirm-box-container").addClass(this.columnClassParsed);if(this.containerFluid){template.find(".jc-bs3-container").addClass(this.bootstrapClasses.containerFluid);}else{template.find(".jc-bs3-container").addClass(this.bootstrapClasses.container);}}else{template.find(".jconfirm-box").css("width",this.boxWidth);}if(this.titleClass){template.find(".jconfirm-title-c").addClass(this.titleClass);}template.addClass(this.themeParsed);var ariaLabel="jconfirm-box"+this._id;template.find(".jconfirm-box").attr("aria-labelledby",ariaLabel).attr("tabindex",-1);template.find(".jconfirm-content").attr("id",ariaLabel);if(this.bgOpacity!==null){template.find(".jconfirm-bg").css("opacity",this.bgOpacity);}if(this.rtl){template.addClass("jconfirm-rtl");}this.$el=template.appendTo(this.container);this.$jconfirmBoxContainer=this.$el.find(".jconfirm-box-container");this.$jconfirmBox=this.$body=this.$el.find(".jconfirm-box");this.$jconfirmBg=this.$el.find(".jconfirm-bg");this.$title=this.$el.find(".jconfirm-title");this.$titleContainer=this.$el.find(".jconfirm-title-c");this.$content=this.$el.find("div.jconfirm-content");this.$contentPane=this.$el.find(".jconfirm-content-pane");this.$icon=this.$el.find(".jconfirm-icon-c");this.$closeIcon=this.$el.find(".jconfirm-closeIcon");this.$holder=this.$el.find(".jconfirm-holder");this.$btnc=this.$el.find(".jconfirm-buttons");this.$scrollPane=this.$el.find(".jconfirm-scrollpane");that.setStartingPoint();this._contentReady=$.Deferred();this._modalReady=$.Deferred();this.$holder.css({"padding-top":this.offsetTop,"padding-bottom":this.offsetBottom,});this.setTitle();this.setIcon();this._setButtons();this._parseContent();this.initDraggable();if(this.isAjax){this.showLoading(false);}$.when(this._contentReady,this._modalReady).then(function(){if(that.isAjaxLoading){setTimeout(function(){that.isAjaxLoading=false;that.setContent();that.setTitle();that.setIcon();setTimeout(function(){that.hideLoading(false);that._updateContentMaxHeight();},100);if(typeof that.onContentReady==="function"){that.onContentReady();}},50);}else{that._updateContentMaxHeight();that.setTitle();that.setIcon();if(typeof that.onContentReady==="function"){that.onContentReady();}}if(that.autoClose){that._startCountDown();}});this._watchContent();if(this.animation==="none"){this.animationSpeed=1;this.animationBounce=1;}this.$body.css(this._getCSS(this.animationSpeed,this.animationBounce));this.$contentPane.css(this._getCSS(this.animationSpeed,1));this.$jconfirmBg.css(this._getCSS(this.animationSpeed,1));this.$jconfirmBoxContainer.css(this._getCSS(this.animationSpeed,1));},_typePrefix:"jconfirm-type-",typeParsed:"",_parseType:function(type){this.typeParsed=this._typePrefix+type;},setType:function(type){var oldClass=this.typeParsed;this._parseType(type);this.$jconfirmBox.removeClass(oldClass).addClass(this.typeParsed);},themeParsed:"",_themePrefix:"jconfirm-",setTheme:function(theme){var previous=this.theme;this.theme=theme||this.theme;this._parseTheme(this.theme);if(previous){this.$el.removeClass(previous);}this.$el.addClass(this.themeParsed);this.theme=theme;},_parseTheme:function(theme){var that=this;theme=theme.split(",");$.each(theme,function(k,a){if(a.indexOf(that._themePrefix)===-1){theme[k]=that._themePrefix+$.trim(a);}});this.themeParsed=theme.join(" ").toLowerCase();},backgroundDismissAnimationParsed:"",_bgDismissPrefix:"jconfirm-hilight-",_parseBgDismissAnimation:function(bgDismissAnimation){var animation=bgDismissAnimation.split(",");var that=this;$.each(animation,function(k,a){if(a.indexOf(that._bgDismissPrefix)===-1){animation[k]=that._bgDismissPrefix+$.trim(a);}});this.backgroundDismissAnimationParsed=animation.join(" ").toLowerCase();},animationParsed:"",closeAnimationParsed:"",_animationPrefix:"jconfirm-animation-",setAnimation:function(animation){this.animation=animation||this.animation;this._parseAnimation(this.animation,"o");},_parseAnimation:function(animation,which){which=which||"o";var animations=animation.split(",");var that=this;$.each(animations,function(k,a){if(a.indexOf(that._animationPrefix)===-1){animations[k]=that._animationPrefix+$.trim(a);}});var a_string=animations.join(" ").toLowerCase();if(which==="o"){this.animationParsed=a_string;}else{this.closeAnimationParsed=a_string;}return a_string;},setCloseAnimation:function(closeAnimation){this.closeAnimation=closeAnimation||this.closeAnimation;this._parseAnimation(this.closeAnimation,"c");},setAnimationSpeed:function(speed){this.animationSpeed=speed||this.animationSpeed;},columnClassParsed:"",setColumnClass:function(colClass){if(!this.useBootstrap){console.warn("cannot set columnClass, useBootstrap is set to false");return;}this.columnClass=colClass||this.columnClass;this._parseColumnClass(this.columnClass);this.$jconfirmBoxContainer.addClass(this.columnClassParsed);},_updateContentMaxHeight:function(){var height=$(window).height()-(this.$jconfirmBox.outerHeight()-this.$contentPane.outerHeight())-(this.offsetTop+this.offsetBottom);this.$contentPane.css({"max-height":height+"px"});},setBoxWidth:function(width){if(this.useBootstrap){console.warn("cannot set boxWidth, useBootstrap is set to true");return;}this.boxWidth=width;this.$jconfirmBox.css("width",width);},_parseColumnClass:function(colClass){colClass=colClass.toLowerCase();var p;switch(colClass){case"xl":case"xlarge":p="col-md-12";break;case"l":case"large":p="col-md-8 col-md-offset-2";break;case"m":case"medium":p="col-md-6 col-md-offset-3";break;case"s":case"small":p="col-md-4 col-md-offset-4";break;case"xs":case"xsmall":p="col-md-2 col-md-offset-5";break;default:p=colClass;}this.columnClassParsed=p;},initDraggable:function(){var that=this;var $t=this.$titleContainer;this.resetDrag();if(this.draggable){$t.on("mousedown",function(e){$t.addClass("jconfirm-hand");that.mouseX=e.clientX;that.mouseY=e.clientY;that.isDrag=true;});$(window).on("mousemove."+this._id,function(e){if(that.isDrag){that.movingX=e.clientX-that.mouseX+that.initialX;that.movingY=e.clientY-that.mouseY+that.initialY;that.setDrag();}});$(window).on("mouseup."+this._id,function(){$t.removeClass("jconfirm-hand");if(that.isDrag){that.isDrag=false;that.initialX=that.movingX;that.initialY=that.movingY;}});}},resetDrag:function(){this.isDrag=false;this.initialX=0;this.initialY=0;this.movingX=0;this.movingY=0;this.mouseX=0;this.mouseY=0;this.$jconfirmBoxContainer.css("transform","translate("+0+"px, "+0+"px)");},setDrag:function(){if(!this.draggable){return;}this.alignMiddle=false;var boxWidth=this.$jconfirmBox.outerWidth();var boxHeight=this.$jconfirmBox.outerHeight();var windowWidth=$(window).width();var windowHeight=$(window).height();var that=this;var dragUpdate=1;if(that.movingX%dragUpdate===0||that.movingY%dragUpdate===0){if(that.dragWindowBorder){var leftDistance=(windowWidth/2)-boxWidth/2;var topDistance=(windowHeight/2)-boxHeight/2;topDistance-=that.dragWindowGap;leftDistance-=that.dragWindowGap;if(leftDistance+that.movingX<0){that.movingX=-leftDistance;}else{if(leftDistance-that.movingX<0){that.movingX=leftDistance;}}if(topDistance+that.movingY<0){that.movingY=-topDistance;}else{if(topDistance-that.movingY<0){that.movingY=topDistance;}}}that.$jconfirmBoxContainer.css("transform","translate("+that.movingX+"px, "+that.movingY+"px)");}},_scrollTop:function(){if(typeof pageYOffset!=="undefined"){return pageYOffset;}else{var B=document.body;var D=document.documentElement;D=(D.clientHeight)?D:B;return D.scrollTop;}},_watchContent:function(){var that=this;if(this._timer){clearInterval(this._timer);}var prevContentHeight=0;this._timer=setInterval(function(){if(that.smoothContent){var contentHeight=that.$content.outerHeight()||0;if(contentHeight!==prevContentHeight){that.$contentPane.css({height:contentHeight}).scrollTop(0);prevContentHeight=contentHeight;}var wh=$(window).height();var total=that.offsetTop+that.offsetBottom+that.$jconfirmBox.height()-that.$contentPane.height()+that.$content.height();if(total<wh){that.$contentPane.addClass("no-scroll");}else{that.$contentPane.removeClass("no-scroll");}}},this.watchInterval);},_overflowClass:"jconfirm-overflow",_hilightAnimating:false,highlight:function(){this.hiLightModal();},hiLightModal:function(){var that=this;if(this._hilightAnimating){return;}that.$body.addClass("hilight");var duration=parseFloat(that.$body.css("animation-duration"))||2;this._hilightAnimating=true;setTimeout(function(){that._hilightAnimating=false;that.$body.removeClass("hilight");},duration*1000);},_bindEvents:function(){var that=this;this.boxClicked=false;this.$scrollPane.click(function(e){if(!that.boxClicked){var buttonName=false;var shouldClose=false;var str;if(typeof that.backgroundDismiss=="function"){str=that.backgroundDismiss();}else{str=that.backgroundDismiss;}if(typeof str=="string"&&typeof that.buttons[str]!="undefined"){buttonName=str;shouldClose=false;}else{if(typeof str=="undefined"||!!(str)==true){shouldClose=true;}else{shouldClose=false;}}if(buttonName){var btnResponse=that.buttons[buttonName].action.apply(that);shouldClose=(typeof btnResponse=="undefined")||!!(btnResponse);}if(shouldClose){that.close();}else{that.hiLightModal();}}that.boxClicked=false;});this.$jconfirmBox.click(function(e){that.boxClicked=true;});var isKeyDown=false;$(window).on("jcKeyDown."+that._id,function(e){if(!isKeyDown){isKeyDown=true;}});$(window).on("keyup."+that._id,function(e){if(isKeyDown){that.reactOnKey(e);isKeyDown=false;}});$(window).on("resize."+this._id,function(){that._updateContentMaxHeight();setTimeout(function(){that.resetDrag();},100);});},_cubic_bezier:"0.36, 0.55, 0.19",_getCSS:function(speed,bounce){return{"-webkit-transition-duration":speed/1000+"s","transition-duration":speed/1000+"s","-webkit-transition-timing-function":"cubic-bezier("+this._cubic_bezier+", "+bounce+")","transition-timing-function":"cubic-bezier("+this._cubic_bezier+", "+bounce+")"};},_setButtons:function(){var that=this;var total_buttons=0;if(typeof this.buttons!=="object"){this.buttons={};}$.each(this.buttons,function(key,button){total_buttons+=1;if(typeof button==="function"){that.buttons[key]=button={action:button};}that.buttons[key].text=button.text||key;that.buttons[key].btnClass=button.btnClass||"btn-default";that.buttons[key].action=button.action||function(){};that.buttons[key].keys=button.keys||[];that.buttons[key].isHidden=button.isHidden||false;that.buttons[key].isDisabled=button.isDisabled||false;$.each(that.buttons[key].keys,function(i,a){that.buttons[key].keys[i]=a.toLowerCase();});var button_element=$('<button type="button" class="btn"></button>').html(that.buttons[key].text).addClass(that.buttons[key].btnClass).prop("disabled",that.buttons[key].isDisabled).css("display",that.buttons[key].isHidden?"none":"").click(function(e){e.preventDefault();var res=that.buttons[key].action.apply(that,[that.buttons[key]]);that.onAction.apply(that,[key,that.buttons[key]]);that._stopCountDown();if(typeof res==="undefined"||res){that.close();}});that.buttons[key].el=button_element;that.buttons[key].setText=function(text){button_element.html(text);};that.buttons[key].addClass=function(className){button_element.addClass(className);};that.buttons[key].removeClass=function(className){button_element.removeClass(className);};that.buttons[key].disable=function(){that.buttons[key].isDisabled=true;button_element.prop("disabled",true);};that.buttons[key].enable=function(){that.buttons[key].isDisabled=false;button_element.prop("disabled",false);};that.buttons[key].show=function(){that.buttons[key].isHidden=false;button_element.css("display","");};that.buttons[key].hide=function(){that.buttons[key].isHidden=true;button_element.css("display","none");};that["$_"+key]=that["$$"+key]=button_element;that.$btnc.append(button_element);});if(total_buttons===0){this.$btnc.hide();}if(this.closeIcon===null&&total_buttons===0){this.closeIcon=true;}if(this.closeIcon){if(this.closeIconClass){var closeHtml='<i class="'+this.closeIconClass+'"></i>';this.$closeIcon.html(closeHtml);}this.$closeIcon.click(function(e){e.preventDefault();var buttonName=false;var shouldClose=false;var str;if(typeof that.closeIcon=="function"){str=that.closeIcon();}else{str=that.closeIcon;}if(typeof str=="string"&&typeof that.buttons[str]!="undefined"){buttonName=str;shouldClose=false;}else{if(typeof str=="undefined"||!!(str)==true){shouldClose=true;}else{shouldClose=false;}}if(buttonName){var btnResponse=that.buttons[buttonName].action.apply(that);shouldClose=(typeof btnResponse=="undefined")||!!(btnResponse);}if(shouldClose){that.close();}});this.$closeIcon.show();}else{this.$closeIcon.hide();}},setTitle:function(string,force){force=force||false;if(typeof string!=="undefined"){if(typeof string=="string"){this.title=string;}else{if(typeof string=="function"){if(typeof string.promise=="function"){console.error("Promise was returned from title function, this is not supported.");}var response=string();if(typeof response=="string"){this.title=response;}else{this.title=false;}}else{this.title=false;}}}if(this.isAjaxLoading&&!force){return;}this.$title.html(this.title||"");this.updateTitleContainer();},setIcon:function(iconClass,force){force=force||false;if(typeof iconClass!=="undefined"){if(typeof iconClass=="string"){this.icon=iconClass;}else{if(typeof iconClass==="function"){var response=iconClass();if(typeof response=="string"){this.icon=response;}else{this.icon=false;}}else{this.icon=false;}}}if(this.isAjaxLoading&&!force){return;}this.$icon.html(this.icon?'<i class="'+this.icon+'"></i>':"");this.updateTitleContainer();},updateTitleContainer:function(){if(!this.title&&!this.icon){this.$titleContainer.hide();}else{this.$titleContainer.show();}},setContentPrepend:function(content,force){if(!content){return;}this.contentParsed.prepend(content);},setContentAppend:function(content){if(!content){return;}this.contentParsed.append(content);},setContent:function(content,force){force=!!force;var that=this;if(content){this.contentParsed.html("").append(content);}if(this.isAjaxLoading&&!force){return;}this.$content.html("");this.$content.append(this.contentParsed);setTimeout(function(){that.$body.find("input[autofocus]:visible:first").focus();},100);},loadingSpinner:false,showLoading:function(disableButtons){this.loadingSpinner=true;this.$jconfirmBox.addClass("loading");if(disableButtons){this.$btnc.find("button").prop("disabled",true);}},hideLoading:function(enableButtons){this.loadingSpinner=false;this.$jconfirmBox.removeClass("loading");if(enableButtons){this.$btnc.find("button").prop("disabled",false);}},ajaxResponse:false,contentParsed:"",isAjax:false,isAjaxLoading:false,_parseContent:function(){var that=this;var e="&nbsp;";if(typeof this.content=="function"){var res=this.content.apply(this);if(typeof res=="string"){this.content=res;}else{if(typeof res=="object"&&typeof res.always=="function"){this.isAjax=true;this.isAjaxLoading=true;res.always(function(data,status,xhr){that.ajaxResponse={data:data,status:status,xhr:xhr};that._contentReady.resolve(data,status,xhr);if(typeof that.contentLoaded=="function"){that.contentLoaded(data,status,xhr);}});this.content=e;}else{this.content=e;}}}if(typeof this.content=="string"&&this.content.substr(0,4).toLowerCase()==="url:"){this.isAjax=true;this.isAjaxLoading=true;var u=this.content.substring(4,this.content.length);$.get(u).done(function(html){that.contentParsed.html(html);}).always(function(data,status,xhr){that.ajaxResponse={data:data,status:status,xhr:xhr};that._contentReady.resolve(data,status,xhr);if(typeof that.contentLoaded=="function"){that.contentLoaded(data,status,xhr);}});}if(!this.content){this.content=e;}if(!this.isAjax){this.contentParsed.html(this.content);this.setContent();that._contentReady.resolve();}},_stopCountDown:function(){clearInterval(this.autoCloseInterval);if(this.$cd){this.$cd.remove();}},_startCountDown:function(){var that=this;var opt=this.autoClose.split("|");if(opt.length!==2){console.error("Invalid option for autoClose. example 'close|10000'");return false;}var button_key=opt[0];var time=parseInt(opt[1]);if(typeof this.buttons[button_key]==="undefined"){console.error("Invalid button key '"+button_key+"' for autoClose");return false;}var seconds=Math.ceil(time/1000);this.$cd=$('<span class="countdown"> ('+seconds+")</span>").appendTo(this["$_"+button_key]);this.autoCloseInterval=setInterval(function(){that.$cd.html(" ("+(seconds-=1)+") ");if(seconds<=0){that["$$"+button_key].trigger("click");that._stopCountDown();}},1000);},_getKey:function(key){switch(key){case 192:return"tilde";case 13:return"enter";case 16:return"shift";case 9:return"tab";case 20:return"capslock";case 17:return"ctrl";case 91:return"win";case 18:return"alt";case 27:return"esc";case 32:return"space";}var initial=String.fromCharCode(key);if(/^[A-z0-9]+$/.test(initial)){return initial.toLowerCase();}else{return false;}},reactOnKey:function(e){var that=this;var a=$(".jconfirm");if(a.eq(a.length-1)[0]!==this.$el[0]){return false;}var key=e.which;if(this.$content.find(":input").is(":focus")&&/13|32/.test(key)){return false;}var keyChar=this._getKey(key);if(keyChar==="esc"&&this.escapeKey){if(this.escapeKey===true){this.$scrollPane.trigger("click");}else{if(typeof this.escapeKey==="string"||typeof this.escapeKey==="function"){var buttonKey;if(typeof this.escapeKey==="function"){buttonKey=this.escapeKey();}else{buttonKey=this.escapeKey;}if(buttonKey){if(typeof this.buttons[buttonKey]==="undefined"){console.warn("Invalid escapeKey, no buttons found with key "+buttonKey);}else{this["$_"+buttonKey].trigger("click");}}}}}$.each(this.buttons,function(key,button){if(button.keys.indexOf(keyChar)!=-1){that["$_"+key].trigger("click");}});},setDialogCenter:function(){console.info("setDialogCenter is deprecated, dialogs are centered with CSS3 tables");},_unwatchContent:function(){clearInterval(this._timer);},close:function(onClosePayload){var that=this;if(typeof this.onClose==="function"){this.onClose(onClosePayload);}this._unwatchContent();$(window).unbind("resize."+this._id);$(window).unbind("keyup."+this._id);$(window).unbind("jcKeyDown."+this._id);if(this.draggable){$(window).unbind("mousemove."+this._id);$(window).unbind("mouseup."+this._id);this.$titleContainer.unbind("mousedown");}that.$el.removeClass(that.loadedClass);$("body").removeClass("jconfirm-no-scroll-"+that._id);that.$jconfirmBoxContainer.removeClass("jconfirm-no-transition");setTimeout(function(){that.$body.addClass(that.closeAnimationParsed);that.$jconfirmBg.addClass("jconfirm-bg-h");var closeTimer=(that.closeAnimation==="none")?1:that.animationSpeed;setTimeout(function(){that.$el.remove();var l=jconfirm.instances;var i=jconfirm.instances.length-1;for(i;i>=0;i--){if(jconfirm.instances[i]._id===that._id){jconfirm.instances.splice(i,1);}}if(!jconfirm.instances.length){if(that.scrollToPreviousElement&&jconfirm.lastFocused&&jconfirm.lastFocused.length&&$.contains(document,jconfirm.lastFocused[0])){var $lf=jconfirm.lastFocused;if(that.scrollToPreviousElementAnimate){var st=$(window).scrollTop();var ot=jconfirm.lastFocused.offset().top;var wh=$(window).height();if(!(ot>st&&ot<(st+wh))){var scrollTo=(ot-Math.round((wh/3)));$("html, body").animate({scrollTop:scrollTo},that.animationSpeed,"swing",function(){$lf.focus();});}else{$lf.focus();}}else{$lf.focus();}jconfirm.lastFocused=false;}}if(typeof that.onDestroy==="function"){that.onDestroy();}},closeTimer*0.4);},50);return true;},open:function(){if(this.isOpen()){return false;}this._buildHTML();this._bindEvents();this._open();return true;},setStartingPoint:function(){var el=false;if(this.animateFromElement!==true&&this.animateFromElement){el=this.animateFromElement;jconfirm.lastClicked=false;}else{if(jconfirm.lastClicked&&this.animateFromElement===true){el=jconfirm.lastClicked;jconfirm.lastClicked=false;}else{return false;}}if(!el){return false;}var offset=el.offset();var iTop=el.outerHeight()/2;var iLeft=el.outerWidth()/2;iTop-=this.$jconfirmBox.outerHeight()/2;iLeft-=this.$jconfirmBox.outerWidth()/2;var sourceTop=offset.top+iTop;sourceTop=sourceTop-this._scrollTop();var sourceLeft=offset.left+iLeft;var wh=$(window).height()/2;var ww=$(window).width()/2;var targetH=wh-this.$jconfirmBox.outerHeight()/2;var targetW=ww-this.$jconfirmBox.outerWidth()/2;sourceTop-=targetH;sourceLeft-=targetW;if(Math.abs(sourceTop)>wh||Math.abs(sourceLeft)>ww){return false;}this.$jconfirmBoxContainer.css("transform","translate("+sourceLeft+"px, "+sourceTop+"px)");},_open:function(){var that=this;if(typeof that.onOpenBefore==="function"){that.onOpenBefore();}this.$body.removeClass(this.animationParsed);this.$jconfirmBg.removeClass("jconfirm-bg-h");this.$body.focus();that.$jconfirmBoxContainer.css("transform","translate("+0+"px, "+0+"px)");setTimeout(function(){that.$body.css(that._getCSS(that.animationSpeed,1));that.$body.css({"transition-property":that.$body.css("transition-property")+", margin"});that.$jconfirmBoxContainer.addClass("jconfirm-no-transition");that._modalReady.resolve();if(typeof that.onOpen==="function"){that.onOpen();}that.$el.addClass(that.loadedClass);},this.animationSpeed);},loadedClass:"jconfirm-open",isClosed:function(){return !this.$el||this.$el.css("display")==="";},isOpen:function(){return !this.isClosed();},toggle:function(){if(!this.isOpen()){this.open();}else{this.close();}}};jconfirm.instances=[];jconfirm.lastFocused=false;jconfirm.pluginDefaults={template:'<div class="jconfirm"><div class="jconfirm-bg jconfirm-bg-h"></div><div class="jconfirm-scrollpane"><div class="jconfirm-row"><div class="jconfirm-cell"><div class="jconfirm-holder"><div class="jc-bs3-container"><div class="jc-bs3-row"><div class="jconfirm-box-container jconfirm-animated"><div class="jconfirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1"><div class="jconfirm-closeIcon">&times;</div><div class="jconfirm-title-c"><span class="jconfirm-icon-c"></span><span class="jconfirm-title"></span></div><div class="jconfirm-content-pane"><div class="jconfirm-content"></div></div><div class="jconfirm-buttons"></div><div class="jconfirm-clear"></div></div></div></div></div></div></div></div></div></div>',title:"Hello",titleClass:"",type:"default",typeAnimated:true,draggable:true,dragWindowGap:15,dragWindowBorder:true,animateFromElement:true,alignMiddle:true,smoothContent:true,content:"Are you sure to continue?",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}}},contentLoaded:function(){},icon:"",lazyOpen:false,bgOpacity:null,theme:"light",animation:"scale",closeAnimation:"scale",animationSpeed:400,animationBounce:1,escapeKey:true,rtl:false,container:"body",containerFluid:false,backgroundDismiss:false,backgroundDismissAnimation:"shake",autoClose:false,closeIcon:null,closeIconClass:false,watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:true,scrollToPreviousElementAnimate:true,useBootstrap:true,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row"},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){}};var keyDown=false;$(window).on("keydown",function(e){if(!keyDown){var $target=$(e.target);var pass=false;if($target.closest(".jconfirm-box").length){pass=true;}if(pass){$(window).trigger("jcKeyDown");}keyDown=true;}});$(window).on("keyup",function(){keyDown=false;});jconfirm.lastClicked=false;$(document).on("mousedown","button, a",function(){jconfirm.lastClicked=$(this);});})(jQuery,window);
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 /*! jQuery UI - v1.11.0pre - 2013-09-27
 * http://jqueryui.com
 * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.sortable.js, jquery.ui.effect.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js, jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-puff.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-size.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.position.js, jquery.ui.progressbar.js, jquery.ui.slider.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
@@ -27355,10 +27453,10 @@ $.widget( "ui.tooltip", {
 
 }( jQuery ) );*/
 
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 $ = jQuery = require('jquery');
 module.exports = require('./dist/jquery-ui.js');
-},{"./dist/jquery-ui.js":200,"jquery":202}],202:[function(require,module,exports){
+},{"./dist/jquery-ui.js":201,"jquery":203}],203:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
@@ -37613,7 +37711,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 'use strict';
 
 var range; // Create a range object for efficently rendering strings to elements.
@@ -38297,7 +38395,7 @@ var morphdom = morphdomFactory(morphAttrs);
 
 module.exports = morphdom;
 
-},{}],204:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 assert.notEqual = notEqual
 assert.notOk = notOk
 assert.equal = equal
@@ -38321,7 +38419,7 @@ function assert (t, m) {
   if (!t) throw new Error(m || 'AssertionError')
 }
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 /* global MutationObserver */
 var document = require('global/document')
 var window = require('global/window')
@@ -38425,7 +38523,7 @@ function eachMutation (nodes, fn) {
   }
 }
 
-},{"assert":204,"global/document":194,"global/window":195}],206:[function(require,module,exports){
+},{"assert":205,"global/document":195,"global/window":196}],207:[function(require,module,exports){
 (function (process){
   /* globals require, module */
 
@@ -39051,7 +39149,7 @@ function eachMutation (nodes, fn) {
   page.sameOrigin = sameOrigin;
 
 }).call(this,require('_process'))
-},{"_process":35,"path-to-regexp":207}],207:[function(require,module,exports){
+},{"_process":36,"path-to-regexp":208}],208:[function(require,module,exports){
 var isarray = require('isarray')
 
 /**
@@ -39443,7 +39541,7 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(path, keys, options)
 }
 
-},{"isarray":198}],208:[function(require,module,exports){
+},{"isarray":199}],209:[function(require,module,exports){
 (function (process,global){
 /**
  * Copyright (c) 2014, Facebook, Inc.
@@ -40098,7 +40196,7 @@ function pathToRegexp (path, keys, options) {
 );
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":35}],209:[function(require,module,exports){
+},{"_process":36}],210:[function(require,module,exports){
 var bel = require('bel') // turns template tag into DOM elements
 var morphdom = require('morphdom') // efficiently diffs + morphs two DOM elements
 var defaultEvents = require('./update-events.js') // default events to be copied when dom elements update
@@ -40142,7 +40240,7 @@ module.exports.update = function (fromNode, toNode, opts) {
   }
 }
 
-},{"./update-events.js":210,"bel":32,"morphdom":203}],210:[function(require,module,exports){
+},{"./update-events.js":211,"bel":33,"morphdom":204}],211:[function(require,module,exports){
 module.exports = [
   // attribute events (can be set with attributes)
   'onclick',
@@ -40180,4 +40278,4 @@ module.exports = [
   'onfocusout'
 ]
 
-},{}]},{},[4]);
+},{}]},{},[5]);
