@@ -150,6 +150,15 @@ $app->get('/juridico/:modulo/datos/catalogos/SubTiposDocumentosDiversos',functio
     $catalogos = new Catalogos();
     $catalogos->getSubTiposDocumentosDiversos();
 });
+
+$app->get('/juridico/Ifa/add/idVolante/datos/catalogos/DoctosTextos',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getDoctosTextos();
+});
+
+
+
+
 /*-------------------------------------------------------*/
 
 /*---------------- OBtiene los datos de la auditoria -----*/

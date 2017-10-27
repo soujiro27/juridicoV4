@@ -110,6 +110,16 @@ page('/SIA/juridico/DocumentosGral/add',function(ctx,next){
     addUtils.cancelar('DocumentosGral')
 })
 
+
+page('/SIA/juridico/Documentos/add',function(ctx,next){
+    $('div#main-content').html(templates.documentos)
+    addUtils.nameFile()
+    addUtils.searchDocumento()
+    addUtils.uploadFileAll('DocumentosGral')
+    addUtils.hideButtons()
+    addUtils.cancelar('Documentos')
+})
+
 page('/SIA/juridico/Irac/add/idVolante/:id',function(ctx,next){
     let index = co(function*(){
         let template = yield addUtils.loadObservaciones(ctx.params.id)

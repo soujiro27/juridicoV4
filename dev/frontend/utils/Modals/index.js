@@ -309,7 +309,37 @@ class Modals{
          })
      }
 
-    errorMsg(msg){
+     doctosTExtos(template){
+        $.alert({
+            title: 'Textos Promocion de Accion',
+            theme:'modern',
+            content:template,
+            buttons:{
+                confirm:{
+                    btnClass:'btn-primary',
+                    text: 'Aceptar',
+                    action:function(){
+                        $('input#notaConfronta').val('SI')
+                    }},
+                cancel:{
+                    btnClass:'btn-danger',
+                    text:'Cancelar',
+                    action:function(){
+                        $('input#notaConfronta').val('NO')
+                    }}},
+            onOpenBefore:function(){
+                $('table#DoctosTextos tbody tr').click(function(){
+                    let val = $(this).children().first().data('id')
+                    let texto = $(this).children().first().next().text()
+                    $('input#idDocumentoTexto').val(val)
+                    $('textarea#textoIfa').text(texto)
+                })
+            }
+                })
+    }
+    
+    
+     errorMsg(msg){
         $.alert({
             theme : 'supervan',
             title : 'Error',

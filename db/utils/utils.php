@@ -13,7 +13,8 @@ class Utils{
         'Irac' => 'JURIDICO-DIRECCION',
         'confrontasJuridico' => 'JURIDICO-DIRECCION',
         'Ifa' => 'JURIDICO-DIRECCION',
-        'Documentos' => 'JURIDICO-DIRECCION'
+        'Documentos' => 'JURIDICO-DIRECCION',
+        'DocumentosDiversos' => 'JURIDICO-DIRECCION'
     );
 
     public function conecta(){

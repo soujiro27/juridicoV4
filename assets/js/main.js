@@ -730,6 +730,36 @@ var Modals = function () {
             });
         }
     }, {
+        key: 'doctosTExtos',
+        value: function doctosTExtos(template) {
+            $.alert({
+                title: 'Textos Promocion de Accion',
+                theme: 'modern',
+                content: template,
+                buttons: {
+                    confirm: {
+                        btnClass: 'btn-primary',
+                        text: 'Aceptar',
+                        action: function action() {
+                            $('input#notaConfronta').val('SI');
+                        } },
+                    cancel: {
+                        btnClass: 'btn-danger',
+                        text: 'Cancelar',
+                        action: function action() {
+                            $('input#notaConfronta').val('NO');
+                        } } },
+                onOpenBefore: function onOpenBefore() {
+                    $('table#DoctosTextos tbody tr').click(function () {
+                        var val = $(this).children().first().data('id');
+                        var texto = $(this).children().first().next().text();
+                        $('input#idDocumentoTexto').val(val);
+                        $('textarea#textoIfa').text(texto);
+                    });
+                }
+            });
+        }
+    }, {
         key: 'errorMsg',
         value: function errorMsg(msg) {
             $.alert({
@@ -1465,6 +1495,15 @@ page('/SIA/juridico/DocumentosGral/add', function (ctx, next) {
     addUtils.cancelar('DocumentosGral');
 });
 
+page('/SIA/juridico/Documentos/add', function (ctx, next) {
+    $('div#main-content').html(templates.documentos);
+    addUtils.nameFile();
+    addUtils.searchDocumento();
+    addUtils.uploadFileAll('DocumentosGral');
+    addUtils.hideButtons();
+    addUtils.cancelar('Documentos');
+});
+
 page('/SIA/juridico/Irac/add/idVolante/:id', function (ctx, next) {
     var index = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var template;
@@ -1574,7 +1613,8 @@ var utils = {
     insertRuta: insertRuta,
     updateObservaciones: updateObservaciones,
     manejoConfronta: manejoConfronta,
-    cedulaIfa: cedulaIfa
+    cedulaIfa: cedulaIfa,
+    addPromocion: addPromocion
 
 };
 
@@ -2074,13 +2114,26 @@ function cedulaIfa(id) {
 
 
                             if (cedula.length > 0) {
-                                modal.updateCedulaIrac(res, cedula);
+                                console.log(cedula);
+                                $('div#main-content').html(res);
+                                $('input#siglas').val(cedula[0].siglas);
+                                $('input#fOficio').val(cedula[0].fOficio);
+                                $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+                                utils.clickFirmas();
+                                utils.addPromocion();
+                                utils.hideButtons();
+                                $('div.numFolio').remove();
+                                utils.datosCedula();
+                                utils.cancelar('Ifa');
                             } else {
                                 $('div#main-content').html(res);
                                 $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
                                 utils.clickFirmas();
+                                utils.addPromocion();
+                                utils.hideButtons();
+                                $('div.numFolio').remove();
                                 utils.datosCedula();
-                                utils.cancelar('Irac');
+                                utils.cancelar('Ifa');
                             }
 
                         case 16:
@@ -2328,6 +2381,38 @@ function manejoConfronta(id) {
             }
         }, _callee16, this);
     }));
+}
+
+function addPromocion() {
+    $('button#addPromoAccion').click(function () {
+        var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
+            var textos, td, template;
+            return regeneratorRuntime.wrap(function _callee17$(_context17) {
+                while (1) {
+                    switch (_context17.prev = _context17.next) {
+                        case 0:
+                            _context17.next = 2;
+                            return formApi.getDatos('DoctosTextos');
+
+                        case 2:
+                            textos = _context17.sent;
+                            td = '';
+                            template = '<table id="DoctosTextos" class="table"><thead><th class="idDocumentoTexto">idDocumentoTexto</th><th class="texto">Texto</th></thead><tbody>';
+
+                            $.each(textos, function (index, el) {
+                                td += '<tr><td class="idDocumentoTexto" data-id="' + textos[index].idDocumentoTexto + '">' + textos[index].idDocumentoTexto + '</td><td class="texto">' + textos[index].texto + '</td></tr>';
+                            });
+                            template = template + td + '</tbody></table>';
+                            modal.doctosTExtos(template);
+
+                        case 8:
+                        case 'end':
+                            return _context17.stop();
+                    }
+                }
+            }, _callee17, this);
+        }));
+    });
 }
 
 module.exports = utils;
@@ -2632,7 +2717,7 @@ module.exports = '\n<form class="form-inline" id="Volantes" method="POST">\n  <d
 },{}],19:[function(require,module,exports){
 module.exports = '\n<div class="auditoria-container">\n  <div class="auditoria">\n    <div class="cuenta">\n      <p class="cuenta">:cuenta</p>\n    </div>\n    <div class="search"><span>ASCM/</span>\n      <input id="auditoria" type="text" name="auditoria"/><span>:cta</span>\n    </div>\n  </div>\n  <div class="datosAuditoria"></div>\n  <div class="asignacion"></div>\n</div>';
 },{}],20:[function(require,module,exports){
-module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group textoIfa">\n      <label class="form-control-label" for="numFolio">Promocion de Accion</label>\n      <button class="btn btn-primary" id="addPromoAccion" type="button">Agregar Promocion de Acciones</button>\n      <textarea class="form-control" id="textoIfa" rows="7" readonly=""></textarea>\n    </div>\n    <div class="form-group estatus">\n      <label class="form-control-label" for="estatus">Estatus</label>\n      <select name="estatus" id="estatus"></select>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
+module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group textoIfa">\n      <label class="form-control-label" for="numFolio">Promocion de Accion</label>\n      <button class="btn btn-primary" id="addPromoAccion" type="button">Agregar Promocion de Acciones</button>\n      <textarea class="form-control" id="textoIfa" rows="7" readonly=""></textarea>\n      <input id="idDocumentoTexto" type="hidden" name="idDocumentoTexto" value=""/>\n    </div>\n    <div class="form-group estatus">\n      <label class="form-control-label" for="estatus">Estatus</label>\n      <select name="estatus" id="estatus"></select>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
 },{}],21:[function(require,module,exports){
 module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group estatus">\n      <label class="form-control-label" for="estatus">Estatus</label>\n      <select name="estatus" id="estatus"></select>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
 },{}],22:[function(require,module,exports){

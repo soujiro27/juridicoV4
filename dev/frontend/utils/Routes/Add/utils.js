@@ -357,13 +357,26 @@ function cedulaIfa(id){
             .replace(':firmas',camposFirmas)
 
            if(cedula.length>0){
-                modal.updateCedulaIrac(res,cedula)
+               console.log(cedula)
+            $('div#main-content').html(res)
+            $('input#siglas').val(cedula[0].siglas)
+            $('input#fOficio').val(cedula[0].fOficio)
+            $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+            utils.clickFirmas()
+            utils.addPromocion()
+            utils.hideButtons()
+            $('div.numFolio').remove()
+            utils.datosCedula()
+            utils.cancelar('Ifa')
            }else{
                $('div#main-content').html(res)
                $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
                utils.clickFirmas()
+               utils.addPromocion()
+               utils.hideButtons()
+               $('div.numFolio').remove()
                utils.datosCedula()
-               utils.cancelar('Irac')
+               utils.cancelar('Ifa')
 
            }
 
@@ -536,6 +549,22 @@ function manejoConfronta(id){
     })
 }
 
+
+function addPromocion(){
+    $('button#addPromoAccion').click(function(){
+        let funcion = co(function *(){
+            let textos = yield formApi.getDatos('DoctosTextos')
+           
+            let td = ''
+            let template = `<table id="DoctosTextos" class="table"><thead><th class="idDocumentoTexto">idDocumentoTexto</th><th class="texto">Texto</th></thead><tbody>`
+            $.each(textos,function(index,el){
+                td += `<tr><td class="idDocumentoTexto" data-id="${textos[index].idDocumentoTexto}">${textos[index].idDocumentoTexto}</td><td class="texto">${textos[index].texto}</td></tr>`
+            })
+            template = template + td + '</tbody></table>'
+            modal.doctosTExtos(template)
+        })
+    })
+}
 
 
 module.exports = utils

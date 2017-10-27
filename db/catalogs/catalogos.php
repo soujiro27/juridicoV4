@@ -21,6 +21,16 @@ class Catalogos{
         echo json_encode($res);
     }
 
+    public function getDoctosTextos(){
+        $db = $this->conecta();
+        $query = "
+        select idDocumentoTexto,idTipoDocto,idSubTipoDocumento,texto from sia_CatDoctosTextos where estatus ='ACTIVO'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
+
     public function getSubTiposDocumentos(){
         $db = $this->conecta();
         $query = "select idSubTipoDocumento,idTipoDocto,nombre,estatus from sia_catSubTiposDocumentos where estatus='ACTIVO'";

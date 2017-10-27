@@ -15,6 +15,8 @@
             elseif ( $modulo == 'Irac'){ $this->irac(); }
             elseif( $modulo == 'confrontasJuridico' ) { $this->confronta();  }
             elseif( $modulo == 'Ifa' ) { $this->Ifa();  }
+            elseif( $modulo == 'Documentos' ) { $this->documentos();  }
+            elseif( $modulo == 'DocumentosDiversos' ) { $this->documentosDiversos();  }
         }
         
 
@@ -126,6 +128,21 @@
             where sub.nombre='IRAC' and v.idTurnado=
             (select nombreCorto from sia_areas where idAreaSuperior='DGAJ' and idEmpleadoTitular=
             (select idEmpleado from sia_usuarios where idUsuario='".$_SESSION ['idUsuario']."'))";
+            $sql = $db->prepare($query);
+            $sql->execute();
+            $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($res);
+        }
+
+
+        public function documentosDiversos(){
+            $db = $this->conecta();
+            $query="select v.idVolante,v.folio,v.numDocumento, v.fRecepcion, v.idRemitente, v.asunto, v.estatus, t.estadoProceso from sia_Volantes v
+            inner join sia_VolantesDocumentos vd on v.idVolante=vd.idVolante
+            inner join sia_catSubTiposDocumentos sub on vd.idSubTipoDocumento=sub.idSubTipoDocumento
+            inner join sia_turnosJuridico t on v.idVolante=t.idVolante
+            where sub.auditoria='NO' and v.idTurnado=
+            (select nombreCorto from sia_areas where idAreaSuperior='DGAJ' and idEmpleadoTitular= (select idEmpleado from  sia_usuarios where idUsuario='".$_SESSION ['idUsuario']."'))";
             $sql = $db->prepare($query);
             $sql->execute();
             $res = $sql->fetchAll(PDO::FETCH_ASSOC);
