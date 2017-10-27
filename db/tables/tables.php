@@ -9,9 +9,12 @@
             elseif ($modulo == 'SubTiposDocumentos') { $this->SubTiposDocumentos();}
             elseif ($modulo == 'Acciones') { $this->Acciones();}
             elseif ($modulo == 'Volantes') { $this->Volantes(); }
-            elseif( $modulo == 'DocumentosGral') { $this->DocumentosGral();}
-            elseif( $modulo == 'Volantes') { $this->Volantes(); }
-            elseif ($modulo == 'VolantesDiversos') { $this->VolantesDiversos(); }
+            elseif ( $modulo == 'DocumentosGral') { $this->DocumentosGral();}
+            elseif ( $modulo == 'Volantes') { $this->Volantes(); }
+            elseif ( $modulo == 'VolantesDiversos') { $this->VolantesDiversos(); }
+            elseif ( $modulo == 'Irac'){ $this->irac(); }
+            elseif( $modulo == 'confrontasJuridico' ) { $this->confronta();  }
+            elseif( $modulo == 'Ifa' ) { $this->Ifa();  }
         }
         
 

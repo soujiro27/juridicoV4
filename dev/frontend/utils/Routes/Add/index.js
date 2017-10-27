@@ -5,6 +5,9 @@ const Promise = require('bluebird')
 const page = require ('page')
 const $ = require('jquery')
 require('ckeditor')
+const apis = require('./../../../../apis/forms/index')
+
+const api = new apis()
 
 /*--------archivos externos---------*/
 const addUtils = require('./utils')
@@ -18,7 +21,8 @@ const templates={
     Volantes:require('./../../Templates/Volantes.html'),
     VolantesDiversos:require('./../../Templates/volantesDiversos.html'),
     documentos : require('./../../Templates/documentos.html'),
-    confronta : require('./../../Templates/confronta.html')
+    confronta : require('./../../Templates/confronta.html'),
+    
 }
 
 /*--------instanciar cclearlases---------*/
@@ -40,7 +44,7 @@ page('/SIA/juridico/DoctosTextos/add',function(ctx,next){
         $('div#main-content').html(json)
         addUtils.getSubTipoDoc()
         CKEDITOR.disableAutoInline=true
-        CKEDITOR.replace('texto')
+        CKEDITOR.replace('textoForm')
         addUtils.insert('DoctosTextos')
         addUtils.hideButtons()
         addUtils.cancelar('DoctosTextos')
@@ -101,7 +105,7 @@ page('/SIA/juridico/DocumentosGral/add',function(ctx,next){
     $('div#main-content').html(templates.documentos)
     addUtils.nameFile()
     addUtils.searchDocumento()
-    addUtils.uploadFileAll()
+    addUtils.uploadFileAll('DocumentosGral')
     addUtils.hideButtons()
     addUtils.cancelar('DocumentosGral')
 })
@@ -110,6 +114,8 @@ page('/SIA/juridico/Irac/add/idVolante/:id',function(ctx,next){
     let index = co(function*(){
         let template = yield addUtils.loadObservaciones(ctx.params.id)
         $('div#main-content').html(template)
+        addUtils.hideButtons()
+        addUtils.updateObservaciones()
         addUtils.newObservacion(ctx.params.id)
         addUtils.cedulaIrac(ctx.params.id)
         addUtils.cancelar('Irac')
@@ -120,6 +126,20 @@ page('/SIA/juridico/Irac/add/idVolante/:id',function(ctx,next){
 page('/SIA/juridico/confrontasJuridico/add/idVolante/:id',function(ctx,next){
     let template = templates.confronta
     $('div#main-content').html(template)
+    addUtils.manejoConfronta(ctx.params.id)
     addUtils.hideButtons()
     addUtils.cancelar('confrontasJuridico')
+})
+
+page('/SIA/juridico/Ifa/add/idVolante/:id',function(ctx,next){
+    let index = co(function*(){
+        let template = yield addUtils.loadObservaciones(ctx.params.id)
+        $('div#main-content').html(template)
+        addUtils.hideButtons()
+        addUtils.updateObservaciones()
+        addUtils.newObservacion(ctx.params.id)
+        addUtils.cedulaIfa(ctx.params.id)
+        addUtils.cancelar('Ifa')
+
+    })
 })

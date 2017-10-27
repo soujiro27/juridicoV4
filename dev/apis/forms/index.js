@@ -132,4 +132,33 @@ module.exports = class FormApi{
         })
         return insert
     }
+
+    insertCatalogoRuta(ruta,datos){
+        let insert = new Promise ( resolve => {
+            $.post({
+                url: `Insert/${ruta}`,
+                data:datos,
+                success:function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return insert
+    }
+
+
+    getCampoConfronta(datos){
+        let insert = new Promise ( resolve => {
+            $.get({
+                url: `datos/Confronta`,
+                data:datos,
+                success:function(json){
+                    resolve(JSON.parse(json))
+                }
+            })
+        })
+        return insert
+    }
+
+
 }

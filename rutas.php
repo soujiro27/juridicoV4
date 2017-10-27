@@ -11,6 +11,7 @@ require_once $rutas['tables'].'tablesOrder.php';
 require_once $rutas['catalogos'].'catalogos.php';
 require_once $rutas['insert'].'Insert.php';
 require_once $rutas['update'].'Update.php';
+require_once $rutas['upload'].'Upload.php';
 
 /*-----------Render Principal ------------------*/
 $app->get('/'.$rutas['inicio'].':modulo',function($modulo) use ($app){
@@ -36,6 +37,24 @@ $app->get('/juridico(/:modulo)/Get/Sessions',function(){
     echo json_encode($datos);
         
 });
+
+
+$app->get('/juridico/:Irac/add/idVolante/Get/Sessions',function(){
+    
+        
+        $datos = array(
+            "idUsuario"         => $_SESSION['idUsuario'],
+            "idCuentaActual"    => $_SESSION['idCuentaActual'],
+            "userName"          => $_SESSION['sUsuario'],
+            "cuenta"            => $_SESSION['sCuentaActual'],
+            "ruta"              => $_SESSION['ruta']
+        );
+    
+        echo json_encode($datos);
+            
+    });
+
+
 
 /*---------------------------------------------*/
 
@@ -109,6 +128,7 @@ $app->get('/juridico/:modulo/datos/catalogos/subTiposDocumentos',function($modul
 $app->get('/juridico/:modulo/datos/catalogos/caracteres',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getCaracteres();
+    
 });
 
 $app->get('/juridico/:modulo/datos/catalogos/turnados',function() use ($app){
@@ -161,10 +181,12 @@ $app->get('/juridico(/:modulo)/documentos/auditoria',function() use ($app){
 
 /*--------- Obtienes las observaciones de irac e ifa -----*/
 
-$app->get('/juridico/observaciones/irac',function() use ($app){
+$app->get('/juridico/:Irac/add/idVolante/observaciones/irac',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getObservacionesIrac($app->request->get());
 });
+
+///juridico/Ifa/add/idVolante/observaciones/irac?idVolante=3193
 
 $app->get('/juridico/observaciones/id',function() use ($app){
     $catalogos = new Catalogos();
@@ -172,17 +194,36 @@ $app->get('/juridico/observaciones/id',function() use ($app){
 });
 
 
-$app->get('/juridico/irac/id',function() use ($app){
+$app->get('/juridico/:Irac/add/idVolante/observaciones/id',function() use ($app){
     $catalogos = new Catalogos();
-    $catalogos->getIracByID($app->request->get());
+    $catalogos->getObservacionesById($app->request->get());
 });
 
-$app->get('/juridico/documentosSiglas/id',function() use ($app){
+
+
+
+$app->get('/juridico/:Irac/add/idVolante/irac/id',function($irac) use ($app){
+    
+    $catalogos = new Catalogos();
+    if($irac == 'Irac'){
+        $catalogos->getIracByID($app->request->get());
+    }elseif($irac == 'Ifa'){
+        $catalogos->getIfaByID($app->request->get());
+    }
+});
+
+$app->get('/juridico/:Irac/add/idVolante/documentosSiglas/id',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getDocumentosSiglas($app->request->get());
 });
 
-$app->get('/juridico/irac/firmas',function() use ($app){
+
+$app->get('/juridico/confrontasJuridico/add/idVolante/documentosSiglas/id',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getDocumentosConfronta($app->request->get());
+});
+
+$app->get('/juridico/:Irac/add/idVolante/irac/firmas',function() use ($app){
     $catalogos = new Catalogos();
     $catalogos->getPersonalFirma($app->request->get());
 });
@@ -198,16 +239,52 @@ $app->post('/juridico/:modulo/Insert',function($modulo) use ($app){
    
 });
 
+$app->post('/juridico/:Irac/add/idVolante/Insert/:modulo',function($irac,$modulo) use ($app){
+    $insert = new Insert($modulo,$app->request->post());
+   
+});
+
+
+
+
+
+// /juridico/confrontasJuridico/add/idVolante/Insert/confrontasJuridico
+
+
+
 /*-------------------------------------------------------*/
 
 
 
 /*---------------- Update -------------------------------*/
 
-$app->post('/juridico/:modulo/Update',function($modulo) use ($app){
+$app->post('/juridico/:modulo/update(/:campo)/Update',function($modulo) use ($app){
+    if($modulo =='VolantesDiversos'){$modulo = 'Volantes';}
     $insert = new Update($modulo,$app->request->post());
    
 });
+
+$app->post('/juridico/:Irac/add/idVolante/Update',function() use ($app){
+    $modulo ='ObservacionesDoctosJuridico';
+    $insert = new Update($modulo,$app->request->post());
+   
+});
+
+
+$app->post('/juridico/Irac/add/idVolante/Update/:modulo',function($modulo) use ($app){
+   $insert = new Update($modulo,$app->request->post());
+   
+});
+
+
+$app->post('/juridico/confrontasJuridico/add/idVolante/Update/confrontasJuridico',function() use ($app){
+    $modulo = 'confrontasJuridico';
+    $insert = new Update($modulo,$app->request->post());
+    
+ });
+
+
+
 
 $app->get('/juridico(/:modulo)/update(/:dato)/datos',function($modulo) use ($app){
     $catalogos = new Catalogos();
@@ -215,15 +292,24 @@ $app->get('/juridico(/:modulo)/update(/:dato)/datos',function($modulo) use ($app
     
 });
 
+$app->get('/juridico(/:modulo)/update(/:dato)/datosRuta',function($modulo) use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getDatoUpdateRuta($app->request->get());
+    
+});
+
+
+
+
 /*-------------------------------------------------------*/
 
 
 
 /*--------------------- Upload de Archivos -------------*/
 
-$app->post('/juridico/insertAll/uploadFile',function() use ($app){
+$app->post('/juridico/:DocumentosGral/uploadFile',function() use ($app){
     
-       $controller = new Insert();
+       $controller = new Upload();
        $numDoc=$app->request->post();
        $numDoc=$numDoc['numDocumento'];
       
@@ -233,17 +319,47 @@ $app->post('/juridico/insertAll/uploadFile',function() use ($app){
            $file=explode('.',$file);
            $nameComplete=$nombre.'.'.$file[1];
            if ($file && move_uploaded_file($_FILES['anexoDoc']['tmp_name'],"./juridico/files/".$nombre.'.'.$file[1])){
-               $controllerUpdate= new UpdateController();
-               $datos=array('anexoDoc'=>$nameComplete,'idVolante'=>$res);
+               //$controllerUpdate= new UpdateController();
+               //$datos=array('anexoDoc'=>$nameComplete,'idVolante'=>$res);
             
-               $controllerUpdate->updateFile('Volantes',$datos);
+               //$controllerUpdate->updateFile('Volantes',$datos);
+               $controller->actualizaNombre($nameComplete,$res);
            }
      
    });
 /*------------------------------------------------------*/
 
 
+/*----------------- rutas mal echas -------------------*/
 
+$app->get('/juridico/:Doc/update(/:idDoc)/datos/catalogos/tiposDocumentos',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getTiposDocumentos();
+});
+
+$app->get('/juridico/:Volantes/update/idVolante/datos/catalogos/caracteres',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getCaracteres();
+});
+
+$app->get('/juridico/:Volantes/update/idVolante/datos/catalogos/turnados',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getTurnados();
+});
+
+$app->get('/juridico/:Volantes/update/idVolante/datos/catalogos/acciones',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getAcciones();
+});
+
+$app->get('/juridico/confrontasJuridico/add/idVolante/datos/Confronta',function() use ($app){
+    $catalogos = new Catalogos();
+    $catalogos->getCampoConfronta($app->request->get());
+});
+
+
+
+/*------------------------------------------------------*/
 
 
 ?>

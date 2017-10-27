@@ -13,6 +13,9 @@ form#SubTiposDocumentos(method='POST')
       option(value='SI') SI
       option(value='NO') NO
     small#passwordHelpBlock.form-text.text-muted El Documento Requiere de Datos de una Auditoria
+  .form-group.estatus
+    label.form-control-label(for='estatus') Estatus
+    select(name="estatus" id="estatus")
   .form-group.send
     input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
     button#cancelar.btn.btn-danger.btn-sm Cancelar

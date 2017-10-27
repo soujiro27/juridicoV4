@@ -90,6 +90,7 @@ function clickOrder(ruta){
             template = template.replace(':body',body)
             $('div#main-content').html(template)
             utils.loadOrder(ruta)
+            utils.clickTr(ruta)
         })
         
     })

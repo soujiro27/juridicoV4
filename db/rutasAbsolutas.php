@@ -10,7 +10,8 @@
         'tables' => 'juridico/db/tables/',
         'catalogos' => 'juridico/db/catalogs/',
         'insert' => 'juridico/db/insert/',
-        'update' => 'juridico/db/update/'
+        'update' => 'juridico/db/update/',
+        'upload' => 'juridico/db/upload/'
     );
 
 

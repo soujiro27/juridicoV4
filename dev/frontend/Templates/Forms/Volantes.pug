@@ -76,6 +76,9 @@ form#Volantes.form-inline(method='POST')
         label(for='idAccion') Instruccion
         select#idAccion.form-control(name='idAccion', required='required')
           | :acciones 
+      .form-group.estatus
+        label.form-control-label(for='estatus') Estatus
+        select(name="estatus" id="estatus")
   .form-group.send
     input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
     button#cancelar.btn.btn-danger.btn-sm Cancelar

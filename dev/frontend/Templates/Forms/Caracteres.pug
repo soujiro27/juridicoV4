@@ -5,6 +5,9 @@ form#Caracteres(method='POST')
   .form-group.nombre
     label.form-control-label(for='nombre') Nombre
     input#nombre.form-control(type='text', placeholder='Nombre', required='', pattern='[A-Za-z]{1-20}', name='nombre', title='Nombre Incorrecto o Caracteres maximos')
+  .form-group.estatus
+    label.form-control-label(for='estatus') Estatus
+    select(name="estatus" id="estatus")
   .error
     p.error
   .form-group.send

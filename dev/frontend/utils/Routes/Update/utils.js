@@ -8,6 +8,7 @@ const update = new api()
 
 const utils = {
     getSingleData,
+    getSingleDataRuta
     
 }
 
@@ -16,6 +17,15 @@ const utils = {
 function getSingleData(campo,id){
     let datos = co(function *(){
         let data = yield update.getData(campo,id)
+        return data
+    })
+    return datos
+}
+
+
+function getSingleDataRuta(ruta,campo,id){
+    let datos = co(function *(){
+        let data = yield update.getDataRuta(ruta,campo,id)
         return data
     })
     return datos

@@ -26,7 +26,10 @@ form#confrontasJuridico.form-inline(method='POST')
       .form-group.numFolio
         label(for='numFolio') Numero Documento
         input#numFolio.form-control(type='text', name='numFolio', required='')
-        input(type='hidden', name='idVolante', value='${idVolante}')
+        input#idVolante(type='hidden', name='idVolante', value='')
+      .form-group.estatus
+        label.form-control-label(for='estatus') Estatus
+        select(name="estatus" id="estatus")
     .form-group.send
       input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
       button#cancelar.btn.btn-danger Cancelar

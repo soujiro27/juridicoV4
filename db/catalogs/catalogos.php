@@ -160,6 +160,25 @@ class Catalogos{
         echo json_encode($res);
     }
 
+
+
+    public function getIfaByID($datos){
+        $id = $datos['id'];
+        $db = $this->conecta();
+        $query="select v.idVolante,v.folio,v.numDocumento, v.fRecepcion, v.idRemitente, v.asunto, v.estatus, t.estadoProceso,
+        vd.cveAuditoria, sub.idSubTipoDocumento
+        from sia_Volantes v
+        inner join sia_VolantesDocumentos vd on v.idVolante=vd.idVolante
+        inner join sia_catSubTiposDocumentos sub on vd.idSubTipoDocumento=sub.idSubTipoDocumento
+        inner join sia_turnosJuridico t on v.idVolante=t.idVolante
+        where sub.nombre='IFA' and v.idTurnado=
+        (select nombreCorto from sia_areas where idAreaSuperior='DGAJ' and idEmpleadoTitular=
+        (select idEmpleado from sia_usuarios where idUsuario='".$_SESSION ['idUsuario']."')) and v.idVolante='$id'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+    }
     public function getDocumentosSiglas($datos){
         $id = $datos['idVolante'];
         $db = $this->conecta();
@@ -169,6 +188,29 @@ class Catalogos{
         $res = $sql->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($res);
 
+    }
+
+    public function getDocumentosConfronta($datos){
+        $id = $datos['idVolante'];
+        $db = $this->conecta();
+        $query="select * from sia_ConfrontasJuridico where idVolante='$id'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+
+    }
+
+    public function getCampoConfronta($datos){
+        $id = $datos['idVolante'];
+        $db = $this->conecta();
+        $query="select vd.notaConfronta as nota ,ct.idTipoDocto from sia_VolantesDocumentos vd
+        inner join sia_catSubTiposDocumentos ct on vd.idSubTipoDocumento=ct.idSubTipoDocumento
+        where vd.idVolante ='$id'";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
     }
 
     public function getPersonalFirma($datos){
@@ -188,6 +230,23 @@ class Catalogos{
     public function getDatoUpdate($modulo,$datos){
         $campo = $datos['campo'];
         $id = $datos['id'];
+        if($modulo != 'Volantes' ){
+            $modulo = 'Cat'.$modulo;
+        }
+        $db = $this->conecta();
+        $query="select * from sia_$modulo where $campo = '$id' ";
+        //echo $query;
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($res);
+
+    }
+
+    public function getDatoUpdateRuta($datos){
+        $campo = $datos['campo'];
+        $id = $datos['id'];
+        $modulo = $datos['ruta'];
         if($modulo != 'Volantes' ){
             $modulo = 'Cat'.$modulo;
         }

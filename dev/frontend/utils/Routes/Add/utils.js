@@ -36,7 +36,13 @@ const utils = {
     buildFirmas,
     clickFirmas,
     insert,
-    uploadFileAll
+    uploadFileAll,
+    datosCedula,
+    insertRuta,
+    updateObservaciones,
+    manejoConfronta,
+    cedulaIfa,
+    addPromocion
     
 }
 
@@ -45,13 +51,17 @@ const templates = {
     irac : require('./../../Templates/irac.html'),
     newObservacion : require('./../../Templates/observacion.html'),
     cedulaIrac : require('./../../Templates/cedulaIrac.html'),
-    firmas : require('./../../Templates/firmas.html')
+    firmas : require('./../../Templates/firmas.html'),
+    iracObservaciones : require('./../../Templates/observacion.html'),
+    confronta : require('./../../Templates/confronta.html'),
+    cedulaIfa : require('./../../Templates/cedulaIfa.html'),
 }
 
 
 function hideButtons(){
     $('div#headerText').text('Añadir Nuevo Registro')
     $('a#addRegister').hide()
+    $('div.estatus').remove();
 }
 
 function cancelar(ruta){
@@ -251,7 +261,7 @@ function searchDocumento(){
                     $('div.icon img').attr('src','../../img/jpg.png')
                 }
 
-                $('div.nombre').html(`<span>${nombre}</span>`)
+                $('div.nombre').html(`<a href="/SIA/juridico/files/${nombre}" target="_blank">${nombre}</a>`)
             }   
             else{
                 $('div.icon img').attr('src','../../img/file.png')
@@ -295,7 +305,9 @@ function newObservacion(id){
             $('div#main-content').html(res)
             CKEDITOR.disableAutoInline=true
             CKEDITOR.replace('observacion')
+            utils.insertRuta('ObservacionesDoctosJuridico')
             utils.cancelar('Irac')
+            utils.hideButtons()
         })
     })
 }
@@ -315,13 +327,85 @@ function cedulaIrac(id){
             .replace(':idVolante',datos[0].idVolante)
             .replace(':firmas',camposFirmas)
 
-            $('div#main-content').html(res)
-            $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
-            utils.clickFirmas()
-            utils.cancelar('Irac')
+           if(cedula.length>0){
+                modal.updateCedulaIrac(res,cedula)
+           }else{
+               $('div#main-content').html(res)
+               $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+               utils.clickFirmas()
+               utils.datosCedula()
+               utils.cancelar('Irac')
+
+           }
+
         })
     })
 }
+
+function cedulaIfa(id){
+    $('button#cedula').click(function(){
+        let promesa = co(function *(){
+            let datos = yield formApi.getIracById({id:id})
+            let cedula = yield formApi.getDocumentosSiglas({idVolante:datos[0].idVolante})
+            let main = yield mainApi.datosInicio()
+            let firmas  = yield formApi.getPersonalFirma({idUsuario:main.idUsuario})
+            let camposFirmas = utils.buildFirmas(firmas)
+            let template = templates.cedulaIfa
+            let res = template
+            .replace(':sub',datos[0].idSubTipoDocumento)
+            .replace(':idVolante',datos[0].idVolante)
+            .replace(':firmas',camposFirmas)
+
+           if(cedula.length>0){
+                modal.updateCedulaIrac(res,cedula)
+           }else{
+               $('div#main-content').html(res)
+               $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+               utils.clickFirmas()
+               utils.datosCedula()
+               utils.cancelar('Irac')
+
+           }
+
+        })
+    })
+}
+
+
+function datosCedula(){
+    $('form#DocumentosSiglas').submit(function(e){
+        e.preventDefault()
+        let puesto=''
+        let datosArray =[]
+        let datos = $(this).serializeArray()
+        $.each(datos,function(index,el){
+            if(datos[index].name == 'idPuesto'){
+                puesto += datos[index].value + ','
+            }else{
+                let obj = {name:datos[index].name,value:datos[index].value}
+                datosArray.push(obj)
+            }
+        })
+        puesto = puesto.substring(0,puesto.length-1)
+        datosArray.push({name:'idPuestosJuridico',value:puesto})
+        
+        let send = co(function *(){
+            let envio = yield formApi.insertCatalogoRuta('DocumentosSiglas',datosArray)
+          if(envio.Error == 'Registro Duplicado'){
+              modal.errorMsg('Registro Duplicado')
+          }else if (envio.Error == 'El Numero de Folio Y SubFolio ya se encuentra Asignado'){
+              modal.errorMsg('El Numero de Folio Y SubFolio ya se encuentra Asignado')
+           }
+           else{
+               location.href = urls.inicio + ruta
+   
+          }
+        })
+        
+
+    })
+}
+
 
 function buildFirmas(datos){
     let res = ''
@@ -375,28 +459,41 @@ function insert(ruta){
  })   
 }
 
+function insertRuta(ruta){
+    $('form#'+ruta).submit(function(e){
+        e.preventDefault()
+        let datos = $(this).serializeArray()
+        let send = co(function *(){
+            let envio = yield formApi.insertCatalogoRuta(ruta,datos)
+          if(envio.Error == 'Registro Duplicado'){
+              modal.errorMsg('Registro Duplicado')
+          }else if (envio.Error == 'El Numero de Folio Y SubFolio ya se encuentra Asignado'){
+              modal.errorMsg('El Numero de Folio Y SubFolio ya se encuentra Asignado')
+           }
+           else{
+              // location.href = urls.inicio + ruta
+   
+          }
+        })
+    })   
+   }
 
 
-function uploadFileAll(){
+
+function uploadFileAll(ruta){
     let self=this
     $('form#documentosJur').on('submit',function(e){
         e.preventDefault()
          var formData = new FormData($(this)[0]);
             $.ajax({
-        url: '/juridico/insertAll/uploadFile',  
+        url: 'uploadFile',  
         type: 'POST',
         data: formData,
         cache: false,
         contentType: false,
         processData: false,
-        beforeSend: function(){
-           // message = $("<span class='before'>Subiendo la imagen, por favor espere...</span>");
-            //showMessage(message)        
-        },
-      
         success: function(json){
-          let data=JSON.parse(json)
-          self.statusInsertRegister(data,ruta)
+            location.href = urls.inicio + ruta
         },
      
         error: function(){
@@ -407,7 +504,37 @@ function uploadFileAll(){
 }
 
 
+function updateObservaciones(){
+    $('table.observaciones tbody tr').click(function(){
+        let val = $(this).children().first().data('valor')
+        let funcion = co(function *(){
+            let obsv = yield formApi.getObservacionesById({idObservacionDoctoJuridico:val})
+            modal.updateObservaciones(templates.iracObservaciones,obsv)
+        })
+        
+    })
+}
 
+
+function manejoConfronta(id){
+    let funcion = co(function *(){
+        let campo = yield formApi.getCampoConfronta({idVolante:id})
+        let datos = yield formApi.getDocumentosSiglas({idVolante:id})
+        if(datos.length>0){
+            if(campo["0"].idTipoDocto == 'OFICIO' && campo["0"].nota=='SI' )
+            {//algo aqui
+            }else{var nota = 'NO'}
+            modal.updateConfronta(templates.confronta,datos,nota)
+        }else{
+            console.log('datos', datos);
+            if(campo["0"].idTipoDocto == 'OFICIO' && campo["0"].nota=='SI' )
+            {//algo aqui
+            }else{$('div.notaInformativa').remove()}
+            $('input#idVolante').val(id)
+            utils.insertRuta('confrontasJuridico')
+        }
+    })
+}
 
 
 

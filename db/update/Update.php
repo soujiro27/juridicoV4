@@ -107,9 +107,14 @@ class Update{
     }
 
     public function updateQuery($tabla,$datos,$datosWhere){
+        
+        if($tabla != 'Volantes' && $tabla != 'ObservacionesDoctosJuridico' && $tabla!='DocumentosSiglas' && $tabla != 'confrontasJuridico' ){
+            $tabla = 'Cat'.$tabla;
+        }
         $campos=$this->buildValuesQueryUpdate($datos);
         $where=$this->buildFieldsWhere($datosWhere,'AND','=');
         $sql='UPDATE sia_'.$tabla.' SET '.$campos.', usrModificacion=:usrModificacion,fModificacion=getdate() WHERE '.$where;
+        
         return $sql;
     }
 
@@ -119,14 +124,51 @@ class Update{
             $dbQuery=$db->prepare($sql);
             $pdo[':usrModificacion']=$_SESSION ["idUsuario"];
             $dbQuery->execute($pdo);
-            $insert=array('Success' => 'Success');
+            //$insert=array('Success' => 'Success');
+            $errores=$dbQuery->errorInfo();     
+            $insert=array('Error' => $errores);
             echo json_encode($insert);
+            
         } catch(PDOException $e){
             $errores=$dbQuery->errorInfo();     
             $insert=array('Error' => $errores);
             echo json_encode($insert);
         }
     }
+
+
+    public function buildFieldsWhere($campos,$logico,$igualador){
+        $cadena='';
+        foreach($campos as $key => $valor){
+            $cadena=$cadena.$key.$igualador.':'.$key.' '.$logico.' ';
+        }
+        $cadena=rtrim($cadena,' ');
+        $cadena=rtrim($cadena,$logico);
+        return $cadena;
+
+    }
+
+    public function conecta(){
+        try{
+            require_once 'juridico/db/rutasAbsolutas.php';
+            $rutas = new RutasAbsolutas();
+            $rutas = $rutas->rutas();
+            require $rutas['conexion'];
+            $db = new PDO("sqlsrv:Server={$hostname}; Database={$database}", $username, $password );
+            return $db;
+        }catch (PDOException $e) {die();}
+    }
+
+    public function buildValuesQueryUpdate($campos){
+        $cadena='';
+        foreach ($campos as $key => $value) {
+            $cadena=$cadena.$key.'=:'.$key.',';
+        }
+        $cadena=rtrim($cadena,',');
+        return $cadena;
+    }
+
+
 
 }
 

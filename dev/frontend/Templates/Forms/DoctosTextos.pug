@@ -9,8 +9,11 @@ form#DoctosTextos(method='POST')
         label.form-control-label(for='subDocumento') Tipo de SubDocumento
         select#subDocumento.form-control(name='idSubTipoDocumento', required='required')
     .form-group.texto
-        label.form-control-label(for='texto') Texto
-        textarea#texto.form-control(rows='3', name='texto', required='', placeholder='texto')
+        label.form-control-label(for='textoForm') Texto
+        textarea#textoForm.form-control(rows='3', name='texto', required='', placeholder='texto')
+    .form-group.estatus
+        label.form-control-label(for='estatus') Estatus
+        select(name="estatus" id="estatus")
     .form-group.send
         input.btn.btn-primary.btn-sm(type='submit', value='Guardar')
         button#cancelar.btn.btn-danger.btn-sm Cancelar

@@ -55,12 +55,44 @@ module.exports = function () {
             return promise;
         }
     }, {
+        key: 'updateRuta',
+        value: function updateRuta(ruta, datos) {
+            var promise = new Promise(function (resolve) {
+                $.post({
+                    url: 'Update/' + ruta,
+                    data: datos,
+                    success: function success(json) {
+                        resolve(JSON.parse(json));
+                    }
+                });
+            });
+            return promise;
+        }
+    }, {
         key: 'getData',
         value: function getData(campo, id) {
             var promesa = new Promise(function (resolve) {
                 $.get({
                     url: 'datos',
                     data: {
+                        campo: campo,
+                        id: id
+                    },
+                    success: function success(json) {
+                        resolve(JSON.parse(json));
+                    }
+                });
+            });
+            return promesa;
+        }
+    }, {
+        key: 'getDataRuta',
+        value: function getDataRuta(ruta, campo, id) {
+            var promesa = new Promise(function (resolve) {
+                $.get({
+                    url: 'datosRuta',
+                    data: {
+                        ruta: ruta,
                         campo: campo,
                         id: id
                     },
@@ -227,6 +259,34 @@ module.exports = function () {
             });
             return insert;
         }
+    }, {
+        key: "insertCatalogoRuta",
+        value: function insertCatalogoRuta(ruta, datos) {
+            var insert = new Promise(function (resolve) {
+                $.post({
+                    url: "Insert/" + ruta,
+                    data: datos,
+                    success: function success(json) {
+                        resolve(JSON.parse(json));
+                    }
+                });
+            });
+            return insert;
+        }
+    }, {
+        key: "getCampoConfronta",
+        value: function getCampoConfronta(datos) {
+            var insert = new Promise(function (resolve) {
+                $.get({
+                    url: "datos/Confronta",
+                    data: datos,
+                    success: function success(json) {
+                        resolve(JSON.parse(json));
+                    }
+                });
+            });
+            return insert;
+        }
     }]);
 
     return FormApi;
@@ -277,7 +337,7 @@ module.exports = function () {
     return Tables;
 }();
 
-},{"jquery":203}],5:[function(require,module,exports){
+},{"jquery":204}],5:[function(require,module,exports){
 'use strict';
 
 /*---------node_modules ---------*/
@@ -325,7 +385,7 @@ var test = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 
 page();
 
-},{"./../apis/Main/index":1,"./utils/Routes/Add/index":8,"./utils/Routes/Update/index":10,"./utils/Tables/index":12,"./utils/Tables/utils":13,"babelify-es6-polyfill":31,"bluebird":34,"co":38,"jquery":203,"page":207}],6:[function(require,module,exports){
+},{"./../apis/Main/index":1,"./utils/Routes/Add/index":8,"./utils/Routes/Update/index":10,"./utils/Tables/index":12,"./utils/Tables/utils":13,"babelify-es6-polyfill":32,"bluebird":35,"co":39,"jquery":204,"page":208}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -351,7 +411,7 @@ var Modals = function () {
     _createClass(Modals, [{
         key: 'updateCaracteres',
         value: function updateCaracteres(template, datos) {
-            console.log('datos', datos);
+
             $.confirm({
                 title: 'Actualizar Registro',
                 theme: 'modern',
@@ -458,6 +518,218 @@ var Modals = function () {
             });
         }
     }, {
+        key: 'updateDoctosTextos',
+        value: function updateDoctosTextos(template, datos) {
+
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.doctosTextos(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#DoctosTextos').serializeArray();
+                            utils.sendDataUpdate(datosForm, 'DoctosTextos');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateSubTipoDocumentos',
+        value: function updateSubTipoDocumentos(template, datos) {
+
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.SubTiposDocumentos(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#SubTiposDocumentos').serializeArray();
+                            utils.sendDataUpdate(datosForm, 'SubTiposDocumentos');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateAcciones',
+        value: function updateAcciones(template, datos) {
+
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.acciones(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#Acciones').serializeArray();
+                            utils.sendDataUpdate(datosForm, 'Acciones');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateVolantes',
+        value: function updateVolantes(template, datos) {
+
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.removeVolantes();
+                    utils.volantes(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#Volantes').serializeArray();
+                            utils.sendDataUpdate(datosForm, 'Volantes');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateVolantesDiversos',
+        value: function updateVolantesDiversos(template, datos) {
+
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.removeVolantesDiversos();
+                    utils.volantesDiversos(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#VolantesDiversos').serializeArray();
+                            utils.sendDataUpdate(datosForm, 'VolantesDiversos');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateObservaciones',
+        value: function updateObservaciones(template, datos) {
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.iracObservaciones(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#ObservacionesDoctosJuridico').serializeArray();
+                            utils.sendDataUpdate(datosForm, 'Irac');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateCedulaIrac',
+        value: function updateCedulaIrac(template, datos) {
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    utils.removeSend();
+                    utils.iracCedula(datos);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var puesto = '';
+                            var datosArray = [];
+                            var datos = $('form#DocumentosSiglas').serializeArray();
+                            $.each(datos, function (index, el) {
+                                if (datos[index].name == 'idPuesto') {
+                                    puesto += datos[index].value + ',';
+                                } else {
+                                    var obj = { name: datos[index].name, value: datos[index].value };
+                                    datosArray.push(obj);
+                                }
+                            });
+                            puesto = puesto.substring(0, puesto.length - 1);
+                            datosArray.unshift({ name: 'idPuestosJuridico', value: puesto });
+                            utils.sendDataUpdateRuta(datosArray, 'DocumentosSiglas');
+                        }
+                    },
+                    cancel: { text: 'Cancelar', btnClass: 'btn-danger' }
+                } });
+        }
+    }, {
+        key: 'updateConfronta',
+        value: function updateConfronta(template, datos, nota) {
+
+            $.confirm({
+                title: 'Actualizar Registro',
+                theme: 'modern',
+                content: template,
+                onOpenBefore: function onOpenBefore() {
+                    $('div#main-content').remove();
+                    utils.removeSend();
+                    utils.confronta(datos, nota);
+                },
+                buttons: {
+                    formSubmit: {
+                        text: 'Actualizar',
+                        btnClass: 'btn-blue',
+                        action: function action() {
+                            var datosForm = $('form#confrontasJuridico').serializeArray();
+                            utils.sendDataUpdateRuta(datosForm, 'confrontasJuridico');
+                        }
+                    },
+                    cancel: {
+                        text: 'Cancelar',
+                        btnClass: 'btn-danger',
+                        action: function action() {
+                            location.href = '/SIA/juridico/confrontasJuridico';
+                        }
+                    }
+                }
+            });
+        }
+    }, {
         key: 'errorMsg',
         value: function errorMsg(msg) {
             $.alert({
@@ -473,19 +745,46 @@ var Modals = function () {
 
 module.exports = Modals;
 
-},{"./../../../apis/forms/index":3,"./utils":7,"bluebird":34,"co":38,"jquery":203,"jquery-confirm":200,"jquery-ui-browserify":202}],7:[function(require,module,exports){
+},{"./../../../apis/forms/index":3,"./utils":7,"bluebird":35,"co":39,"jquery":204,"jquery-confirm":201,"jquery-ui-browserify":203}],7:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
 var urls = require('./../rutasAbsolutas');
+var co = require('co');
+var Promise = require('bluebird');
+var updateApi = require('./../../../apis/Update/index');
+var api = new updateApi();
+
+var apiForm = require('./../../../apis/forms/index');
+
+var formApi = new apiForm();
 
 var utils = {
     removeSend: removeSend,
+    removeVolantes: removeVolantes,
+    removeVolantesDiversos: removeVolantesDiversos,
     caracteres: caracteres,
+    doctosTextos: doctosTextos,
+    SubTiposDocumentos: SubTiposDocumentos,
+    acciones: acciones,
+    volantes: volantes,
+    volantesDiversos: volantesDiversos,
     isEmptyInput: isEmptyInput,
     sendDataUpdate: sendDataUpdate,
     TableDatosAuditoria: TableDatosAuditoria,
-    tableTurnados: tableTurnados
+    tableTurnados: tableTurnados,
+    estatus: estatus,
+    tipoDocumento: tipoDocumento,
+    subDocumento: subDocumento,
+    auditoriaSiNo: auditoriaSiNo,
+    cambiaHora: cambiaHora,
+    comboCaracteres: comboCaracteres,
+    comboTurnado: comboTurnado,
+    comboInstruccion: comboInstruccion,
+    iracObservaciones: iracObservaciones,
+    iracCedula: iracCedula,
+    sendDataUpdateRuta: sendDataUpdateRuta,
+    confronta: confronta
 
 };
 
@@ -500,9 +799,216 @@ function removeSend() {
 
 function caracteres(datos) {
 
-    $('div.nombre').append('<input type="hidden" name="' + datos[0].campo + '" value="' + datos[0].idCaracter + '" />');
     $('input#siglas').val(datos[0].siglas);
     $('input#nombre').val(datos[0].nombre);
+    var res = utils.estatus(datos["0"].estatus);
+    $('select#estatus').html(res);
+    $('div.estatus').append('<input type="hidden" name="idCaracter" value="' + datos[0].idCaracter + '" />');
+}
+
+function confronta(datos, nota) {
+    if (nota == 'NO') {
+        $('div.notaInformativa').remove();
+        $('input#notaInformativa').val(datos[0].notaInformativa);
+    }
+    $('input#nombre').val(datos[0].nombreResponsable);
+    $('input#cargo').val(datos[0].cargoResponsable);
+    $('input#fConfronta').val(datos[0].fConfronta);
+    var hora = utils.cambiaHora(datos[0].hConfronta);
+    $('input#hConfronta').val(hora);
+    $('input#fOficio').val(datos[0].fOficio);
+    $('input#siglas').val(datos[0].siglas);
+    $('input#numFolio').val(datos[0].numFolio);
+    $('input#idVolante').val(datos[0].idVolante);
+    var res = utils.estatus(datos[0].estatus);
+    $('select#estatus').html(res);
+    $('div.estatus').append('<input type="hidden" name="idConfrontaJuridico" value="' + datos[0].idConfrontaJuridico + '" />');
+}
+
+function SubTiposDocumentos(datos) {
+
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var tipoDocumento, auditoria, res;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        _context.next = 2;
+                        return utils.tipoDocumento(datos[0].idTipoDocto);
+
+                    case 2:
+                        tipoDocumento = _context.sent;
+
+                        $('select#idDocumento').html(tipoDocumento);
+                        $('input#nombre').val(datos[0].nombre);
+
+                        auditoria = utils.auditoriaSiNo(datos[0].auditoria);
+
+                        $('select#auditoria').html(auditoria);
+
+                        res = utils.estatus(datos[0].estatus);
+
+                        $('select#estatus').html(res);
+                        $('div.estatus').append('<input type="hidden" name="idSubTipoDocumento" value="' + datos[0].idSubTipoDocumento + '" />');
+
+                    case 10:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, _callee, this);
+    }));
+}
+
+function acciones(datos) {
+
+    $('input#nombre').val(datos[0].nombre);
+    var res = utils.estatus(datos["0"].estatus);
+    $('select#estatus').html(res);
+    $('div.estatus').append('<input type="hidden" name="idAccion" value="' + datos[0].idAccion + '" />');
+}
+
+function volantes(datos) {
+    var hora = utils.cambiaHora(datos[0].hRecepcion);
+    $('input#Folio').val(datos[0].folio);
+    $('input#subFolio').val(datos[0].subFolio);
+    $('input#numDocumento').val(datos[0].numDocumento);
+    $('input#anexos').val(datos[0].anexos);
+    $('input#fDocumento').val(datos[0].fDocumento);
+    $('input#fRecepcion').val(datos[0].fRecepcion);
+    $('input#hRecepcion').val(hora);
+    $('textarea').val(datos[0].asunto);
+    var combos = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var carac, turn, acc, res;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        _context2.next = 2;
+                        return utils.comboCaracteres(datos[0].idCaracter);
+
+                    case 2:
+                        carac = _context2.sent;
+                        _context2.next = 5;
+                        return utils.comboTurnado(datos[0].idTurnado);
+
+                    case 5:
+                        turn = _context2.sent;
+                        _context2.next = 8;
+                        return utils.comboInstruccion(datos[0].idAccion);
+
+                    case 8:
+                        acc = _context2.sent;
+
+                        $('select#idCaracter').html(carac);
+                        $('select#idTurnado').html(turn);
+                        $('select#idAccion').html(acc);
+                        res = utils.estatus(datos["0"].estatus);
+
+                        $('select#estatus').html(res);
+                        $('div.estatus').append('<input type="hidden" name="idVolante" value="' + datos[0].idVolante + '" />');
+
+                    case 15:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, this);
+    }));
+}
+
+function volantesDiversos(datos) {
+    var hora = utils.cambiaHora(datos[0].hRecepcion);
+    $('input#Folio').val(datos[0].folio);
+    $('input#subFolio').val(datos[0].subFolio);
+    $('input#numDocumento').val(datos[0].numDocumento);
+    $('input#anexos').val(datos[0].anexos);
+    $('input#fDocumento').val(datos[0].fDocumento);
+    $('input#fRecepcion').val(datos[0].fRecepcion);
+    $('input#hRecepcion').val(hora);
+    $('input#idRemitente').val(datos[0].idRemitente);
+    $('textarea').val(datos[0].asunto);
+    var combos = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var carac, turn, acc, res;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            while (1) {
+                switch (_context3.prev = _context3.next) {
+                    case 0:
+                        _context3.next = 2;
+                        return utils.comboCaracteres(datos[0].idCaracter);
+
+                    case 2:
+                        carac = _context3.sent;
+                        _context3.next = 5;
+                        return utils.comboTurnado(datos[0].idTurnado);
+
+                    case 5:
+                        turn = _context3.sent;
+                        _context3.next = 8;
+                        return utils.comboInstruccion(datos[0].idAccion);
+
+                    case 8:
+                        acc = _context3.sent;
+
+                        $('select#idCaracter').html(carac);
+                        $('select#idTurnado').html(turn);
+                        $('select#idAccion').html(acc);
+                        res = utils.estatus(datos["0"].estatus);
+
+                        $('select#estatus').html(res);
+                        $('div.estatus').append('<input type="hidden" name="idVolante" value="' + datos[0].idVolante + '" />');
+
+                    case 15:
+                    case 'end':
+                        return _context3.stop();
+                }
+            }
+        }, _callee3, this);
+    }));
+}
+
+function doctosTextos(datos) {
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+        var tipoDocumento, sub, editor, res;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+                switch (_context4.prev = _context4.next) {
+                    case 0:
+                        _context4.next = 2;
+                        return utils.tipoDocumento(datos[0].idTipoDocto);
+
+                    case 2:
+                        tipoDocumento = _context4.sent;
+
+                        $('select#idDocumento').html(tipoDocumento);
+
+                        _context4.next = 6;
+                        return utils.subDocumento(datos[0].idTipoDocto, datos[0].idSubTipoDocumento);
+
+                    case 6:
+                        sub = _context4.sent;
+
+                        $('select#subDocumento').html(sub);
+
+                        $('textarea#textoForm').text(datos[0].texto);
+                        CKEDITOR.disableAutoInline = true;
+                        editor = CKEDITOR.replace('textoForm');
+
+                        editor.on('change', function (e) {
+                            $('textarea#textoForm').text(editor.getData());
+                        });
+                        res = utils.estatus(datos["0"].estatus);
+
+                        $('select#estatus').html(res);
+                        $('div.estatus').append('<input type="hidden" name="idDocumentoTexto" value="' + datos[0].idDocumentoTexto + '" />');
+
+                    case 15:
+                    case 'end':
+                        return _context4.stop();
+                }
+            }
+        }, _callee4, this);
+    }));
 }
 
 function isEmptyInput(datos) {
@@ -520,8 +1026,56 @@ function isEmptyInput(datos) {
 
 function sendDataUpdate(datos, ruta) {
     var empty = isEmptyInput(datos);
-    //manda los datos con el api y respuesta de la api
-    location.href = urls.inicio + ruta;
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+        var send;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+            while (1) {
+                switch (_context5.prev = _context5.next) {
+                    case 0:
+                        _context5.next = 2;
+                        return api.update(empty);
+
+                    case 2:
+                        send = _context5.sent;
+
+                        if (send.Success == 'Success') {
+                            //location.href = urls.inicio + ruta
+                        }
+
+                    case 4:
+                    case 'end':
+                        return _context5.stop();
+                }
+            }
+        }, _callee5, this);
+    }));
+}
+
+function sendDataUpdateRuta(datos, ruta) {
+    var empty = isEmptyInput(datos);
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+        var send;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            while (1) {
+                switch (_context6.prev = _context6.next) {
+                    case 0:
+                        _context6.next = 2;
+                        return api.updateRuta(ruta, empty);
+
+                    case 2:
+                        send = _context6.sent;
+
+                        if (send.Success == 'Success') {
+                            //location.href = urls.inicio + ruta
+                        }
+
+                    case 4:
+                    case 'end':
+                        return _context6.stop();
+                }
+            }
+        }, _callee6, this);
+    }));
 }
 
 function TableDatosAuditoria(datos) {
@@ -555,9 +1109,263 @@ function tableTurnados(datos) {
     return res;
 }
 
+function estatus(dato) {
+    dato = dato.trim();
+    var res = '';
+    if (dato == 'ACTIVO') {
+        res = '<option value="ACTIVO">ACTIVO</option><option value="INACTIVO">INACTIVO</option> ';
+    } else {
+        res = '<option value="INACTIVO">INACTIVO</option><option value="ACTIVO">ACTIVO</option> ';
+    }
+    return res;
+}
+
+function tipoDocumento(id) {
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+        var opt, datos;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+            while (1) {
+                switch (_context7.prev = _context7.next) {
+                    case 0:
+                        opt = '';
+                        _context7.next = 3;
+                        return formApi.getDatos('tiposDocumentos');
+
+                    case 3:
+                        datos = _context7.sent;
+
+                        $.each(datos, function (index, el) {
+                            if (datos[index].idTipoDocto == id) {
+                                opt += '<option value="' + datos[index].idTipoDocto + '" selected>' + datos[index].nombre + '</option> ';
+                            } else {
+                                opt += '<option value="' + datos[index].idTipoDocto + '">' + datos[index].nombre + '</option> ';
+                            }
+                        });
+                        return _context7.abrupt('return', opt);
+
+                    case 6:
+                    case 'end':
+                        return _context7.stop();
+                }
+            }
+        }, _callee7, this);
+    }));
+    return funcion;
+}
+
+function subDocumento(documento, subtipo) {
+    //esta funcion depende del oficio que se seleeciono
+    var subDoc = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+        var opt, sub;
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+            while (1) {
+                switch (_context8.prev = _context8.next) {
+                    case 0:
+                        opt = '';
+                        _context8.next = 3;
+                        return api.getDataRuta('SubTiposDocumentos', 'idTipoDocto', documento);
+
+                    case 3:
+                        sub = _context8.sent;
+
+                        $.each(sub, function (index, el) {
+                            if (sub[index].idSubTipoDocumento == subtipo) {
+                                opt += '<option value="' + sub[index].idSubTipoDocumento + '" selected>' + sub[index].nombre + '</option>';
+                            } else {
+                                opt += '<option value="' + sub[index].idSubTipoDocumento + '" >' + sub[index].nombre + '</option>';
+                            }
+                        });
+                        return _context8.abrupt('return', opt);
+
+                    case 6:
+                    case 'end':
+                        return _context8.stop();
+                }
+            }
+        }, _callee8, this);
+    }));
+    return subDoc;
+}
+
+function auditoriaSiNo(dato) {
+    var res = '';
+    if (dato == 'SI') {
+        res = '<option value="SI">SI</option><option value="NO">NO</option> ';
+    } else {
+        res = '<option value="NO">NO</option><option value="SI">SI</option> ';
+    }
+    return res;
+}
+
+function removeVolantes() {
+    $('div.headerVolante').remove();
+    $('input#Folio').prop('readonly', 'true');
+    $('input#subFolio').prop('readonly', 'true');
+    $('div.bloque3').remove();
+}
+
+function removeVolantesDiversos() {
+    $('div.headerVolante').remove();
+    $('input#Folio').prop('readonly', 'true');
+    $('input#subFolio').prop('readonly', 'true');
+}
+
+function cambiaHora(dato) {
+    var res = dato.substring(0, 5);
+    return res;
+}
+
+function comboCaracteres(id) {
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+        var datos, opt;
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+            while (1) {
+                switch (_context9.prev = _context9.next) {
+                    case 0:
+                        _context9.next = 2;
+                        return formApi.getDatos('caracteres');
+
+                    case 2:
+                        datos = _context9.sent;
+                        opt = '';
+
+                        $.each(datos, function (index, el) {
+                            if (datos[index].idCaracter == id) {
+                                opt += '<option value="' + datos[index].idCaracter + '" selected>' + datos[index].nombre + '</option>';
+                            } else {
+                                opt += '<option value="' + datos[index].idCaracter + '">' + datos[index].nombre + '</option>';
+                            }
+                        });
+                        return _context9.abrupt('return', opt);
+
+                    case 6:
+                    case 'end':
+                        return _context9.stop();
+                }
+            }
+        }, _callee9, this);
+    }));
+    return funcion;
+}
+
+function comboTurnado(id) {
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+        var datos, opt;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+            while (1) {
+                switch (_context10.prev = _context10.next) {
+                    case 0:
+                        _context10.next = 2;
+                        return formApi.getDatos('turnados');
+
+                    case 2:
+                        datos = _context10.sent;
+                        opt = '';
+
+                        $.each(datos, function (index, el) {
+                            if (datos[index].idArea == id) {
+                                opt += '<option value="' + datos[index].idArea + '" selected>' + datos[index].nombre + '</option>';
+                            } else {
+                                opt += '<option value="' + datos[index].idArea + '">' + datos[index].nombre + '</option>';
+                            }
+                        });
+                        return _context10.abrupt('return', opt);
+
+                    case 6:
+                    case 'end':
+                        return _context10.stop();
+                }
+            }
+        }, _callee10, this);
+    }));
+    return funcion;
+}
+
+function comboInstruccion(id) {
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+        var datos, opt;
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+            while (1) {
+                switch (_context11.prev = _context11.next) {
+                    case 0:
+                        _context11.next = 2;
+                        return formApi.getDatos('acciones');
+
+                    case 2:
+                        datos = _context11.sent;
+                        opt = '';
+
+                        $.each(datos, function (index, el) {
+                            if (datos[index].idAccion == id) {
+                                opt += '<option value="' + datos[index].idAccion + '" selected>' + datos[index].nombre + '</option>';
+                            } else {
+                                opt += '<option value="' + datos[index].idAccion + '">' + datos[index].nombre + '</option>';
+                            }
+                        });
+                        return _context11.abrupt('return', opt);
+
+                    case 6:
+                    case 'end':
+                        return _context11.stop();
+                }
+            }
+        }, _callee11, this);
+    }));
+    return funcion;
+}
+
+function iracObservaciones(datos) {
+    console.log('datos', datos);
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
+        var editor, res;
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
+            while (1) {
+                switch (_context12.prev = _context12.next) {
+                    case 0:
+                        $('input#idVolante').val(datos[0].idVolante);
+                        $('input#cveAuditoria').val(datos[0].cveAuditoria);
+                        $('input#idSubTipoDocumento').val(datos[0].idSubTipoDocumento);
+                        $('input#pagina').val(datos[0].pagina);
+                        $('input#parrafo').val(datos[0].parrafo);
+                        $('textarea#observacionTexto').text(datos[0].observacion);
+                        CKEDITOR.disableAutoInline = true;
+                        editor = CKEDITOR.replace('observacionTexto');
+
+                        editor.on('change', function (e) {
+                            $('textarea#observacionTexto').text(editor.getData());
+                        });
+                        res = utils.estatus(datos["0"].estatus);
+
+                        $('select#estatus').html(res);
+                        $('div.estatus').append('<input type="hidden" name="idObservacionDoctoJuridico" value="' + datos[0].idObservacionDoctoJuridico + '" />');
+
+                    case 12:
+                    case 'end':
+                        return _context12.stop();
+                }
+            }
+        }, _callee12, this);
+    }));
+}
+
+function iracCedula(datos) {
+    $('input#siglas').val(datos[0].siglas);
+    $('input#fOficio').val(datos[0].fOficio);
+    $('input#numFolio').val(datos[0].numFolio);
+    console.log('datos', datos);
+    var puestos = datos[0].idPuestosJuridico;
+    var puestosArray = puestos.split(',');
+    console.log('puestosArray', puestosArray);
+    for (var x in puestosArray) {
+        $('input[value="' + puestosArray[x] + '"]').prop('checked', true);
+    }
+    var res = utils.estatus(datos["0"].estatus);
+    $('select#estatus').html(res);
+    $('div.estatus').append('<input type="hidden" name="idDocumentoSiglas" value="' + datos[0].idDocumentoSiglas + '" />');
+}
 module.exports = utils;
 
-},{"./../Templates/datosAuditoria.html":22,"./../Templates/datosTurnado.html":23,"./../rutasAbsolutas":30,"jquery":203}],8:[function(require,module,exports){
+},{"./../../../apis/Update/index":2,"./../../../apis/forms/index":3,"./../Templates/datosAuditoria.html":23,"./../Templates/datosTurnado.html":24,"./../rutasAbsolutas":31,"bluebird":35,"co":39,"jquery":204}],8:[function(require,module,exports){
 'use strict';
 
 window.CKEDITOR_BASEPATH = 'node_modules/ckeditor/';
@@ -567,6 +1375,9 @@ var Promise = require('bluebird');
 var page = require('page');
 var $ = require('jquery');
 require('ckeditor');
+var apis = require('./../../../../apis/forms/index');
+
+var api = new apis();
 
 /*--------archivos externos---------*/
 var addUtils = require('./utils');
@@ -596,7 +1407,7 @@ page('/SIA/juridico/DoctosTextos/add', function (ctx, next) {
         $('div#main-content').html(json);
         addUtils.getSubTipoDoc();
         CKEDITOR.disableAutoInline = true;
-        CKEDITOR.replace('texto');
+        CKEDITOR.replace('textoForm');
         addUtils.insert('DoctosTextos');
         addUtils.hideButtons();
         addUtils.cancelar('DoctosTextos');
@@ -649,7 +1460,7 @@ page('/SIA/juridico/DocumentosGral/add', function (ctx, next) {
     $('div#main-content').html(templates.documentos);
     addUtils.nameFile();
     addUtils.searchDocumento();
-    addUtils.uploadFileAll();
+    addUtils.uploadFileAll('DocumentosGral');
     addUtils.hideButtons();
     addUtils.cancelar('DocumentosGral');
 });
@@ -668,11 +1479,13 @@ page('/SIA/juridico/Irac/add/idVolante/:id', function (ctx, next) {
                         template = _context.sent;
 
                         $('div#main-content').html(template);
+                        addUtils.hideButtons();
+                        addUtils.updateObservaciones();
                         addUtils.newObservacion(ctx.params.id);
                         addUtils.cedulaIrac(ctx.params.id);
                         addUtils.cancelar('Irac');
 
-                    case 7:
+                    case 9:
                     case 'end':
                         return _context.stop();
                 }
@@ -684,11 +1497,41 @@ page('/SIA/juridico/Irac/add/idVolante/:id', function (ctx, next) {
 page('/SIA/juridico/confrontasJuridico/add/idVolante/:id', function (ctx, next) {
     var template = templates.confronta;
     $('div#main-content').html(template);
+    addUtils.manejoConfronta(ctx.params.id);
     addUtils.hideButtons();
     addUtils.cancelar('confrontasJuridico');
 });
 
-},{"./../../Templates/Acciones.html":14,"./../../Templates/Caracteres.html":15,"./../../Templates/DoctosTextos.html":16,"./../../Templates/SubTiposDocumentos.html":17,"./../../Templates/Volantes.html":18,"./../../Templates/confronta.html":21,"./../../Templates/documentos.html":24,"./../../Templates/volantesDiversos.html":29,"./utils":9,"bluebird":34,"ckeditor":37,"co":38,"jquery":203,"page":207}],9:[function(require,module,exports){
+page('/SIA/juridico/Ifa/add/idVolante/:id', function (ctx, next) {
+    var index = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var template;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        _context2.next = 2;
+                        return addUtils.loadObservaciones(ctx.params.id);
+
+                    case 2:
+                        template = _context2.sent;
+
+                        $('div#main-content').html(template);
+                        addUtils.hideButtons();
+                        addUtils.updateObservaciones();
+                        addUtils.newObservacion(ctx.params.id);
+                        addUtils.cedulaIfa(ctx.params.id);
+                        addUtils.cancelar('Ifa');
+
+                    case 9:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, this);
+    }));
+});
+
+},{"./../../../../apis/forms/index":3,"./../../Templates/Acciones.html":14,"./../../Templates/Caracteres.html":15,"./../../Templates/DoctosTextos.html":16,"./../../Templates/SubTiposDocumentos.html":17,"./../../Templates/Volantes.html":18,"./../../Templates/confronta.html":22,"./../../Templates/documentos.html":25,"./../../Templates/volantesDiversos.html":30,"./utils":9,"bluebird":35,"ckeditor":38,"co":39,"jquery":204,"page":208}],9:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -726,7 +1569,12 @@ var utils = {
     buildFirmas: buildFirmas,
     clickFirmas: clickFirmas,
     insert: insert,
-    uploadFileAll: uploadFileAll
+    uploadFileAll: uploadFileAll,
+    datosCedula: datosCedula,
+    insertRuta: insertRuta,
+    updateObservaciones: updateObservaciones,
+    manejoConfronta: manejoConfronta,
+    cedulaIfa: cedulaIfa
 
 };
 
@@ -735,12 +1583,16 @@ var templates = {
     irac: require('./../../Templates/irac.html'),
     newObservacion: require('./../../Templates/observacion.html'),
     cedulaIrac: require('./../../Templates/cedulaIrac.html'),
-    firmas: require('./../../Templates/firmas.html')
+    firmas: require('./../../Templates/firmas.html'),
+    iracObservaciones: require('./../../Templates/observacion.html'),
+    confronta: require('./../../Templates/confronta.html'),
+    cedulaIfa: require('./../../Templates/cedulaIfa.html')
 };
 
 function hideButtons() {
     $('div#headerText').text('Añadir Nuevo Registro');
     $('a#addRegister').hide();
+    $('div.estatus').remove();
 }
 
 function cancelar(ruta) {
@@ -1054,7 +1906,7 @@ function searchDocumento() {
                                     $('div.icon img').attr('src', '../../img/jpg.png');
                                 }
 
-                                $('div.nombre').html('<span>' + nombre + '</span>');
+                                $('div.nombre').html('<a href="/SIA/juridico/files/' + nombre + '" target="_blank">' + nombre + '</a>');
                             } else {
                                 $('div.icon img').attr('src', '../../img/file.png');
                                 $('div.nombre').html('<span>No hay archivos o el Documento no Existe</span>');
@@ -1121,9 +1973,11 @@ function newObservacion(id) {
                             $('div#main-content').html(res);
                             CKEDITOR.disableAutoInline = true;
                             CKEDITOR.replace('observacion');
+                            utils.insertRuta('ObservacionesDoctosJuridico');
                             utils.cancelar('Irac');
+                            utils.hideButtons();
 
-                        case 9:
+                        case 11:
                         case 'end':
                             return _context9.stop();
                     }
@@ -1166,17 +2020,122 @@ function cedulaIrac(id) {
                             res = template.replace(':sub', datos[0].idSubTipoDocumento).replace(':idVolante', datos[0].idVolante).replace(':firmas', camposFirmas);
 
 
-                            $('div#main-content').html(res);
-                            $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
-                            utils.clickFirmas();
-                            utils.cancelar('Irac');
+                            if (cedula.length > 0) {
+                                modal.updateCedulaIrac(res, cedula);
+                            } else {
+                                $('div#main-content').html(res);
+                                $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+                                utils.clickFirmas();
+                                utils.datosCedula();
+                                utils.cancelar('Irac');
+                            }
 
-                        case 19:
+                        case 16:
                         case 'end':
                             return _context10.stop();
                     }
                 }
             }, _callee10, this);
+        }));
+    });
+}
+
+function cedulaIfa(id) {
+    $('button#cedula').click(function () {
+        var promesa = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+            var datos, cedula, main, firmas, camposFirmas, template, res;
+            return regeneratorRuntime.wrap(function _callee11$(_context11) {
+                while (1) {
+                    switch (_context11.prev = _context11.next) {
+                        case 0:
+                            _context11.next = 2;
+                            return formApi.getIracById({ id: id });
+
+                        case 2:
+                            datos = _context11.sent;
+                            _context11.next = 5;
+                            return formApi.getDocumentosSiglas({ idVolante: datos[0].idVolante });
+
+                        case 5:
+                            cedula = _context11.sent;
+                            _context11.next = 8;
+                            return mainApi.datosInicio();
+
+                        case 8:
+                            main = _context11.sent;
+                            _context11.next = 11;
+                            return formApi.getPersonalFirma({ idUsuario: main.idUsuario });
+
+                        case 11:
+                            firmas = _context11.sent;
+                            camposFirmas = utils.buildFirmas(firmas);
+                            template = templates.cedulaIfa;
+                            res = template.replace(':sub', datos[0].idSubTipoDocumento).replace(':idVolante', datos[0].idVolante).replace(':firmas', camposFirmas);
+
+
+                            if (cedula.length > 0) {
+                                modal.updateCedulaIrac(res, cedula);
+                            } else {
+                                $('div#main-content').html(res);
+                                $('input.fechaInput').datepicker({ dateFormat: "yy-mm-dd" });
+                                utils.clickFirmas();
+                                utils.datosCedula();
+                                utils.cancelar('Irac');
+                            }
+
+                        case 16:
+                        case 'end':
+                            return _context11.stop();
+                    }
+                }
+            }, _callee11, this);
+        }));
+    });
+}
+
+function datosCedula() {
+    $('form#DocumentosSiglas').submit(function (e) {
+        e.preventDefault();
+        var puesto = '';
+        var datosArray = [];
+        var datos = $(this).serializeArray();
+        $.each(datos, function (index, el) {
+            if (datos[index].name == 'idPuesto') {
+                puesto += datos[index].value + ',';
+            } else {
+                var obj = { name: datos[index].name, value: datos[index].value };
+                datosArray.push(obj);
+            }
+        });
+        puesto = puesto.substring(0, puesto.length - 1);
+        datosArray.push({ name: 'idPuestosJuridico', value: puesto });
+
+        var send = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
+            var envio;
+            return regeneratorRuntime.wrap(function _callee12$(_context12) {
+                while (1) {
+                    switch (_context12.prev = _context12.next) {
+                        case 0:
+                            _context12.next = 2;
+                            return formApi.insertCatalogoRuta('DocumentosSiglas', datosArray);
+
+                        case 2:
+                            envio = _context12.sent;
+
+                            if (envio.Error == 'Registro Duplicado') {
+                                modal.errorMsg('Registro Duplicado');
+                            } else if (envio.Error == 'El Numero de Folio Y SubFolio ya se encuentra Asignado') {
+                                modal.errorMsg('El Numero de Folio Y SubFolio ya se encuentra Asignado');
+                            } else {
+                                location.href = urls.inicio + ruta;
+                            }
+
+                        case 4:
+                        case 'end':
+                            return _context12.stop();
+                    }
+                }
+            }, _callee12, this);
         }));
     });
 }
@@ -1213,17 +2172,17 @@ function insert(ruta) {
     $('form#' + ruta).submit(function (e) {
         e.preventDefault();
         var datos = $(this).serializeArray();
-        var send = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+        var send = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
             var envio;
-            return regeneratorRuntime.wrap(function _callee11$(_context11) {
+            return regeneratorRuntime.wrap(function _callee13$(_context13) {
                 while (1) {
-                    switch (_context11.prev = _context11.next) {
+                    switch (_context13.prev = _context13.next) {
                         case 0:
-                            _context11.next = 2;
+                            _context13.next = 2;
                             return formApi.insertCatalogo(ruta, datos);
 
                         case 2:
-                            envio = _context11.sent;
+                            envio = _context13.sent;
 
                             if (envio.Error == 'Registro Duplicado') {
                                 modal.errorMsg('Registro Duplicado');
@@ -1235,34 +2194,63 @@ function insert(ruta) {
 
                         case 4:
                         case 'end':
-                            return _context11.stop();
+                            return _context13.stop();
                     }
                 }
-            }, _callee11, this);
+            }, _callee13, this);
         }));
     });
 }
 
-function uploadFileAll() {
+function insertRuta(ruta) {
+    $('form#' + ruta).submit(function (e) {
+        e.preventDefault();
+        var datos = $(this).serializeArray();
+        var send = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
+            var envio;
+            return regeneratorRuntime.wrap(function _callee14$(_context14) {
+                while (1) {
+                    switch (_context14.prev = _context14.next) {
+                        case 0:
+                            _context14.next = 2;
+                            return formApi.insertCatalogoRuta(ruta, datos);
+
+                        case 2:
+                            envio = _context14.sent;
+
+                            if (envio.Error == 'Registro Duplicado') {
+                                modal.errorMsg('Registro Duplicado');
+                            } else if (envio.Error == 'El Numero de Folio Y SubFolio ya se encuentra Asignado') {
+                                modal.errorMsg('El Numero de Folio Y SubFolio ya se encuentra Asignado');
+                            } else {
+                                // location.href = urls.inicio + ruta
+
+                            }
+
+                        case 4:
+                        case 'end':
+                            return _context14.stop();
+                    }
+                }
+            }, _callee14, this);
+        }));
+    });
+}
+
+function uploadFileAll(ruta) {
     var self = this;
     $('form#documentosJur').on('submit', function (e) {
         e.preventDefault();
         var formData = new FormData($(this)[0]);
         $.ajax({
-            url: '/juridico/insertAll/uploadFile',
+            url: 'uploadFile',
             type: 'POST',
             data: formData,
             cache: false,
             contentType: false,
             processData: false,
-            beforeSend: function beforeSend() {
-                // message = $("<span class='before'>Subiendo la imagen, por favor espere...</span>");
-                //showMessage(message)        
-            },
-
             success: function success(json) {
-                var data = JSON.parse(json);
-                self.statusInsertRegister(data, ruta);
+                location.href = urls.inicio + ruta;
             },
 
             error: function error() {
@@ -1272,9 +2260,79 @@ function uploadFileAll() {
     });
 }
 
+function updateObservaciones() {
+    $('table.observaciones tbody tr').click(function () {
+        var val = $(this).children().first().data('valor');
+        var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
+            var obsv;
+            return regeneratorRuntime.wrap(function _callee15$(_context15) {
+                while (1) {
+                    switch (_context15.prev = _context15.next) {
+                        case 0:
+                            _context15.next = 2;
+                            return formApi.getObservacionesById({ idObservacionDoctoJuridico: val });
+
+                        case 2:
+                            obsv = _context15.sent;
+
+                            modal.updateObservaciones(templates.iracObservaciones, obsv);
+
+                        case 4:
+                        case 'end':
+                            return _context15.stop();
+                    }
+                }
+            }, _callee15, this);
+        }));
+    });
+}
+
+function manejoConfronta(id) {
+    var funcion = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
+        var campo, datos, nota;
+        return regeneratorRuntime.wrap(function _callee16$(_context16) {
+            while (1) {
+                switch (_context16.prev = _context16.next) {
+                    case 0:
+                        _context16.next = 2;
+                        return formApi.getCampoConfronta({ idVolante: id });
+
+                    case 2:
+                        campo = _context16.sent;
+                        _context16.next = 5;
+                        return formApi.getDocumentosSiglas({ idVolante: id });
+
+                    case 5:
+                        datos = _context16.sent;
+
+                        if (datos.length > 0) {
+                            if (campo["0"].idTipoDocto == 'OFICIO' && campo["0"].nota == 'SI') {//algo aqui
+                            } else {
+                                nota = 'NO';
+                            }
+                            modal.updateConfronta(templates.confronta, datos, nota);
+                        } else {
+                            console.log('datos', datos);
+                            if (campo["0"].idTipoDocto == 'OFICIO' && campo["0"].nota == 'SI') {//algo aqui
+                            } else {
+                                $('div.notaInformativa').remove();
+                            }
+                            $('input#idVolante').val(id);
+                            utils.insertRuta('confrontasJuridico');
+                        }
+
+                    case 7:
+                    case 'end':
+                        return _context16.stop();
+                }
+            }
+        }, _callee16, this);
+    }));
+}
+
 module.exports = utils;
 
-},{"./../../../../apis/Main/index":1,"./../../../../apis/forms/index":3,"./../../Modals/index":6,"./../../Tables/utils":13,"./../../Templates/auditoria.html":19,"./../../Templates/cedulaIrac.html":20,"./../../Templates/firmas.html":25,"./../../Templates/irac.html":26,"./../../Templates/observacion.html":27,"./../../rutasAbsolutas":30,"bluebird":34,"co":38,"jquery":203}],10:[function(require,module,exports){
+},{"./../../../../apis/Main/index":1,"./../../../../apis/forms/index":3,"./../../Modals/index":6,"./../../Tables/utils":13,"./../../Templates/auditoria.html":19,"./../../Templates/cedulaIfa.html":20,"./../../Templates/cedulaIrac.html":21,"./../../Templates/confronta.html":22,"./../../Templates/firmas.html":26,"./../../Templates/irac.html":27,"./../../Templates/observacion.html":28,"./../../rutasAbsolutas":31,"bluebird":35,"co":39,"jquery":204}],10:[function(require,module,exports){
 'use strict';
 
 window.CKEDITOR_BASEPATH = 'node_modules/ckeditor/';
@@ -1290,7 +2348,9 @@ var templates = {
     Caracteres: require('./../../Templates/Caracteres.html'),
     DoctosTextos: require('./../../Templates/DoctosTextos.html'),
     SubTiposDocumentos: require('./../../Templates/SubTiposDocumentos.html'),
-    Acciones: require('./../../Templates/Acciones.html')
+    Acciones: require('./../../Templates/Acciones.html'),
+    Volantes: require('./../../Templates/Volantes.html'),
+    VolantesDiversos: require('./../../Templates/volantesDiversos.html')
 
     /*--------Modals---------*/
 };var modals = require('./../../Modals/index');
@@ -1308,7 +2368,47 @@ page('/SIA/juridico/Caracteres/update/:campo/:id', function (ctx, next) {
     });
 });
 
-},{"./../../Modals/index":6,"./../../Templates/Acciones.html":14,"./../../Templates/Caracteres.html":15,"./../../Templates/DoctosTextos.html":16,"./../../Templates/SubTiposDocumentos.html":17,"./utils.js":11,"ckeditor":37,"jquery":203,"page":207}],11:[function(require,module,exports){
+page('/SIA/juridico/DoctosTextos/update/:campo/:id', function (ctx, next) {
+    var campo = ctx.params.campo;
+    var id = ctx.params.id;
+    utils.getSingleData(campo, id).then(function (json) {
+        modal.updateDoctosTextos(templates.DoctosTextos, json);
+    });
+});
+
+page('/SIA/juridico/Acciones/update/:campo/:id', function (ctx, next) {
+    var campo = ctx.params.campo;
+    var id = ctx.params.id;
+    utils.getSingleData(campo, id).then(function (json) {
+        modal.updateAcciones(templates.Acciones, json);
+    });
+});
+
+page('/SIA/juridico/Volantes/update/:campo/:id', function (ctx, next) {
+    var campo = ctx.params.campo;
+    var id = ctx.params.id;
+    utils.getSingleData(campo, id).then(function (json) {
+        modal.updateVolantes(templates.Volantes, json);
+    });
+});
+
+page('/SIA/juridico/VolantesDiversos/update/:campo/:id', function (ctx, next) {
+    var campo = ctx.params.campo;
+    var id = ctx.params.id;
+    utils.getSingleDataRuta('Volantes', campo, id).then(function (json) {
+        modal.updateVolantesDiversos(templates.VolantesDiversos, json);
+    });
+});
+
+page('/SIA/juridico/DocumentosGral/update/:campo/:id', function (ctx, next) {
+    var campo = ctx.params.campo;
+    var id = ctx.params.id;
+    utils.getSingleDataRuta('Volantes', campo, id).then(function (json) {
+        window.open('/SIA/juridico/files/' + json[0].anexoDoc);
+    });
+});
+
+},{"./../../Modals/index":6,"./../../Templates/Acciones.html":14,"./../../Templates/Caracteres.html":15,"./../../Templates/DoctosTextos.html":16,"./../../Templates/SubTiposDocumentos.html":17,"./../../Templates/Volantes.html":18,"./../../Templates/volantesDiversos.html":30,"./utils.js":11,"ckeditor":38,"jquery":204,"page":208}],11:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -1319,7 +2419,8 @@ var Promise = require('bluebird');
 var update = new api();
 
 var utils = {
-    getSingleData: getSingleData
+    getSingleData: getSingleData,
+    getSingleDataRuta: getSingleDataRuta
 
 };
 
@@ -1347,9 +2448,33 @@ function getSingleData(campo, id) {
     return datos;
 }
 
+function getSingleDataRuta(ruta, campo, id) {
+    var datos = co( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var data;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        _context2.next = 2;
+                        return update.getDataRuta(ruta, campo, id);
+
+                    case 2:
+                        data = _context2.sent;
+                        return _context2.abrupt('return', data);
+
+                    case 4:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, this);
+    }));
+    return datos;
+}
+
 module.exports = utils;
 
-},{"./../../../../apis/Update/index":2,"bluebird":34,"co":38,"jquery":203}],12:[function(require,module,exports){
+},{"./../../../../apis/Update/index":2,"bluebird":35,"co":39,"jquery":204}],12:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1389,7 +2514,7 @@ var Tables = function () {
 
 module.exports = Tables;
 
-},{"./../Templates/table.html":28,"./utils":13,"jquery":203}],13:[function(require,module,exports){
+},{"./../Templates/table.html":29,"./utils":13,"jquery":204}],13:[function(require,module,exports){
 'use strict';
 
 var yo = require('yo-yo');
@@ -1473,6 +2598,7 @@ function clickOrder(ruta) {
             template = template.replace(':body', body);
             $('div#main-content').html(template);
             utils.loadOrder(ruta);
+            utils.clickTr(ruta);
         });
     });
 }
@@ -1493,39 +2619,41 @@ function redirect(ruta, campo, id) {
 
 module.exports = utils;
 
-},{"./../../../apis/tables/index":4,"./../Templates/table.html":28,"./../rutasAbsolutas":30,"jquery":203,"page":207,"yo-yo":210}],14:[function(require,module,exports){
-module.exports = '\n<form id="Acciones" method="POST">\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre </label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,10}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+},{"./../../../apis/tables/index":4,"./../Templates/table.html":29,"./../rutasAbsolutas":31,"jquery":204,"page":208,"yo-yo":211}],14:[function(require,module,exports){
+module.exports = '\n<form id="Acciones" method="POST">\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre </label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,10}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group estatus">\n    <label class="form-control-label" for="estatus">Estatus</label>\n    <select name="estatus" id="estatus"></select>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],15:[function(require,module,exports){
-module.exports = '\n<form id="Caracteres" method="POST">\n  <div class="form-group siglas">\n    <label class="form-control-label" for="siglas">Siglas</label>\n    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]{1-5}" name="siglas" title="Inserta una Sigla"/>\n  </div>\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]{1-20}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="error">\n    <p class="error"></p>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-info" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form id="Caracteres" method="POST">\n  <div class="form-group siglas">\n    <label class="form-control-label" for="siglas">Siglas</label>\n    <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" pattern="[A-Za-z]{1-5}" name="siglas" title="Inserta una Sigla"/>\n  </div>\n  <div class="form-group nombre">\n    <label class="form-control-label" for="nombre">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z]{1-20}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group estatus">\n    <label class="form-control-label" for="estatus">Estatus</label>\n    <select name="estatus" id="estatus"></select>\n  </div>\n  <div class="error">\n    <p class="error"></p>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-info" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],16:[function(require,module,exports){
-module.exports = '\n<form id="DoctosTextos" method="POST">\n  <div class="form-group idDocumento">\n    <label class="form-control-label" for="idDocumento">Tipo de Documento</label>\n    <input id="tipo" type="hidden" name="tipo" value="JURIDICO"/>\n    <input id="nombre" type="hidden" name="nombre" value="TEXTO-JURIDICO"/>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group subDocumento">\n    <label class="form-control-label" for="subDocumento">Tipo de SubDocumento</label>\n    <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required"></select>\n  </div>\n  <div class="form-group texto">\n    <label class="form-control-label" for="texto">Texto</label>\n    <textarea class="form-control" id="texto" rows="3" name="texto" required="" placeholder="texto"></textarea>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form id="DoctosTextos" method="POST">\n  <div class="form-group idDocumento">\n    <label class="form-control-label" for="idDocumento">Tipo de Documento</label>\n    <input id="tipo" type="hidden" name="tipo" value="JURIDICO"/>\n    <input id="nombre" type="hidden" name="nombre" value="TEXTO-JURIDICO"/>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group subDocumento">\n    <label class="form-control-label" for="subDocumento">Tipo de SubDocumento</label>\n    <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required"></select>\n  </div>\n  <div class="form-group texto">\n    <label class="form-control-label" for="textoForm">Texto</label>\n    <textarea class="form-control" id="textoForm" rows="3" name="texto" required="" placeholder="texto"></textarea>\n  </div>\n  <div class="form-group estatus">\n    <label class="form-control-label" for="estatus">Estatus</label>\n    <select name="estatus" id="estatus"></select>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],17:[function(require,module,exports){
-module.exports = '\n<form id="SubTiposDocumentos" method="POST">\n  <div class="form-group idDocumento">\n    <label for="idDocumento" clas="form-control-label">Tipo de Documento</label>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group nombre">\n    <label for="nombre" clas="form-control-label">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group auditoria">\n    <label for="auditoria" clas="form-control-label">Datos Auditoria</label>\n    <select class="form-control" id="auditoria" name="auditoria" required="required" aria-describedby="passwordHelpBlock">\n      <option value=""> Seleccione una Opción </option>\n      <option value="SI">SI</option>\n      <option value="NO">NO</option>\n    </select><small class="form-text text-muted" id="passwordHelpBlock">El Documento Requiere de Datos de una Auditoria</small>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form id="SubTiposDocumentos" method="POST">\n  <div class="form-group idDocumento">\n    <label for="idDocumento" clas="form-control-label">Tipo de Documento</label>\n    <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:optionDocumento</select>\n  </div>\n  <div class="form-group nombre">\n    <label for="nombre" clas="form-control-label">Nombre</label>\n    <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombre" title="Nombre Incorrecto o Caracteres maximos"/>\n  </div>\n  <div class="form-group auditoria">\n    <label for="auditoria" clas="form-control-label">Datos Auditoria</label>\n    <select class="form-control" id="auditoria" name="auditoria" required="required" aria-describedby="passwordHelpBlock">\n      <option value=""> Seleccione una Opción </option>\n      <option value="SI">SI</option>\n      <option value="NO">NO</option>\n    </select><small class="form-text text-muted" id="passwordHelpBlock">El Documento Requiere de Datos de una Auditoria</small>\n  </div>\n  <div class="form-group estatus">\n    <label class="form-control-label" for="estatus">Estatus</label>\n    <select name="estatus" id="estatus"></select>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],18:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="Volantes" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group Promocion">\n      <label for="subDocumento">Promocion de Accion</label>\n      <select class="form-control" id="promocion" name="promocion" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group cveAuditoria">\n      <label for="cveAuditoria">Auditoria</label>\n      <div class="addAuditoriaContainer">\n        <p id="textoCveAuditoria">Selecciona Una Auditoria</p>\n        <button class="btn btn-info" id="modalAuditoria"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>\n        <input id="cveAuditoria" type="hidden" name="cveAuditoria" value=""/>\n      </div>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente" readonly=""/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<form class="form-inline" id="Volantes" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group Promocion">\n      <label for="subDocumento">Promocion de Accion</label>\n      <select class="form-control" id="promocion" name="promocion" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n    <div class="form-group cveAuditoria">\n      <label for="cveAuditoria">Auditoria</label>\n      <div class="addAuditoriaContainer">\n        <p id="textoCveAuditoria">Selecciona Una Auditoria</p>\n        <button class="btn btn-info" id="modalAuditoria"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>\n        <input id="cveAuditoria" type="hidden" name="cveAuditoria" value=""/>\n      </div>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente" readonly=""/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n      <div class="form-group estatus">\n        <label class="form-control-label" for="estatus">Estatus</label>\n        <select name="estatus" id="estatus"></select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],19:[function(require,module,exports){
 module.exports = '\n<div class="auditoria-container">\n  <div class="auditoria">\n    <div class="cuenta">\n      <p class="cuenta">:cuenta</p>\n    </div>\n    <div class="search"><span>ASCM/</span>\n      <input id="auditoria" type="text" name="auditoria"/><span>:cta</span>\n    </div>\n  </div>\n  <div class="datosAuditoria"></div>\n  <div class="asignacion"></div>\n</div>';
 },{}],20:[function(require,module,exports){
-module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
+module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group textoIfa">\n      <label class="form-control-label" for="numFolio">Promocion de Accion</label>\n      <button class="btn btn-primary" id="addPromoAccion" type="button">Agregar Promocion de Acciones</button>\n      <textarea class="form-control" id="textoIfa" rows="7" readonly=""></textarea>\n    </div>\n    <div class="form-group estatus">\n      <label class="form-control-label" for="estatus">Estatus</label>\n      <select name="estatus" id="estatus"></select>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
 },{}],21:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="confrontasJuridico" method="POST">\n  <div class="group-nota">\n    <div class="form-group notaInformativa">\n      <label for="notaInformativa">nota Informativa</label>\n      <input class="form-control" id="notaInformativa" type="text" placeholder="nota Informativa" name="notaInformativa"/>\n    </div>\n  </div>\n  <div class="group-datos">\n    <div class="form-group nombre">\n      <label for="nombre">Nombre</label>\n      <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombreResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group cargo">\n      <label for="cargo">Cargo</label>\n      <input class="form-control" id="cargo" type="text" placeholder="cargo" required="" pattern="[A-Za-z].{1,49}" name="cargoResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fConfronta">\n      <label for="fConfronta">Fecha Confronta</label>\n      <input class="form-control fechaInput" id="fConfronta" type="text" name="fConfronta" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n    <div class="form-group hConfronta">\n      <label for="hConfronta">Hora de Confronta</label>\n      <input class="form-control" id="hConfronta" type="time" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" name="hConfronta" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fecha">\n      <label for="fecha">Fecha Documento</label>\n      <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n  </div>\n  <div class="group-firmas">\n    <div class="form-group siglas">\n      <label for="siglas">Siglas</label>\n      <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" name="siglas" title="Nombre Incorrecto o Caracteres maximos"/>\n    </div>\n    <div class="form-group numFolio">\n      <label for="numFolio">Numero Documento</label>\n      <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      <input type="hidden" name="idVolante" value="${idVolante}"/>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<div class="contentIrac" id="DocumentosSiglas">\n  <form class="form-inline" id="DocumentosSiglas" method="POST">\n    <div class="datos-llenado">\n      <div class="form-group siglas">\n        <label class="form-control-label" for="siglas">Siglas</label>\n        <input class="form-control" id="siglas" type="text" name="siglas" required=""/>\n        <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":sub"/>\n        <input type="hidden" name="idVolante" value=":idVolante"/>\n      </div>\n      <div class="form-group fecha">\n        <label class="form-control-label" for="fecha">Fecha Documento</label>\n        <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group numFolio">\n        <label class="form-control-label" for="numFolio">Numero Folio</label>\n        <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      </div>\n    </div>\n    <div class="firmas">\n      <div class="titulo">\n        <p>Personal que Firma</p>\n      </div>\n      <div class="inputs">:firmas</div>\n    </div>\n    <div class="form-group estatus">\n      <label class="form-control-label" for="estatus">Estatus</label>\n      <select name="estatus" id="estatus"></select>\n    </div>\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </form>\n</div>';
 },{}],22:[function(require,module,exports){
-module.exports = '\n<table class="datosAuditoria">\n  <thead>\n    <tr>\n      <th>Sujeto</th>\n      <th>Rubros</th>\n      <th>Tipo</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
+module.exports = '\n<form class="form-inline" id="confrontasJuridico" method="POST">\n  <div class="group-nota">\n    <div class="form-group notaInformativa">\n      <label for="notaInformativa">nota Informativa</label>\n      <input class="form-control" id="notaInformativa" type="text" placeholder="nota Informativa" name="notaInformativa"/>\n    </div>\n  </div>\n  <div class="group-datos">\n    <div class="form-group nombre">\n      <label for="nombre">Nombre</label>\n      <input class="form-control" id="nombre" type="text" placeholder="Nombre" required="" pattern="[A-Za-z].{1,49}" name="nombreResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group cargo">\n      <label for="cargo">Cargo</label>\n      <input class="form-control" id="cargo" type="text" placeholder="cargo" required="" pattern="[A-Za-z].{1,49}" name="cargoResponsable" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fConfronta">\n      <label for="fConfronta">Fecha Confronta</label>\n      <input class="form-control fechaInput" id="fConfronta" type="text" name="fConfronta" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n    <div class="form-group hConfronta">\n      <label for="hConfronta">Hora de Confronta</label>\n      <input class="form-control" id="hConfronta" type="time" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" name="hConfronta" title="Formato Incorrecto"/>\n    </div>\n    <div class="form-group fecha">\n      <label for="fecha">Fecha Documento</label>\n      <input class="form-control fechaInput" id="fOficio" type="text" name="fOficio" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n    </div>\n  </div>\n  <div class="group-firmas">\n    <div class="form-group siglas">\n      <label for="siglas">Siglas</label>\n      <input class="form-control" id="siglas" type="text" placeholder="siglas" required="" name="siglas" title="Nombre Incorrecto o Caracteres maximos"/>\n    </div>\n    <div class="form-group numFolio">\n      <label for="numFolio">Numero Documento</label>\n      <input class="form-control" id="numFolio" type="text" name="numFolio" required=""/>\n      <input id="idVolante" type="hidden" name="idVolante" value=""/>\n    </div>\n    <div class="form-group estatus">\n      <label class="form-control-label" for="estatus">Estatus</label>\n      <select name="estatus" id="estatus"></select>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</form>';
 },{}],23:[function(require,module,exports){
-module.exports = '\n<table class="datosTurnado">\n  <thead>\n    <tr>\n      <th>Irac</th>\n      <th>Confronta</th>\n      <th>Ifa</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
+module.exports = '\n<table class="datosAuditoria">\n  <thead>\n    <tr>\n      <th>Sujeto</th>\n      <th>Rubros</th>\n      <th>Tipo</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
 },{}],24:[function(require,module,exports){
-module.exports = '\n<div class="document-container">\n  <div class="datos">\n    <form id="documentosJur" enctype="multipart/form-data">\n      <div class="inputs">\n        <div class="form-group documento">\n          <label class="form-control-label" for="documento">Numero Documento</label>\n          <input class="form-control" id="documento" type="text" placeholder="Numero Documento" required="required" name="nombre"/>\n        </div>\n        <div class="form-group file">\n          <input type="file" name="anexoDoc" id="imagen" required="required"/>\n          <div><span><i class="fa fa-upload" aria-hidden="true"></i></span><span class="titulo">Selecciona Archivo</span></div>\n        </div>\n      </div>\n      <div class="documento">\n        <div>\n          <p>Documento Asignado</p>\n        </div>\n        <div class="documento-datos">\n          <div class="icon"><img src="../img/file.png"/></div>\n          <div class="nombre">\n            <p>Sin Documentos</p>\n          </div>\n        </div>\n      </div>\n      <div class="form-group send">\n        <input class="btn btn-info" type="submit" value="Guardar"/>\n        <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n      </div>\n    </form>\n  </div>\n</div>';
+module.exports = '\n<table class="datosTurnado">\n  <thead>\n    <tr>\n      <th>Irac</th>\n      <th>Confronta</th>\n      <th>Ifa</th>\n    </tr>\n  </thead>\n  <tbody>:datos</tbody>\n</table>';
 },{}],25:[function(require,module,exports){
-module.exports = '\n<div class="firma-container">\n  <input id="idFirma" type="checkbox" name="idPuesto" value=":idPuesto"/>\n  <div class="user"><i class="fa fa-user" aria-hidden="true"></i></div>\n  <div class="datos">\n    <p>:nombre</p>\n    <p>:puesto</p>\n  </div>\n</div>';
+module.exports = '\n<div class="document-container">\n  <div class="datos">\n    <form id="documentosJur" enctype="multipart/form-data">\n      <div class="inputs">\n        <div class="form-group documento">\n          <label class="form-control-label" for="documento">Numero Documento</label>\n          <input class="form-control" id="documento" type="text" placeholder="Numero Documento" required="required" name="numDocumento"/>\n        </div>\n        <div class="form-group file">\n          <input type="file" name="anexoDoc" id="imagen" required="required"/>\n          <div><span><i class="fa fa-upload" aria-hidden="true"></i></span><span class="titulo">Selecciona Archivo</span></div>\n        </div>\n      </div>\n      <div class="documento">\n        <div>\n          <p>Documento Asignado</p>\n        </div>\n        <div class="documento-datos">\n          <div class="icon"><img src="../img/file.png"/></div>\n          <div class="nombre">\n            <p>Sin Documentos</p>\n          </div>\n        </div>\n      </div>\n      <div class="form-group send">\n        <input class="btn btn-info" type="submit" value="Guardar"/>\n        <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n      </div>\n    </form>\n  </div>\n</div>';
 },{}],26:[function(require,module,exports){
-module.exports = '\n<div class="irac">\n  <div class="irac-datos">\n    <div class="irac-datos-folio">\n      <p class="titulo">Folio:</p>\n      <p class="folio">:folio</p>\n    </div>\n    <div class="irac-datos-numDocumento">\n      <p class="titulo">Numero de Documento</p>\n      <p class="numDocumento">:numDocumento</p>\n    </div>\n    <div class="irac-datos-remitente">\n      <p class="titulo">Remitente</p>\n      <p class="remitente">:remitente</p>\n    </div>\n  </div>\n  <div class="irac-tabla">\n    <table class="observaciones table">\n      <thead>\n        <tr>\n          <th class="idVolante">IdVolante</th>\n          <th>Pagina</th>\n          <th>Parrafo</th>\n          <th>Observacion</th>\n          <th>Estatus</th>\n        </tr>\n      </thead>\n      <tbody>:body</tbody>\n    </table>\n  </div>\n  <div class="irac-botones">\n    <button class="btn btn-info" id="add">Agregar Observacion</button>\n    <button class="btn btn-warning" id="cedula">Generar Cedula</button>\n    <button class="btn btn-warning" id="print">Imprimir Cedula</button>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</div>';
+module.exports = '\n<div class="firma-container">\n  <input id="idFirma" type="checkbox" name="idPuesto" value=":idPuesto"/>\n  <div class="user"><i class="fa fa-user" aria-hidden="true"></i></div>\n  <div class="datos">\n    <p>:nombre</p>\n    <p>:puesto</p>\n  </div>\n</div>';
 },{}],27:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="ObservacionesDoctosJuridico" method="POST">\n  <div class="datos">\n    <div class="form-group pagina">\n      <label for="text">Hoja</label>\n      <input class="form-control" id="pagina" type="text" name="pagina" required=""/>\n      <input type="hidden" name="idVolante" value=":idVolante"/>\n      <input type="hidden" name="cveAuditoria" value=":cveAuditoria"/>\n      <input type="hidden" name="idSubTipoDocumento" value=":idSubDoc:"/>\n    </div>\n    <div class="form-group parrafo">\n      <label for="parrafo">Parrafo</label>\n      <input class="form-control" id="parrafo" type="text" name="parrafo" required=""/>\n    </div>\n  </div>\n  <div class="form-group observacion">\n    <label for="observacion">Observacion</label>\n    <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>\n  </div>\n  <div class="envio">\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </div>\n</form>';
+module.exports = '\n<div class="irac">\n  <div class="irac-datos">\n    <div class="irac-datos-folio">\n      <p class="titulo">Folio:</p>\n      <p class="folio">:folio</p>\n    </div>\n    <div class="irac-datos-numDocumento">\n      <p class="titulo">Numero de Documento</p>\n      <p class="numDocumento">:numDocumento</p>\n    </div>\n    <div class="irac-datos-remitente">\n      <p class="titulo">Remitente</p>\n      <p class="remitente">:remitente</p>\n    </div>\n  </div>\n  <div class="irac-tabla">\n    <table class="observaciones table">\n      <thead>\n        <tr>\n          <th class="idVolante">IdVolante</th>\n          <th>Pagina</th>\n          <th>Parrafo</th>\n          <th>Observacion</th>\n          <th>Estatus</th>\n        </tr>\n      </thead>\n      <tbody>:body</tbody>\n    </table>\n  </div>\n  <div class="irac-botones">\n    <button class="btn btn-info" id="add">Agregar Observacion</button>\n    <button class="btn btn-warning" id="cedula">Generar Cedula</button>\n    <button class="btn btn-warning" id="print">Imprimir Cedula</button>\n    <button class="btn btn-danger" id="cancelar">Cancelar</button>\n  </div>\n</div>';
 },{}],28:[function(require,module,exports){
-module.exports = '\n<table class="table  principal" id="table-main">\n  <thead>:headers</thead>\n  <tbody>:body</tbody>\n</table>';
+module.exports = '\n<form class="form-inline" id="ObservacionesDoctosJuridico" method="POST">\n  <div class="datos">\n    <div class="form-group pagina">\n      <label for="text">Hoja</label>\n      <input class="form-control" id="pagina" type="text" name="pagina" required=""/>\n      <input id="idVolante" type="hidden" name="idVolante" value=":idVolante"/>\n      <input id="cveAuditoria" type="hidden" name="cveAuditoria" value=":cveAuditoria"/>\n      <input id="idSubTipoDocumento" type="hidden" name="idSubTipoDocumento" value=":idSubDoc"/>\n    </div>\n    <div class="form-group parrafo">\n      <label for="parrafo">Parrafo</label>\n      <input class="form-control" id="parrafo" type="text" name="parrafo" required=""/>\n    </div>\n  </div>\n  <div class="form-group observacion">\n    <label for="observacion">Observacion</label>\n    <textarea class="form-control" id="observacionTexto" rows="3" name="observacion"></textarea>\n  </div>\n  <div class="form-group estatus">\n    <label class="form-control-label" for="estatus">Estatus</label>\n    <select name="estatus" id="estatus"></select>\n  </div>\n  <div class="envio">\n    <div class="form-group send">\n      <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n      <button class="btn btn-danger" id="cancelar">Cancelar</button>\n    </div>\n  </div>\n</form>';
 },{}],29:[function(require,module,exports){
-module.exports = '\n<form class="form-inline" id="VolantesDiversos" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente"/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+module.exports = '\n<table class="table  principal" id="table-main">\n  <thead>:headers</thead>\n  <tbody>:body</tbody>\n</table>';
 },{}],30:[function(require,module,exports){
+module.exports = '\n<form class="form-inline" id="VolantesDiversos" method="POST">\n  <div class="headerVolante">\n    <div class="form-group idDocumento">\n      <label for="idDocumento">Tipo de Documento</label>\n      <select class="form-control" id="idDocumento" name="idTipoDocto" required="required">:documentos</select>\n    </div>\n    <div class="form-group subDocumento">\n      <label for="subDocumento">Tipo de SubDocumento</label>\n      <select class="form-control" id="subDocumento" name="idSubTipoDocumento" required="required">\n        <option value="">Seleccione un Documento Primero</option>\n      </select>\n      <input id="notaConfronta" type="hidden" value="NO" name="notaConfronta"/>\n    </div>\n    <div class="form-group extemporaneo">\n      <label for="extemporaneo">Extemporáneo</label>\n      <select class="form-control" id="extemporaneo" name="extemporaneo" required="required">\n        <option value=""> Seleccione una Opción </option>\n        <option value="SI"> SI</option>\n        <option value="NO"> NO </option>\n      </select>\n    </div>\n  </div>\n  <div class="contentVolante">\n    <div class="bloque1">\n      <div class="form-group Folio">\n        <label for="Folio">Folio</label>\n        <input class="form-control" id="Folio" type="number" name="folio" required=""/>\n      </div>\n      <div class="form-group subFolio">\n        <label for="subFolio">subFolio</label>\n        <input class="form-control" id="subFolio" type="number" name="subFolio" required="" value="0"/>\n      </div>\n      <div class="form-group numDocumento">\n        <label for="numDocumento">Numero de Documento</label>\n        <input class="form-control" id="numDocumento" type="text" name="numDocumento" required=""/>\n      </div>\n      <div class="form-group anexos">\n        <label for="anexos">Numero de Anexos</label>\n        <input class="form-control" id="anexos" type="number" name="anexos" required="" pattern="[0-9]{1,16}"/>\n      </div>\n    </div>\n    <div class="bloque2">\n      <div class="form-group fDocumento">\n        <label for="fDocumento">Fecha de Documento</label>\n        <input class="form-control fechaInput" id="fDocumento" type="text" name="fDocumento" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group fRecepcion">\n        <label for="fRecepcion">Fecha de Recepcion</label>\n        <input class="form-control fechaInput" id="fRecepcion" type="text" name="fRecepcion" required="" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>\n      </div>\n      <div class="form-group hRecepcion">\n        <label for="hRecepcion">Hora de Recepcion</label>\n        <input class="form-control" id="hRecepcion" type="time" name="hRecepcion" required="" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" placeholder="00:00" title="Formato de 24 horas 00:00"/>\n      </div>\n    </div>\n    <div class="bloque3">\n      <div class="form-group idRemitente">\n        <label for="idRemitente">Remitente</label>\n        <input class="form-control" id="idRemitente" type="text" name="idRemitente"/>\n      </div>\n      <div class="form-group Destinatario">\n        <label for="Destinatario">Destinatario</label>\n        <input class="form-control" id="Destinatario" type="text" name="destinatario" placeholder="Destinatario" pattern="[a-zA-Z._- ]" required="" title="Unicamente letras" value="DR. IVÁN DE JESÚS OLMOS CANSINO" readonly=""/>\n      </div>\n    </div>\n    <div class="bloque4">\n      <div class="form-group Asunto">\n        <label for="Asunto">Asunto</label>\n        <textarea class="form-control" rows="3" name="asunto" required="" placeholder="Asunto"></textarea>\n      </div>\n    </div>\n    <div class="bloque5">\n      <div class="form-group idCaracter">\n        <label for="idCaracter">Caracter</label>\n        <select class="form-control" id="idCaracter" name="idCaracter" required="required">:caracteres</select>\n      </div>\n      <div class="form-group idTurnado">\n        <label for="idTurnado">Turnado a:</label>\n        <select class="form-control" id="idTurnado" name="idTurnado" required="required">:turnados</select>\n      </div>\n      <div class="form-group idAccion">\n        <label for="idAccion">Instruccion</label>\n        <select class="form-control" id="idAccion" name="idAccion" required="required">:acciones</select>\n      </div>\n      <div class="form-group estatus">\n        <label class="form-control-label" for="estatus">Estatus</label>\n        <select name="estatus" id="estatus"> </select>\n      </div>\n    </div>\n  </div>\n  <div class="form-group send">\n    <input class="btn btn-primary btn-sm" type="submit" value="Guardar"/>\n    <button class="btn btn-danger btn-sm" id="cancelar">Cancelar</button>\n  </div>\n</form>';
+},{}],31:[function(require,module,exports){
 'use strict';
 
 var rutas = {
@@ -1534,7 +2662,7 @@ var rutas = {
 
 module.exports = rutas;
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1548,7 +2676,7 @@ if (global._babelPolyfill) {
 
 global._babelPolyfill = true;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./shim.js":32,"regenerator/runtime":209}],32:[function(require,module,exports){
+},{"./shim.js":33,"regenerator/runtime":210}],33:[function(require,module,exports){
 require('core-js/modules/es5');
 require('core-js/modules/es6.symbol');
 require('core-js/modules/es6.object.assign');
@@ -1637,7 +2765,7 @@ require('core-js/modules/es6.reflect.prevent-extensions');
 require('core-js/modules/es6.reflect.set');
 require('core-js/modules/es6.reflect.set-prototype-of');
 module.exports = require('core-js/modules/$.core');
-},{"core-js/modules/$.core":49,"core-js/modules/es5":108,"core-js/modules/es6.array.copy-within":109,"core-js/modules/es6.array.fill":110,"core-js/modules/es6.array.find":112,"core-js/modules/es6.array.find-index":111,"core-js/modules/es6.array.from":113,"core-js/modules/es6.array.iterator":114,"core-js/modules/es6.array.of":115,"core-js/modules/es6.array.species":116,"core-js/modules/es6.function.has-instance":117,"core-js/modules/es6.function.name":118,"core-js/modules/es6.map":119,"core-js/modules/es6.math.acosh":120,"core-js/modules/es6.math.asinh":121,"core-js/modules/es6.math.atanh":122,"core-js/modules/es6.math.cbrt":123,"core-js/modules/es6.math.clz32":124,"core-js/modules/es6.math.cosh":125,"core-js/modules/es6.math.expm1":126,"core-js/modules/es6.math.fround":127,"core-js/modules/es6.math.hypot":128,"core-js/modules/es6.math.imul":129,"core-js/modules/es6.math.log10":130,"core-js/modules/es6.math.log1p":131,"core-js/modules/es6.math.log2":132,"core-js/modules/es6.math.sign":133,"core-js/modules/es6.math.sinh":134,"core-js/modules/es6.math.tanh":135,"core-js/modules/es6.math.trunc":136,"core-js/modules/es6.number.constructor":137,"core-js/modules/es6.number.epsilon":138,"core-js/modules/es6.number.is-finite":139,"core-js/modules/es6.number.is-integer":140,"core-js/modules/es6.number.is-nan":141,"core-js/modules/es6.number.is-safe-integer":142,"core-js/modules/es6.number.max-safe-integer":143,"core-js/modules/es6.number.min-safe-integer":144,"core-js/modules/es6.number.parse-float":145,"core-js/modules/es6.number.parse-int":146,"core-js/modules/es6.object.assign":147,"core-js/modules/es6.object.freeze":148,"core-js/modules/es6.object.get-own-property-descriptor":149,"core-js/modules/es6.object.get-own-property-names":150,"core-js/modules/es6.object.get-prototype-of":151,"core-js/modules/es6.object.is":155,"core-js/modules/es6.object.is-extensible":152,"core-js/modules/es6.object.is-frozen":153,"core-js/modules/es6.object.is-sealed":154,"core-js/modules/es6.object.keys":156,"core-js/modules/es6.object.prevent-extensions":157,"core-js/modules/es6.object.seal":158,"core-js/modules/es6.object.set-prototype-of":159,"core-js/modules/es6.object.to-string":160,"core-js/modules/es6.promise":161,"core-js/modules/es6.reflect.apply":162,"core-js/modules/es6.reflect.construct":163,"core-js/modules/es6.reflect.define-property":164,"core-js/modules/es6.reflect.delete-property":165,"core-js/modules/es6.reflect.enumerate":166,"core-js/modules/es6.reflect.get":169,"core-js/modules/es6.reflect.get-own-property-descriptor":167,"core-js/modules/es6.reflect.get-prototype-of":168,"core-js/modules/es6.reflect.has":170,"core-js/modules/es6.reflect.is-extensible":171,"core-js/modules/es6.reflect.own-keys":172,"core-js/modules/es6.reflect.prevent-extensions":173,"core-js/modules/es6.reflect.set":175,"core-js/modules/es6.reflect.set-prototype-of":174,"core-js/modules/es6.regexp.constructor":176,"core-js/modules/es6.regexp.flags":177,"core-js/modules/es6.regexp.match":178,"core-js/modules/es6.regexp.replace":179,"core-js/modules/es6.regexp.search":180,"core-js/modules/es6.regexp.split":181,"core-js/modules/es6.set":182,"core-js/modules/es6.string.code-point-at":183,"core-js/modules/es6.string.ends-with":184,"core-js/modules/es6.string.from-code-point":185,"core-js/modules/es6.string.includes":186,"core-js/modules/es6.string.iterator":187,"core-js/modules/es6.string.raw":188,"core-js/modules/es6.string.repeat":189,"core-js/modules/es6.string.starts-with":190,"core-js/modules/es6.string.trim":191,"core-js/modules/es6.symbol":192,"core-js/modules/es6.weak-map":193,"core-js/modules/es6.weak-set":194}],33:[function(require,module,exports){
+},{"core-js/modules/$.core":50,"core-js/modules/es5":109,"core-js/modules/es6.array.copy-within":110,"core-js/modules/es6.array.fill":111,"core-js/modules/es6.array.find":113,"core-js/modules/es6.array.find-index":112,"core-js/modules/es6.array.from":114,"core-js/modules/es6.array.iterator":115,"core-js/modules/es6.array.of":116,"core-js/modules/es6.array.species":117,"core-js/modules/es6.function.has-instance":118,"core-js/modules/es6.function.name":119,"core-js/modules/es6.map":120,"core-js/modules/es6.math.acosh":121,"core-js/modules/es6.math.asinh":122,"core-js/modules/es6.math.atanh":123,"core-js/modules/es6.math.cbrt":124,"core-js/modules/es6.math.clz32":125,"core-js/modules/es6.math.cosh":126,"core-js/modules/es6.math.expm1":127,"core-js/modules/es6.math.fround":128,"core-js/modules/es6.math.hypot":129,"core-js/modules/es6.math.imul":130,"core-js/modules/es6.math.log10":131,"core-js/modules/es6.math.log1p":132,"core-js/modules/es6.math.log2":133,"core-js/modules/es6.math.sign":134,"core-js/modules/es6.math.sinh":135,"core-js/modules/es6.math.tanh":136,"core-js/modules/es6.math.trunc":137,"core-js/modules/es6.number.constructor":138,"core-js/modules/es6.number.epsilon":139,"core-js/modules/es6.number.is-finite":140,"core-js/modules/es6.number.is-integer":141,"core-js/modules/es6.number.is-nan":142,"core-js/modules/es6.number.is-safe-integer":143,"core-js/modules/es6.number.max-safe-integer":144,"core-js/modules/es6.number.min-safe-integer":145,"core-js/modules/es6.number.parse-float":146,"core-js/modules/es6.number.parse-int":147,"core-js/modules/es6.object.assign":148,"core-js/modules/es6.object.freeze":149,"core-js/modules/es6.object.get-own-property-descriptor":150,"core-js/modules/es6.object.get-own-property-names":151,"core-js/modules/es6.object.get-prototype-of":152,"core-js/modules/es6.object.is":156,"core-js/modules/es6.object.is-extensible":153,"core-js/modules/es6.object.is-frozen":154,"core-js/modules/es6.object.is-sealed":155,"core-js/modules/es6.object.keys":157,"core-js/modules/es6.object.prevent-extensions":158,"core-js/modules/es6.object.seal":159,"core-js/modules/es6.object.set-prototype-of":160,"core-js/modules/es6.object.to-string":161,"core-js/modules/es6.promise":162,"core-js/modules/es6.reflect.apply":163,"core-js/modules/es6.reflect.construct":164,"core-js/modules/es6.reflect.define-property":165,"core-js/modules/es6.reflect.delete-property":166,"core-js/modules/es6.reflect.enumerate":167,"core-js/modules/es6.reflect.get":170,"core-js/modules/es6.reflect.get-own-property-descriptor":168,"core-js/modules/es6.reflect.get-prototype-of":169,"core-js/modules/es6.reflect.has":171,"core-js/modules/es6.reflect.is-extensible":172,"core-js/modules/es6.reflect.own-keys":173,"core-js/modules/es6.reflect.prevent-extensions":174,"core-js/modules/es6.reflect.set":176,"core-js/modules/es6.reflect.set-prototype-of":175,"core-js/modules/es6.regexp.constructor":177,"core-js/modules/es6.regexp.flags":178,"core-js/modules/es6.regexp.match":179,"core-js/modules/es6.regexp.replace":180,"core-js/modules/es6.regexp.search":181,"core-js/modules/es6.regexp.split":182,"core-js/modules/es6.set":183,"core-js/modules/es6.string.code-point-at":184,"core-js/modules/es6.string.ends-with":185,"core-js/modules/es6.string.from-code-point":186,"core-js/modules/es6.string.includes":187,"core-js/modules/es6.string.iterator":188,"core-js/modules/es6.string.raw":189,"core-js/modules/es6.string.repeat":190,"core-js/modules/es6.string.starts-with":191,"core-js/modules/es6.string.trim":192,"core-js/modules/es6.symbol":193,"core-js/modules/es6.weak-map":194,"core-js/modules/es6.weak-set":195}],34:[function(require,module,exports){
 var document = require('global/document')
 var hyperx = require('hyperx')
 var onload = require('on-load')
@@ -1792,7 +2920,7 @@ module.exports = hyperx(belCreateElement, {comments: true})
 module.exports.default = module.exports
 module.exports.createElement = belCreateElement
 
-},{"global/document":195,"hyperx":198,"on-load":206}],34:[function(require,module,exports){
+},{"global/document":196,"hyperx":199,"on-load":207}],35:[function(require,module,exports){
 (function (process,global){
 /* @preserve
  * The MIT License (MIT)
@@ -7418,9 +8546,9 @@ module.exports = ret;
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":36}],35:[function(require,module,exports){
+},{"_process":37}],36:[function(require,module,exports){
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -7606,7 +8734,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
@@ -8689,7 +9817,7 @@ CKEDITOR.tools.removeFunction(this._.frameLoadedHandler);f&&f.getParent()?(f.cle
 CKEDITOR.config.skin="moono-lisa",function(){var a=function(a,b){var c=CKEDITOR.getUrl("plugins/"+b);a=a.split(",");for(var e=0;e<a.length;e++)CKEDITOR.skin.icons[a[e]]={path:c,offset:-a[++e],bgsize:a[++e]}};CKEDITOR.env.hidpi?a("about,0,,bold,24,,italic,48,,strike,72,,subscript,96,,superscript,120,,underline,144,,bidiltr,168,,bidirtl,192,,blockquote,216,,copy-rtl,240,,copy,264,,cut-rtl,288,,cut,312,,paste-rtl,336,,paste,360,,codesnippet,384,,bgcolor,408,,textcolor,432,,copyformatting,456,,creatediv,480,,docprops-rtl,504,,docprops,528,,embed,552,,embedsemantic,576,,find-rtl,600,,find,624,,replace,648,,flash,672,,button,696,,checkbox,720,,form,744,,hiddenfield,768,,imagebutton,792,,radio,816,,select-rtl,840,,select,864,,textarea-rtl,888,,textarea,912,,textfield-rtl,936,,textfield,960,,horizontalrule,984,,iframe,1008,,image,1032,,indent-rtl,1056,,indent,1080,,outdent-rtl,1104,,outdent,1128,,justifyblock,1152,,justifycenter,1176,,justifyleft,1200,,justifyright,1224,,language,1248,,anchor-rtl,1272,,anchor,1296,,link,1320,,unlink,1344,,bulletedlist-rtl,1368,,bulletedlist,1392,,numberedlist-rtl,1416,,numberedlist,1440,,mathjax,1464,,maximize,1488,,newpage-rtl,1512,,newpage,1536,,pagebreak-rtl,1560,,pagebreak,1584,,pastefromword-rtl,1608,,pastefromword,1632,,pastetext-rtl,1656,,pastetext,1680,,placeholder,1704,,preview-rtl,1728,,preview,1752,,print,1776,,removeformat,1800,,save,1824,,scayt,1848,,selectall,1872,,showblocks-rtl,1896,,showblocks,1920,,smiley,1944,,source-rtl,1968,,source,1992,,sourcedialog-rtl,2016,,sourcedialog,2040,,specialchar,2064,,table,2088,,templates-rtl,2112,,templates,2136,,uicolor,2160,,redo-rtl,2184,,redo,2208,,undo-rtl,2232,,undo,2256,,simplebox,4560,auto,spellchecker,2304,",
 "icons_hidpi.png"):a("about,0,auto,bold,24,auto,italic,48,auto,strike,72,auto,subscript,96,auto,superscript,120,auto,underline,144,auto,bidiltr,168,auto,bidirtl,192,auto,blockquote,216,auto,copy-rtl,240,auto,copy,264,auto,cut-rtl,288,auto,cut,312,auto,paste-rtl,336,auto,paste,360,auto,codesnippet,384,auto,bgcolor,408,auto,textcolor,432,auto,copyformatting,456,auto,creatediv,480,auto,docprops-rtl,504,auto,docprops,528,auto,embed,552,auto,embedsemantic,576,auto,find-rtl,600,auto,find,624,auto,replace,648,auto,flash,672,auto,button,696,auto,checkbox,720,auto,form,744,auto,hiddenfield,768,auto,imagebutton,792,auto,radio,816,auto,select-rtl,840,auto,select,864,auto,textarea-rtl,888,auto,textarea,912,auto,textfield-rtl,936,auto,textfield,960,auto,horizontalrule,984,auto,iframe,1008,auto,image,1032,auto,indent-rtl,1056,auto,indent,1080,auto,outdent-rtl,1104,auto,outdent,1128,auto,justifyblock,1152,auto,justifycenter,1176,auto,justifyleft,1200,auto,justifyright,1224,auto,language,1248,auto,anchor-rtl,1272,auto,anchor,1296,auto,link,1320,auto,unlink,1344,auto,bulletedlist-rtl,1368,auto,bulletedlist,1392,auto,numberedlist-rtl,1416,auto,numberedlist,1440,auto,mathjax,1464,auto,maximize,1488,auto,newpage-rtl,1512,auto,newpage,1536,auto,pagebreak-rtl,1560,auto,pagebreak,1584,auto,pastefromword-rtl,1608,auto,pastefromword,1632,auto,pastetext-rtl,1656,auto,pastetext,1680,auto,placeholder,1704,auto,preview-rtl,1728,auto,preview,1752,auto,print,1776,auto,removeformat,1800,auto,save,1824,auto,scayt,1848,auto,selectall,1872,auto,showblocks-rtl,1896,auto,showblocks,1920,auto,smiley,1944,auto,source-rtl,1968,auto,source,1992,auto,sourcedialog-rtl,2016,auto,sourcedialog,2040,auto,specialchar,2064,auto,table,2088,auto,templates-rtl,2112,auto,templates,2136,auto,uicolor,2160,auto,redo-rtl,2184,auto,redo,2208,auto,undo-rtl,2232,auto,undo,2256,auto,simplebox,2280,auto,spellchecker,2304,auto",
 "icons.png")}())})();
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 /**
  * slice() reference.
@@ -8928,18 +10056,18 @@ function isObject(val) {
   return Object == val.constructor;
 }
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = function(it){
   if(typeof it != 'function')throw TypeError(it + ' is not a function!');
   return it;
 };
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var isObject = require('./$.is-object');
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
-},{"./$.is-object":69}],41:[function(require,module,exports){
+},{"./$.is-object":70}],42:[function(require,module,exports){
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = require('./$.to-iobject')
@@ -8961,7 +10089,7 @@ module.exports = function(IS_INCLUDES){
     } return !IS_INCLUDES && -1;
   };
 };
-},{"./$.to-index":99,"./$.to-iobject":101,"./$.to-length":102}],42:[function(require,module,exports){
+},{"./$.to-index":100,"./$.to-iobject":102,"./$.to-length":103}],43:[function(require,module,exports){
 // 0 -> Array#forEach
 // 1 -> Array#map
 // 2 -> Array#filter
@@ -9004,7 +10132,7 @@ module.exports = function(TYPE){
     return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
   };
 };
-},{"./$.ctx":50,"./$.iobject":66,"./$.to-length":102,"./$.to-object":103}],43:[function(require,module,exports){
+},{"./$.ctx":51,"./$.iobject":67,"./$.to-length":103,"./$.to-object":104}],44:[function(require,module,exports){
 // 19.1.2.1 Object.assign(target, source, ...)
 var toObject = require('./$.to-object')
   , IObject  = require('./$.iobject')
@@ -9025,7 +10153,7 @@ module.exports = Object.assign || function assign(target, source){
   }
   return T;
 };
-},{"./$.enum-keys":54,"./$.iobject":66,"./$.to-object":103}],44:[function(require,module,exports){
+},{"./$.enum-keys":55,"./$.iobject":67,"./$.to-object":104}],45:[function(require,module,exports){
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = require('./$.cof')
   , TAG = require('./$.wks')('toStringTag')
@@ -9042,13 +10170,13 @@ module.exports = function(it){
     // ES3 arguments fallback
     : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
 };
-},{"./$.cof":45,"./$.wks":106}],45:[function(require,module,exports){
+},{"./$.cof":46,"./$.wks":107}],46:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 'use strict';
 var $            = require('./$')
   , hide         = require('./$.hide')
@@ -9207,7 +10335,7 @@ module.exports = {
     species(require('./$.core')[NAME]); // for wrapper
   }
 };
-},{"./$":77,"./$.core":49,"./$.ctx":50,"./$.defined":52,"./$.for-of":59,"./$.has":62,"./$.hide":63,"./$.is-object":69,"./$.iter-define":73,"./$.iter-step":75,"./$.mix":81,"./$.species":90,"./$.strict-new":91,"./$.support-desc":96,"./$.uid":104}],47:[function(require,module,exports){
+},{"./$":78,"./$.core":50,"./$.ctx":51,"./$.defined":53,"./$.for-of":60,"./$.has":63,"./$.hide":64,"./$.is-object":70,"./$.iter-define":74,"./$.iter-step":76,"./$.mix":82,"./$.species":91,"./$.strict-new":92,"./$.support-desc":97,"./$.uid":105}],48:[function(require,module,exports){
 'use strict';
 var hide         = require('./$.hide')
   , anObject     = require('./$.an-object')
@@ -9293,7 +10421,7 @@ module.exports = {
   frozenStore: frozenStore,
   WEAK: WEAK
 };
-},{"./$.an-object":40,"./$.array-methods":42,"./$.for-of":59,"./$.has":62,"./$.hide":63,"./$.is-object":69,"./$.mix":81,"./$.strict-new":91,"./$.uid":104}],48:[function(require,module,exports){
+},{"./$.an-object":41,"./$.array-methods":43,"./$.for-of":60,"./$.has":63,"./$.hide":64,"./$.is-object":70,"./$.mix":82,"./$.strict-new":92,"./$.uid":105}],49:[function(require,module,exports){
 'use strict';
 var global     = require('./$.global')
   , $def       = require('./$.def')
@@ -9360,10 +10488,10 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 
   return C;
 };
-},{"./$.def":51,"./$.for-of":59,"./$.global":61,"./$.iter-buggy":70,"./$.iter-detect":74,"./$.mix":81,"./$.redef":85,"./$.strict-new":91,"./$.tag":97}],49:[function(require,module,exports){
+},{"./$.def":52,"./$.for-of":60,"./$.global":62,"./$.iter-buggy":71,"./$.iter-detect":75,"./$.mix":82,"./$.redef":86,"./$.strict-new":92,"./$.tag":98}],50:[function(require,module,exports){
 var core = module.exports = {};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 // optional / simple context binding
 var aFunction = require('./$.a-function');
 module.exports = function(fn, that, length){
@@ -9383,7 +10511,7 @@ module.exports = function(fn, that, length){
       return fn.apply(that, arguments);
     };
 };
-},{"./$.a-function":39}],51:[function(require,module,exports){
+},{"./$.a-function":40}],52:[function(require,module,exports){
 var global     = require('./$.global')
   , core       = require('./$.core')
   , hide       = require('./$.hide')
@@ -9426,13 +10554,13 @@ $def.P = 8;  // proto
 $def.B = 16; // bind
 $def.W = 32; // wrap
 module.exports = $def;
-},{"./$.core":49,"./$.global":61,"./$.hide":63,"./$.redef":85}],52:[function(require,module,exports){
+},{"./$.core":50,"./$.global":62,"./$.hide":64,"./$.redef":86}],53:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 var isObject = require('./$.is-object')
   , document = require('./$.global').document
   // in old IE typeof document.createElement is 'object'
@@ -9440,7 +10568,7 @@ var isObject = require('./$.is-object')
 module.exports = function(it){
   return is ? document.createElement(it) : {};
 };
-},{"./$.global":61,"./$.is-object":69}],54:[function(require,module,exports){
+},{"./$.global":62,"./$.is-object":70}],55:[function(require,module,exports){
 // all enumerable object keys, includes symbols
 var $ = require('./$');
 module.exports = function(it){
@@ -9455,12 +10583,12 @@ module.exports = function(it){
   }
   return keys;
 };
-},{"./$":77}],55:[function(require,module,exports){
+},{"./$":78}],56:[function(require,module,exports){
 // 20.2.2.14 Math.expm1(x)
 module.exports = Math.expm1 || function expm1(x){
   return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
 };
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -9468,7 +10596,7 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 'use strict';
 module.exports = function(KEY, length, exec){
   var defined  = require('./$.defined')
@@ -9490,7 +10618,7 @@ module.exports = function(KEY, length, exec){
     );
   }
 };
-},{"./$.defined":52,"./$.fails":56,"./$.hide":63,"./$.redef":85,"./$.wks":106}],58:[function(require,module,exports){
+},{"./$.defined":53,"./$.fails":57,"./$.hide":64,"./$.redef":86,"./$.wks":107}],59:[function(require,module,exports){
 'use strict';
 // 21.2.5.3 get RegExp.prototype.flags
 var anObject = require('./$.an-object');
@@ -9504,7 +10632,7 @@ module.exports = function(){
   if(that.sticky)result += 'y';
   return result;
 };
-},{"./$.an-object":40}],59:[function(require,module,exports){
+},{"./$.an-object":41}],60:[function(require,module,exports){
 var ctx         = require('./$.ctx')
   , call        = require('./$.iter-call')
   , isArrayIter = require('./$.is-array-iter')
@@ -9524,7 +10652,7 @@ module.exports = function(iterable, entries, fn, that){
     call(iterator, f, step.value, entries);
   }
 };
-},{"./$.an-object":40,"./$.ctx":50,"./$.is-array-iter":67,"./$.iter-call":71,"./$.to-length":102,"./core.get-iterator-method":107}],60:[function(require,module,exports){
+},{"./$.an-object":41,"./$.ctx":51,"./$.is-array-iter":68,"./$.iter-call":72,"./$.to-length":103,"./core.get-iterator-method":108}],61:[function(require,module,exports){
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toString  = {}.toString
   , toIObject = require('./$.to-iobject')
@@ -9545,16 +10673,16 @@ module.exports.get = function getOwnPropertyNames(it){
   if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
   return getNames(toIObject(it));
 };
-},{"./$":77,"./$.to-iobject":101}],61:[function(require,module,exports){
+},{"./$":78,"./$.to-iobject":102}],62:[function(require,module,exports){
 var global = typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 module.exports = global;
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var hasOwnProperty = {}.hasOwnProperty;
 module.exports = function(it, key){
   return hasOwnProperty.call(it, key);
 };
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var $          = require('./$')
   , createDesc = require('./$.property-desc');
 module.exports = require('./$.support-desc') ? function(object, key, value){
@@ -9563,9 +10691,9 @@ module.exports = require('./$.support-desc') ? function(object, key, value){
   object[key] = value;
   return object;
 };
-},{"./$":77,"./$.property-desc":84,"./$.support-desc":96}],64:[function(require,module,exports){
+},{"./$":78,"./$.property-desc":85,"./$.support-desc":97}],65:[function(require,module,exports){
 module.exports = require('./$.global').document && document.documentElement;
-},{"./$.global":61}],65:[function(require,module,exports){
+},{"./$.global":62}],66:[function(require,module,exports){
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
 module.exports = function(fn, args, that){
   var un = that === undefined;
@@ -9582,35 +10710,35 @@ module.exports = function(fn, args, that){
                       : fn.call(that, args[0], args[1], args[2], args[3]);
   } return              fn.apply(that, args);
 };
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 // indexed object, fallback for non-array-like ES3 strings
 var cof = require('./$.cof');
 module.exports = 0 in Object('z') ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-},{"./$.cof":45}],67:[function(require,module,exports){
+},{"./$.cof":46}],68:[function(require,module,exports){
 // check on default Array iterator
 var Iterators = require('./$.iterators')
   , ITERATOR  = require('./$.wks')('iterator');
 module.exports = function(it){
   return (Iterators.Array || Array.prototype[ITERATOR]) === it;
 };
-},{"./$.iterators":76,"./$.wks":106}],68:[function(require,module,exports){
+},{"./$.iterators":77,"./$.wks":107}],69:[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var isObject = require('./$.is-object')
   , floor    = Math.floor;
 module.exports = function isInteger(it){
   return !isObject(it) && isFinite(it) && floor(it) === it;
 };
-},{"./$.is-object":69}],69:[function(require,module,exports){
+},{"./$.is-object":70}],70:[function(require,module,exports){
 // http://jsperf.com/core-js-isobject
 module.exports = function(it){
   return it !== null && (typeof it == 'object' || typeof it == 'function');
 };
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 // Safari has buggy iterators w/o `next`
 module.exports = 'keys' in [] && !('next' in [].keys());
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 // call something on iterator step with safe closing on error
 var anObject = require('./$.an-object');
 module.exports = function(iterator, fn, value, entries){
@@ -9623,7 +10751,7 @@ module.exports = function(iterator, fn, value, entries){
     throw e;
   }
 };
-},{"./$.an-object":40}],72:[function(require,module,exports){
+},{"./$.an-object":41}],73:[function(require,module,exports){
 'use strict';
 var $ = require('./$')
   , IteratorPrototype = {};
@@ -9635,7 +10763,7 @@ module.exports = function(Constructor, NAME, next){
   Constructor.prototype = $.create(IteratorPrototype, {next: require('./$.property-desc')(1,next)});
   require('./$.tag')(Constructor, NAME + ' Iterator');
 };
-},{"./$":77,"./$.hide":63,"./$.property-desc":84,"./$.tag":97,"./$.wks":106}],73:[function(require,module,exports){
+},{"./$":78,"./$.hide":64,"./$.property-desc":85,"./$.tag":98,"./$.wks":107}],74:[function(require,module,exports){
 'use strict';
 var LIBRARY         = require('./$.library')
   , $def            = require('./$.def')
@@ -9685,7 +10813,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE)
     } else $def($def.P + $def.F * require('./$.iter-buggy'), NAME, methods);
   }
 };
-},{"./$":77,"./$.def":51,"./$.has":62,"./$.hide":63,"./$.iter-buggy":70,"./$.iter-create":72,"./$.iterators":76,"./$.library":79,"./$.redef":85,"./$.tag":97,"./$.wks":106}],74:[function(require,module,exports){
+},{"./$":78,"./$.def":52,"./$.has":63,"./$.hide":64,"./$.iter-buggy":71,"./$.iter-create":73,"./$.iterators":77,"./$.library":80,"./$.redef":86,"./$.tag":98,"./$.wks":107}],75:[function(require,module,exports){
 var SYMBOL_ITERATOR = require('./$.wks')('iterator')
   , SAFE_CLOSING    = false;
 try {
@@ -9705,13 +10833,13 @@ module.exports = function(exec){
   } catch(e){ /* empty */ }
   return safe;
 };
-},{"./$.wks":106}],75:[function(require,module,exports){
+},{"./$.wks":107}],76:[function(require,module,exports){
 module.exports = function(done, value){
   return {value: value, done: !!done};
 };
-},{}],76:[function(require,module,exports){
-module.exports = {};
 },{}],77:[function(require,module,exports){
+module.exports = {};
+},{}],78:[function(require,module,exports){
 var $Object = Object;
 module.exports = {
   create:     $Object.create,
@@ -9725,7 +10853,7 @@ module.exports = {
   getSymbols: $Object.getOwnPropertySymbols,
   each:       [].forEach
 };
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var $         = require('./$')
   , toIObject = require('./$.to-iobject');
 module.exports = function(object, el){
@@ -9736,20 +10864,20 @@ module.exports = function(object, el){
     , key;
   while(length > index)if(O[key = keys[index++]] === el)return key;
 };
-},{"./$":77,"./$.to-iobject":101}],79:[function(require,module,exports){
+},{"./$":78,"./$.to-iobject":102}],80:[function(require,module,exports){
 module.exports = false;
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 // 20.2.2.20 Math.log1p(x)
 module.exports = Math.log1p || function log1p(x){
   return (x = +x) > -1e-8 && x < 1e-8 ? x - x * x / 2 : Math.log(1 + x);
 };
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 var $redef = require('./$.redef');
 module.exports = function(target, src){
   for(var key in src)$redef(target, key, src[key]);
   return target;
 };
-},{"./$.redef":85}],82:[function(require,module,exports){
+},{"./$.redef":86}],83:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
 module.exports = function(KEY, exec){
   var $def = require('./$.def')
@@ -9758,7 +10886,7 @@ module.exports = function(KEY, exec){
   exp[KEY] = exec(fn);
   $def($def.S + $def.F * require('./$.fails')(function(){ fn(1); }), 'Object', exp);
 };
-},{"./$.core":49,"./$.def":51,"./$.fails":56}],83:[function(require,module,exports){
+},{"./$.core":50,"./$.def":52,"./$.fails":57}],84:[function(require,module,exports){
 // all object keys, includes non-enumerable and symbols
 var $        = require('./$')
   , anObject = require('./$.an-object');
@@ -9767,7 +10895,7 @@ module.exports = function ownKeys(it){
     , getSymbols = $.getSymbols;
   return getSymbols ? keys.concat(getSymbols(it)) : keys;
 };
-},{"./$":77,"./$.an-object":40}],84:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41}],85:[function(require,module,exports){
 module.exports = function(bitmap, value){
   return {
     enumerable  : !(bitmap & 1),
@@ -9776,7 +10904,7 @@ module.exports = function(bitmap, value){
     value       : value
   };
 };
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 // add fake Function#toString
 // for correct work wrapped methods / constructors with methods like LoDash isNative
 var global    = require('./$.global')
@@ -9804,11 +10932,11 @@ require('./$.core').inspectSource = function(it){
 })(Function.prototype, TO_STRING, function toString(){
   return typeof this == 'function' && this[SRC] || $toString.call(this);
 });
-},{"./$.core":49,"./$.global":61,"./$.hide":63,"./$.uid":104}],86:[function(require,module,exports){
+},{"./$.core":50,"./$.global":62,"./$.hide":64,"./$.uid":105}],87:[function(require,module,exports){
 module.exports = Object.is || function is(x, y){
   return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
 };
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var getDesc  = require('./$').getDesc
@@ -9835,19 +10963,19 @@ module.exports = {
     : undefined),
   check: check
 };
-},{"./$":77,"./$.an-object":40,"./$.ctx":50,"./$.is-object":69}],88:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.ctx":51,"./$.is-object":70}],89:[function(require,module,exports){
 var global = require('./$.global')
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
   return store[key] || (store[key] = {});
 };
-},{"./$.global":61}],89:[function(require,module,exports){
+},{"./$.global":62}],90:[function(require,module,exports){
 // 20.2.2.28 Math.sign(x)
 module.exports = Math.sign || function sign(x){
   return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
 };
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 'use strict';
 var $       = require('./$')
   , SPECIES = require('./$.wks')('species');
@@ -9857,12 +10985,12 @@ module.exports = function(C){
     get: function(){ return this; }
   });
 };
-},{"./$":77,"./$.support-desc":96,"./$.wks":106}],91:[function(require,module,exports){
+},{"./$":78,"./$.support-desc":97,"./$.wks":107}],92:[function(require,module,exports){
 module.exports = function(it, Constructor, name){
   if(!(it instanceof Constructor))throw TypeError(name + ": use the 'new' operator!");
   return it;
 };
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 // true  -> String#at
 // false -> String#codePointAt
 var toInteger = require('./$.to-integer')
@@ -9881,7 +11009,7 @@ module.exports = function(TO_STRING){
         : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
   };
 };
-},{"./$.defined":52,"./$.to-integer":100}],93:[function(require,module,exports){
+},{"./$.defined":53,"./$.to-integer":101}],94:[function(require,module,exports){
 // helper for String#{startsWith, endsWith, includes}
 var defined = require('./$.defined')
   , cof     = require('./$.cof');
@@ -9890,7 +11018,7 @@ module.exports = function(that, searchString, NAME){
   if(cof(searchString) == 'RegExp')throw TypeError('String#' + NAME + " doesn't accept regex!");
   return String(defined(that));
 };
-},{"./$.cof":45,"./$.defined":52}],94:[function(require,module,exports){
+},{"./$.cof":46,"./$.defined":53}],95:[function(require,module,exports){
 'use strict';
 var toInteger = require('./$.to-integer')
   , defined   = require('./$.defined');
@@ -9903,7 +11031,7 @@ module.exports = function repeat(count){
   for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
   return res;
 };
-},{"./$.defined":52,"./$.to-integer":100}],95:[function(require,module,exports){
+},{"./$.defined":53,"./$.to-integer":101}],96:[function(require,module,exports){
 // 1 -> String#trimLeft
 // 2 -> String#trimRight
 // 3 -> String#trim
@@ -9930,12 +11058,12 @@ module.exports = function(KEY, exec){
     return !!spaces[KEY]() || non[KEY]() != non;
   }), 'String', exp);
 };
-},{"./$.def":51,"./$.defined":52,"./$.fails":56}],96:[function(require,module,exports){
+},{"./$.def":52,"./$.defined":53,"./$.fails":57}],97:[function(require,module,exports){
 // Thank's IE8 for his funny defineProperty
 module.exports = !require('./$.fails')(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
-},{"./$.fails":56}],97:[function(require,module,exports){
+},{"./$.fails":57}],98:[function(require,module,exports){
 var has  = require('./$.has')
   , hide = require('./$.hide')
   , TAG  = require('./$.wks')('toStringTag');
@@ -9943,7 +11071,7 @@ var has  = require('./$.has')
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))hide(it, TAG, tag);
 };
-},{"./$.has":62,"./$.hide":63,"./$.wks":106}],98:[function(require,module,exports){
+},{"./$.has":63,"./$.hide":64,"./$.wks":107}],99:[function(require,module,exports){
 'use strict';
 var ctx                = require('./$.ctx')
   , invoke             = require('./$.invoke')
@@ -10020,7 +11148,7 @@ module.exports = {
   set:   setTask,
   clear: clearTask
 };
-},{"./$.cof":45,"./$.ctx":50,"./$.dom-create":53,"./$.global":61,"./$.html":64,"./$.invoke":65}],99:[function(require,module,exports){
+},{"./$.cof":46,"./$.ctx":51,"./$.dom-create":54,"./$.global":62,"./$.html":65,"./$.invoke":66}],100:[function(require,module,exports){
 var toInteger = require('./$.to-integer')
   , max       = Math.max
   , min       = Math.min;
@@ -10028,61 +11156,61 @@ module.exports = function(index, length){
   index = toInteger(index);
   return index < 0 ? max(index + length, 0) : min(index, length);
 };
-},{"./$.to-integer":100}],100:[function(require,module,exports){
+},{"./$.to-integer":101}],101:[function(require,module,exports){
 // 7.1.4 ToInteger
 var ceil  = Math.ceil
   , floor = Math.floor;
 module.exports = function(it){
   return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
 };
-},{}],101:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./$.iobject')
   , defined = require('./$.defined');
 module.exports = function(it){
   return IObject(defined(it));
 };
-},{"./$.defined":52,"./$.iobject":66}],102:[function(require,module,exports){
+},{"./$.defined":53,"./$.iobject":67}],103:[function(require,module,exports){
 // 7.1.15 ToLength
 var toInteger = require('./$.to-integer')
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
-},{"./$.to-integer":100}],103:[function(require,module,exports){
+},{"./$.to-integer":101}],104:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./$.defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./$.defined":52}],104:[function(require,module,exports){
+},{"./$.defined":53}],105:[function(require,module,exports){
 var id = 0
   , px = Math.random();
 module.exports = function(key){
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 // 22.1.3.31 Array.prototype[@@unscopables]
 var UNSCOPABLES = require('./$.wks')('unscopables');
 if(!(UNSCOPABLES in []))require('./$.hide')(Array.prototype, UNSCOPABLES, {});
 module.exports = function(key){
   [][UNSCOPABLES][key] = true;
 };
-},{"./$.hide":63,"./$.wks":106}],106:[function(require,module,exports){
+},{"./$.hide":64,"./$.wks":107}],107:[function(require,module,exports){
 var store  = require('./$.shared')('wks')
   , Symbol = require('./$.global').Symbol;
 module.exports = function(name){
   return store[name] || (store[name] =
     Symbol && Symbol[name] || (Symbol || require('./$.uid'))('Symbol.' + name));
 };
-},{"./$.global":61,"./$.shared":88,"./$.uid":104}],107:[function(require,module,exports){
+},{"./$.global":62,"./$.shared":89,"./$.uid":105}],108:[function(require,module,exports){
 var classof   = require('./$.classof')
   , ITERATOR  = require('./$.wks')('iterator')
   , Iterators = require('./$.iterators');
 module.exports = require('./$.core').getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
 };
-},{"./$.classof":44,"./$.core":49,"./$.iterators":76,"./$.wks":106}],108:[function(require,module,exports){
+},{"./$.classof":45,"./$.core":50,"./$.iterators":77,"./$.wks":107}],109:[function(require,module,exports){
 'use strict';
 var $                = require('./$')
   , SUPPORT_DESC     = require('./$.support-desc')
@@ -10358,7 +11486,7 @@ $def($def.P + $def.F * brokenDate, 'Date', {
       ':' + lz(d.getUTCSeconds()) + '.' + (m > 99 ? m : '0' + lz(m)) + 'Z';
   }
 });
-},{"./$":77,"./$.a-function":39,"./$.an-object":40,"./$.array-includes":41,"./$.array-methods":42,"./$.cof":45,"./$.def":51,"./$.dom-create":53,"./$.fails":56,"./$.has":62,"./$.html":64,"./$.invoke":65,"./$.iobject":66,"./$.is-object":69,"./$.property-desc":84,"./$.support-desc":96,"./$.to-index":99,"./$.to-integer":100,"./$.to-iobject":101,"./$.to-length":102,"./$.to-object":103,"./$.uid":104}],109:[function(require,module,exports){
+},{"./$":78,"./$.a-function":40,"./$.an-object":41,"./$.array-includes":42,"./$.array-methods":43,"./$.cof":46,"./$.def":52,"./$.dom-create":54,"./$.fails":57,"./$.has":63,"./$.html":65,"./$.invoke":66,"./$.iobject":67,"./$.is-object":70,"./$.property-desc":85,"./$.support-desc":97,"./$.to-index":100,"./$.to-integer":101,"./$.to-iobject":102,"./$.to-length":103,"./$.to-object":104,"./$.uid":105}],110:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toObject = require('./$.to-object')
@@ -10389,7 +11517,7 @@ $def($def.P, 'Array', {
   }
 });
 require('./$.unscope')('copyWithin');
-},{"./$.def":51,"./$.to-index":99,"./$.to-length":102,"./$.to-object":103,"./$.unscope":105}],110:[function(require,module,exports){
+},{"./$.def":52,"./$.to-index":100,"./$.to-length":103,"./$.to-object":104,"./$.unscope":106}],111:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toObject = require('./$.to-object')
@@ -10408,7 +11536,7 @@ $def($def.P, 'Array', {
   }
 });
 require('./$.unscope')('fill');
-},{"./$.def":51,"./$.to-index":99,"./$.to-length":102,"./$.to-object":103,"./$.unscope":105}],111:[function(require,module,exports){
+},{"./$.def":52,"./$.to-index":100,"./$.to-length":103,"./$.to-object":104,"./$.unscope":106}],112:[function(require,module,exports){
 'use strict';
 // 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 var KEY    = 'findIndex'
@@ -10423,7 +11551,7 @@ $def($def.P + $def.F * forced, 'Array', {
   }
 });
 require('./$.unscope')(KEY);
-},{"./$.array-methods":42,"./$.def":51,"./$.unscope":105}],112:[function(require,module,exports){
+},{"./$.array-methods":43,"./$.def":52,"./$.unscope":106}],113:[function(require,module,exports){
 'use strict';
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 var KEY    = 'find'
@@ -10438,7 +11566,7 @@ $def($def.P + $def.F * forced, 'Array', {
   }
 });
 require('./$.unscope')(KEY);
-},{"./$.array-methods":42,"./$.def":51,"./$.unscope":105}],113:[function(require,module,exports){
+},{"./$.array-methods":43,"./$.def":52,"./$.unscope":106}],114:[function(require,module,exports){
 'use strict';
 var ctx         = require('./$.ctx')
   , $def        = require('./$.def')
@@ -10472,7 +11600,7 @@ $def($def.S + $def.F * !require('./$.iter-detect')(function(iter){ Array.from(it
     return result;
   }
 });
-},{"./$.ctx":50,"./$.def":51,"./$.is-array-iter":67,"./$.iter-call":71,"./$.iter-detect":74,"./$.to-length":102,"./$.to-object":103,"./core.get-iterator-method":107}],114:[function(require,module,exports){
+},{"./$.ctx":51,"./$.def":52,"./$.is-array-iter":68,"./$.iter-call":72,"./$.iter-detect":75,"./$.to-length":103,"./$.to-object":104,"./core.get-iterator-method":108}],115:[function(require,module,exports){
 'use strict';
 var setUnscope = require('./$.unscope')
   , step       = require('./$.iter-step')
@@ -10507,7 +11635,7 @@ Iterators.Arguments = Iterators.Array;
 setUnscope('keys');
 setUnscope('values');
 setUnscope('entries');
-},{"./$.iter-define":73,"./$.iter-step":75,"./$.iterators":76,"./$.to-iobject":101,"./$.unscope":105}],115:[function(require,module,exports){
+},{"./$.iter-define":74,"./$.iter-step":76,"./$.iterators":77,"./$.to-iobject":102,"./$.unscope":106}],116:[function(require,module,exports){
 'use strict';
 var $def = require('./$.def');
 $def($def.S, 'Array', {
@@ -10521,9 +11649,9 @@ $def($def.S, 'Array', {
     return result;
   }
 });
-},{"./$.def":51}],116:[function(require,module,exports){
+},{"./$.def":52}],117:[function(require,module,exports){
 require('./$.species')(Array);
-},{"./$.species":90}],117:[function(require,module,exports){
+},{"./$.species":91}],118:[function(require,module,exports){
 'use strict';
 var $             = require('./$')
   , isObject      = require('./$.is-object')
@@ -10537,7 +11665,7 @@ if(!(HAS_INSTANCE in FunctionProto))$.setDesc(FunctionProto, HAS_INSTANCE, {valu
   while(O = $.getProto(O))if(this.prototype === O)return true;
   return false;
 }});
-},{"./$":77,"./$.is-object":69,"./$.wks":106}],118:[function(require,module,exports){
+},{"./$":78,"./$.is-object":70,"./$.wks":107}],119:[function(require,module,exports){
 var setDesc    = require('./$').setDesc
   , createDesc = require('./$.property-desc')
   , has        = require('./$.has')
@@ -10554,7 +11682,7 @@ NAME in FProto || require('./$.support-desc') && setDesc(FProto, NAME, {
     return name;
   }
 });
-},{"./$":77,"./$.has":62,"./$.property-desc":84,"./$.support-desc":96}],119:[function(require,module,exports){
+},{"./$":78,"./$.has":63,"./$.property-desc":85,"./$.support-desc":97}],120:[function(require,module,exports){
 'use strict';
 var strong = require('./$.collection-strong');
 
@@ -10572,7 +11700,7 @@ require('./$.collection')('Map', function(get){
     return strong.def(this, key === 0 ? 0 : key, value);
   }
 }, strong, true);
-},{"./$.collection":48,"./$.collection-strong":46}],120:[function(require,module,exports){
+},{"./$.collection":49,"./$.collection-strong":47}],121:[function(require,module,exports){
 // 20.2.2.3 Math.acosh(x)
 var $def   = require('./$.def')
   , log1p  = require('./$.log1p')
@@ -10587,7 +11715,7 @@ $def($def.S + $def.F * !($acosh && Math.floor($acosh(Number.MAX_VALUE)) == 710),
       : log1p(x - 1 + sqrt(x - 1) * sqrt(x + 1));
   }
 });
-},{"./$.def":51,"./$.log1p":80}],121:[function(require,module,exports){
+},{"./$.def":52,"./$.log1p":81}],122:[function(require,module,exports){
 // 20.2.2.5 Math.asinh(x)
 var $def = require('./$.def');
 
@@ -10596,7 +11724,7 @@ function asinh(x){
 }
 
 $def($def.S, 'Math', {asinh: asinh});
-},{"./$.def":51}],122:[function(require,module,exports){
+},{"./$.def":52}],123:[function(require,module,exports){
 // 20.2.2.7 Math.atanh(x)
 var $def = require('./$.def');
 
@@ -10605,7 +11733,7 @@ $def($def.S, 'Math', {
     return (x = +x) == 0 ? x : Math.log((1 + x) / (1 - x)) / 2;
   }
 });
-},{"./$.def":51}],123:[function(require,module,exports){
+},{"./$.def":52}],124:[function(require,module,exports){
 // 20.2.2.9 Math.cbrt(x)
 var $def = require('./$.def')
   , sign = require('./$.sign');
@@ -10615,7 +11743,7 @@ $def($def.S, 'Math', {
     return sign(x = +x) * Math.pow(Math.abs(x), 1 / 3);
   }
 });
-},{"./$.def":51,"./$.sign":89}],124:[function(require,module,exports){
+},{"./$.def":52,"./$.sign":90}],125:[function(require,module,exports){
 // 20.2.2.11 Math.clz32(x)
 var $def = require('./$.def');
 
@@ -10624,7 +11752,7 @@ $def($def.S, 'Math', {
     return (x >>>= 0) ? 31 - Math.floor(Math.log(x + 0.5) * Math.LOG2E) : 32;
   }
 });
-},{"./$.def":51}],125:[function(require,module,exports){
+},{"./$.def":52}],126:[function(require,module,exports){
 // 20.2.2.12 Math.cosh(x)
 var $def = require('./$.def')
   , exp  = Math.exp;
@@ -10634,12 +11762,12 @@ $def($def.S, 'Math', {
     return (exp(x = +x) + exp(-x)) / 2;
   }
 });
-},{"./$.def":51}],126:[function(require,module,exports){
+},{"./$.def":52}],127:[function(require,module,exports){
 // 20.2.2.14 Math.expm1(x)
 var $def = require('./$.def');
 
 $def($def.S, 'Math', {expm1: require('./$.expm1')});
-},{"./$.def":51,"./$.expm1":55}],127:[function(require,module,exports){
+},{"./$.def":52,"./$.expm1":56}],128:[function(require,module,exports){
 // 20.2.2.16 Math.fround(x)
 var $def  = require('./$.def')
   , sign  = require('./$.sign')
@@ -10666,7 +11794,7 @@ $def($def.S, 'Math', {
     return $sign * result;
   }
 });
-},{"./$.def":51,"./$.sign":89}],128:[function(require,module,exports){
+},{"./$.def":52,"./$.sign":90}],129:[function(require,module,exports){
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
 var $def = require('./$.def')
   , abs  = Math.abs;
@@ -10692,7 +11820,7 @@ $def($def.S, 'Math', {
     return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
   }
 });
-},{"./$.def":51}],129:[function(require,module,exports){
+},{"./$.def":52}],130:[function(require,module,exports){
 // 20.2.2.18 Math.imul(x, y)
 var $def = require('./$.def');
 
@@ -10709,7 +11837,7 @@ $def($def.S + $def.F * require('./$.fails')(function(){
     return 0 | xl * yl + ((UINT16 & xn >>> 16) * yl + xl * (UINT16 & yn >>> 16) << 16 >>> 0);
   }
 });
-},{"./$.def":51,"./$.fails":56}],130:[function(require,module,exports){
+},{"./$.def":52,"./$.fails":57}],131:[function(require,module,exports){
 // 20.2.2.21 Math.log10(x)
 var $def = require('./$.def');
 
@@ -10718,12 +11846,12 @@ $def($def.S, 'Math', {
     return Math.log(x) / Math.LN10;
   }
 });
-},{"./$.def":51}],131:[function(require,module,exports){
+},{"./$.def":52}],132:[function(require,module,exports){
 // 20.2.2.20 Math.log1p(x)
 var $def = require('./$.def');
 
 $def($def.S, 'Math', {log1p: require('./$.log1p')});
-},{"./$.def":51,"./$.log1p":80}],132:[function(require,module,exports){
+},{"./$.def":52,"./$.log1p":81}],133:[function(require,module,exports){
 // 20.2.2.22 Math.log2(x)
 var $def = require('./$.def');
 
@@ -10732,12 +11860,12 @@ $def($def.S, 'Math', {
     return Math.log(x) / Math.LN2;
   }
 });
-},{"./$.def":51}],133:[function(require,module,exports){
+},{"./$.def":52}],134:[function(require,module,exports){
 // 20.2.2.28 Math.sign(x)
 var $def = require('./$.def');
 
 $def($def.S, 'Math', {sign: require('./$.sign')});
-},{"./$.def":51,"./$.sign":89}],134:[function(require,module,exports){
+},{"./$.def":52,"./$.sign":90}],135:[function(require,module,exports){
 // 20.2.2.30 Math.sinh(x)
 var $def  = require('./$.def')
   , expm1 = require('./$.expm1')
@@ -10750,7 +11878,7 @@ $def($def.S, 'Math', {
       : (exp(x - 1) - exp(-x - 1)) * (Math.E / 2);
   }
 });
-},{"./$.def":51,"./$.expm1":55}],135:[function(require,module,exports){
+},{"./$.def":52,"./$.expm1":56}],136:[function(require,module,exports){
 // 20.2.2.33 Math.tanh(x)
 var $def  = require('./$.def')
   , expm1 = require('./$.expm1')
@@ -10763,7 +11891,7 @@ $def($def.S, 'Math', {
     return a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (exp(x) + exp(-x));
   }
 });
-},{"./$.def":51,"./$.expm1":55}],136:[function(require,module,exports){
+},{"./$.def":52,"./$.expm1":56}],137:[function(require,module,exports){
 // 20.2.2.34 Math.trunc(x)
 var $def = require('./$.def');
 
@@ -10772,7 +11900,7 @@ $def($def.S, 'Math', {
     return (it > 0 ? Math.floor : Math.ceil)(it);
   }
 });
-},{"./$.def":51}],137:[function(require,module,exports){
+},{"./$.def":52}],138:[function(require,module,exports){
 'use strict';
 var $          = require('./$')
   , global     = require('./$.global')
@@ -10826,12 +11954,12 @@ if(!($Number('0o1') && $Number('0b1'))){
   proto.constructor = $Number;
   require('./$.redef')(global, NUMBER, $Number);
 }
-},{"./$":77,"./$.cof":45,"./$.fails":56,"./$.global":61,"./$.has":62,"./$.is-object":69,"./$.redef":85,"./$.support-desc":96}],138:[function(require,module,exports){
+},{"./$":78,"./$.cof":46,"./$.fails":57,"./$.global":62,"./$.has":63,"./$.is-object":70,"./$.redef":86,"./$.support-desc":97}],139:[function(require,module,exports){
 // 20.1.2.1 Number.EPSILON
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {EPSILON: Math.pow(2, -52)});
-},{"./$.def":51}],139:[function(require,module,exports){
+},{"./$.def":52}],140:[function(require,module,exports){
 // 20.1.2.2 Number.isFinite(number)
 var $def      = require('./$.def')
   , _isFinite = require('./$.global').isFinite;
@@ -10841,12 +11969,12 @@ $def($def.S, 'Number', {
     return typeof it == 'number' && _isFinite(it);
   }
 });
-},{"./$.def":51,"./$.global":61}],140:[function(require,module,exports){
+},{"./$.def":52,"./$.global":62}],141:[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {isInteger: require('./$.is-integer')});
-},{"./$.def":51,"./$.is-integer":68}],141:[function(require,module,exports){
+},{"./$.def":52,"./$.is-integer":69}],142:[function(require,module,exports){
 // 20.1.2.4 Number.isNaN(number)
 var $def = require('./$.def');
 
@@ -10855,7 +11983,7 @@ $def($def.S, 'Number', {
     return number != number;
   }
 });
-},{"./$.def":51}],142:[function(require,module,exports){
+},{"./$.def":52}],143:[function(require,module,exports){
 // 20.1.2.5 Number.isSafeInteger(number)
 var $def      = require('./$.def')
   , isInteger = require('./$.is-integer')
@@ -10866,31 +11994,31 @@ $def($def.S, 'Number', {
     return isInteger(number) && abs(number) <= 0x1fffffffffffff;
   }
 });
-},{"./$.def":51,"./$.is-integer":68}],143:[function(require,module,exports){
+},{"./$.def":52,"./$.is-integer":69}],144:[function(require,module,exports){
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
-},{"./$.def":51}],144:[function(require,module,exports){
+},{"./$.def":52}],145:[function(require,module,exports){
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
-},{"./$.def":51}],145:[function(require,module,exports){
+},{"./$.def":52}],146:[function(require,module,exports){
 // 20.1.2.12 Number.parseFloat(string)
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {parseFloat: parseFloat});
-},{"./$.def":51}],146:[function(require,module,exports){
+},{"./$.def":52}],147:[function(require,module,exports){
 // 20.1.2.13 Number.parseInt(string, radix)
 var $def = require('./$.def');
 
 $def($def.S, 'Number', {parseInt: parseInt});
-},{"./$.def":51}],147:[function(require,module,exports){
+},{"./$.def":52}],148:[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
 var $def = require('./$.def');
 $def($def.S, 'Object', {assign: require('./$.assign')});
-},{"./$.assign":43,"./$.def":51}],148:[function(require,module,exports){
+},{"./$.assign":44,"./$.def":52}],149:[function(require,module,exports){
 // 19.1.2.5 Object.freeze(O)
 var isObject = require('./$.is-object');
 
@@ -10899,7 +12027,7 @@ require('./$.object-sap')('freeze', function($freeze){
     return $freeze && isObject(it) ? $freeze(it) : it;
   };
 });
-},{"./$.is-object":69,"./$.object-sap":82}],149:[function(require,module,exports){
+},{"./$.is-object":70,"./$.object-sap":83}],150:[function(require,module,exports){
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject = require('./$.to-iobject');
 
@@ -10908,12 +12036,12 @@ require('./$.object-sap')('getOwnPropertyDescriptor', function($getOwnPropertyDe
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
-},{"./$.object-sap":82,"./$.to-iobject":101}],150:[function(require,module,exports){
+},{"./$.object-sap":83,"./$.to-iobject":102}],151:[function(require,module,exports){
 // 19.1.2.7 Object.getOwnPropertyNames(O)
 require('./$.object-sap')('getOwnPropertyNames', function(){
   return require('./$.get-names').get;
 });
-},{"./$.get-names":60,"./$.object-sap":82}],151:[function(require,module,exports){
+},{"./$.get-names":61,"./$.object-sap":83}],152:[function(require,module,exports){
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = require('./$.to-object');
 
@@ -10922,7 +12050,7 @@ require('./$.object-sap')('getPrototypeOf', function($getPrototypeOf){
     return $getPrototypeOf(toObject(it));
   };
 });
-},{"./$.object-sap":82,"./$.to-object":103}],152:[function(require,module,exports){
+},{"./$.object-sap":83,"./$.to-object":104}],153:[function(require,module,exports){
 // 19.1.2.11 Object.isExtensible(O)
 var isObject = require('./$.is-object');
 
@@ -10931,7 +12059,7 @@ require('./$.object-sap')('isExtensible', function($isExtensible){
     return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
   };
 });
-},{"./$.is-object":69,"./$.object-sap":82}],153:[function(require,module,exports){
+},{"./$.is-object":70,"./$.object-sap":83}],154:[function(require,module,exports){
 // 19.1.2.12 Object.isFrozen(O)
 var isObject = require('./$.is-object');
 
@@ -10940,7 +12068,7 @@ require('./$.object-sap')('isFrozen', function($isFrozen){
     return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
   };
 });
-},{"./$.is-object":69,"./$.object-sap":82}],154:[function(require,module,exports){
+},{"./$.is-object":70,"./$.object-sap":83}],155:[function(require,module,exports){
 // 19.1.2.13 Object.isSealed(O)
 var isObject = require('./$.is-object');
 
@@ -10949,13 +12077,13 @@ require('./$.object-sap')('isSealed', function($isSealed){
     return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
   };
 });
-},{"./$.is-object":69,"./$.object-sap":82}],155:[function(require,module,exports){
+},{"./$.is-object":70,"./$.object-sap":83}],156:[function(require,module,exports){
 // 19.1.3.10 Object.is(value1, value2)
 var $def = require('./$.def');
 $def($def.S, 'Object', {
   is: require('./$.same')
 });
-},{"./$.def":51,"./$.same":86}],156:[function(require,module,exports){
+},{"./$.def":52,"./$.same":87}],157:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./$.to-object');
 
@@ -10964,7 +12092,7 @@ require('./$.object-sap')('keys', function($keys){
     return $keys(toObject(it));
   };
 });
-},{"./$.object-sap":82,"./$.to-object":103}],157:[function(require,module,exports){
+},{"./$.object-sap":83,"./$.to-object":104}],158:[function(require,module,exports){
 // 19.1.2.15 Object.preventExtensions(O)
 var isObject = require('./$.is-object');
 
@@ -10973,7 +12101,7 @@ require('./$.object-sap')('preventExtensions', function($preventExtensions){
     return $preventExtensions && isObject(it) ? $preventExtensions(it) : it;
   };
 });
-},{"./$.is-object":69,"./$.object-sap":82}],158:[function(require,module,exports){
+},{"./$.is-object":70,"./$.object-sap":83}],159:[function(require,module,exports){
 // 19.1.2.17 Object.seal(O)
 var isObject = require('./$.is-object');
 
@@ -10982,11 +12110,11 @@ require('./$.object-sap')('seal', function($seal){
     return $seal && isObject(it) ? $seal(it) : it;
   };
 });
-},{"./$.is-object":69,"./$.object-sap":82}],159:[function(require,module,exports){
+},{"./$.is-object":70,"./$.object-sap":83}],160:[function(require,module,exports){
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $def = require('./$.def');
 $def($def.S, 'Object', {setPrototypeOf: require('./$.set-proto').set});
-},{"./$.def":51,"./$.set-proto":87}],160:[function(require,module,exports){
+},{"./$.def":52,"./$.set-proto":88}],161:[function(require,module,exports){
 'use strict';
 // 19.1.3.6 Object.prototype.toString()
 var classof = require('./$.classof')
@@ -10997,7 +12125,7 @@ if(test + '' != '[object z]'){
     return '[object ' + classof(this) + ']';
   }, true);
 }
-},{"./$.classof":44,"./$.redef":85,"./$.wks":106}],161:[function(require,module,exports){
+},{"./$.classof":45,"./$.redef":86,"./$.wks":107}],162:[function(require,module,exports){
 'use strict';
 var $          = require('./$')
   , LIBRARY    = require('./$.library')
@@ -11261,7 +12389,7 @@ $def($def.S + $def.F * !(useNative && require('./$.iter-detect')(function(iter){
     });
   }
 });
-},{"./$":77,"./$.a-function":39,"./$.an-object":40,"./$.classof":44,"./$.core":49,"./$.ctx":50,"./$.def":51,"./$.for-of":59,"./$.global":61,"./$.is-object":69,"./$.iter-detect":74,"./$.library":79,"./$.mix":81,"./$.same":86,"./$.set-proto":87,"./$.species":90,"./$.strict-new":91,"./$.support-desc":96,"./$.tag":97,"./$.task":98,"./$.uid":104,"./$.wks":106}],162:[function(require,module,exports){
+},{"./$":78,"./$.a-function":40,"./$.an-object":41,"./$.classof":45,"./$.core":50,"./$.ctx":51,"./$.def":52,"./$.for-of":60,"./$.global":62,"./$.is-object":70,"./$.iter-detect":75,"./$.library":80,"./$.mix":82,"./$.same":87,"./$.set-proto":88,"./$.species":91,"./$.strict-new":92,"./$.support-desc":97,"./$.tag":98,"./$.task":99,"./$.uid":105,"./$.wks":107}],163:[function(require,module,exports){
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 var $def   = require('./$.def')
   , _apply = Function.apply;
@@ -11271,7 +12399,7 @@ $def($def.S, 'Reflect', {
     return _apply.call(target, thisArgument, argumentsList);
   }
 });
-},{"./$.def":51}],163:[function(require,module,exports){
+},{"./$.def":52}],164:[function(require,module,exports){
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
 var $         = require('./$')
   , $def      = require('./$.def')
@@ -11304,7 +12432,7 @@ $def($def.S, 'Reflect', {
     return isObject(result) ? result : instance;
   }
 });
-},{"./$":77,"./$.a-function":39,"./$.an-object":40,"./$.core":49,"./$.def":51,"./$.is-object":69}],164:[function(require,module,exports){
+},{"./$":78,"./$.a-function":40,"./$.an-object":41,"./$.core":50,"./$.def":52,"./$.is-object":70}],165:[function(require,module,exports){
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
 var $        = require('./$')
   , $def     = require('./$.def')
@@ -11324,7 +12452,7 @@ $def($def.S + $def.F * require('./$.fails')(function(){
     }
   }
 });
-},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.fails":56}],165:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52,"./$.fails":57}],166:[function(require,module,exports){
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
 var $def     = require('./$.def')
   , getDesc  = require('./$').getDesc
@@ -11336,7 +12464,7 @@ $def($def.S, 'Reflect', {
     return desc && !desc.configurable ? false : delete target[propertyKey];
   }
 });
-},{"./$":77,"./$.an-object":40,"./$.def":51}],166:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52}],167:[function(require,module,exports){
 'use strict';
 // 26.1.5 Reflect.enumerate(target)
 var $def     = require('./$.def')
@@ -11363,7 +12491,7 @@ $def($def.S, 'Reflect', {
     return new Enumerate(target);
   }
 });
-},{"./$.an-object":40,"./$.def":51,"./$.iter-create":72}],167:[function(require,module,exports){
+},{"./$.an-object":41,"./$.def":52,"./$.iter-create":73}],168:[function(require,module,exports){
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
 var $        = require('./$')
   , $def     = require('./$.def')
@@ -11374,7 +12502,7 @@ $def($def.S, 'Reflect', {
     return $.getDesc(anObject(target), propertyKey);
   }
 });
-},{"./$":77,"./$.an-object":40,"./$.def":51}],168:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52}],169:[function(require,module,exports){
 // 26.1.8 Reflect.getPrototypeOf(target)
 var $def     = require('./$.def')
   , getProto = require('./$').getProto
@@ -11385,7 +12513,7 @@ $def($def.S, 'Reflect', {
     return getProto(anObject(target));
   }
 });
-},{"./$":77,"./$.an-object":40,"./$.def":51}],169:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52}],170:[function(require,module,exports){
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
 var $        = require('./$')
   , has      = require('./$.has')
@@ -11406,7 +12534,7 @@ function get(target, propertyKey/*, receiver*/){
 }
 
 $def($def.S, 'Reflect', {get: get});
-},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.has":62,"./$.is-object":69}],170:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52,"./$.has":63,"./$.is-object":70}],171:[function(require,module,exports){
 // 26.1.9 Reflect.has(target, propertyKey)
 var $def = require('./$.def');
 
@@ -11415,7 +12543,7 @@ $def($def.S, 'Reflect', {
     return propertyKey in target;
   }
 });
-},{"./$.def":51}],171:[function(require,module,exports){
+},{"./$.def":52}],172:[function(require,module,exports){
 // 26.1.10 Reflect.isExtensible(target)
 var $def          = require('./$.def')
   , anObject      = require('./$.an-object')
@@ -11427,12 +12555,12 @@ $def($def.S, 'Reflect', {
     return $isExtensible ? $isExtensible(target) : true;
   }
 });
-},{"./$.an-object":40,"./$.def":51}],172:[function(require,module,exports){
+},{"./$.an-object":41,"./$.def":52}],173:[function(require,module,exports){
 // 26.1.11 Reflect.ownKeys(target)
 var $def = require('./$.def');
 
 $def($def.S, 'Reflect', {ownKeys: require('./$.own-keys')});
-},{"./$.def":51,"./$.own-keys":83}],173:[function(require,module,exports){
+},{"./$.def":52,"./$.own-keys":84}],174:[function(require,module,exports){
 // 26.1.12 Reflect.preventExtensions(target)
 var $def               = require('./$.def')
   , anObject           = require('./$.an-object')
@@ -11449,7 +12577,7 @@ $def($def.S, 'Reflect', {
     }
   }
 });
-},{"./$.an-object":40,"./$.def":51}],174:[function(require,module,exports){
+},{"./$.an-object":41,"./$.def":52}],175:[function(require,module,exports){
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $def     = require('./$.def')
   , setProto = require('./$.set-proto');
@@ -11465,7 +12593,7 @@ if(setProto)$def($def.S, 'Reflect', {
     }
   }
 });
-},{"./$.def":51,"./$.set-proto":87}],175:[function(require,module,exports){
+},{"./$.def":52,"./$.set-proto":88}],176:[function(require,module,exports){
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
 var $          = require('./$')
   , has        = require('./$.has')
@@ -11495,7 +12623,7 @@ function set(target, propertyKey, V/*, receiver*/){
 }
 
 $def($def.S, 'Reflect', {set: set});
-},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.has":62,"./$.is-object":69,"./$.property-desc":84}],176:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52,"./$.has":63,"./$.is-object":70,"./$.property-desc":85}],177:[function(require,module,exports){
 var $       = require('./$')
   , global  = require('./$.global')
   , cof     = require('./$.cof')
@@ -11538,14 +12666,14 @@ if(require('./$.support-desc')){
 }
 
 require('./$.species')($RegExp);
-},{"./$":77,"./$.cof":45,"./$.flags":58,"./$.global":61,"./$.redef":85,"./$.species":90,"./$.support-desc":96}],177:[function(require,module,exports){
+},{"./$":78,"./$.cof":46,"./$.flags":59,"./$.global":62,"./$.redef":86,"./$.species":91,"./$.support-desc":97}],178:[function(require,module,exports){
 // 21.2.5.3 get RegExp.prototype.flags()
 var $ = require('./$');
 if(require('./$.support-desc') && /./g.flags != 'g')$.setDesc(RegExp.prototype, 'flags', {
   configurable: true,
   get: require('./$.flags')
 });
-},{"./$":77,"./$.flags":58,"./$.support-desc":96}],178:[function(require,module,exports){
+},{"./$":78,"./$.flags":59,"./$.support-desc":97}],179:[function(require,module,exports){
 // @@match logic
 require('./$.fix-re-wks')('match', 1, function(defined, MATCH){
   // 21.1.3.11 String.prototype.match(regexp)
@@ -11556,7 +12684,7 @@ require('./$.fix-re-wks')('match', 1, function(defined, MATCH){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
   };
 });
-},{"./$.fix-re-wks":57}],179:[function(require,module,exports){
+},{"./$.fix-re-wks":58}],180:[function(require,module,exports){
 // @@replace logic
 require('./$.fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
   // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
@@ -11569,7 +12697,7 @@ require('./$.fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
       : $replace.call(String(O), searchValue, replaceValue);
   };
 });
-},{"./$.fix-re-wks":57}],180:[function(require,module,exports){
+},{"./$.fix-re-wks":58}],181:[function(require,module,exports){
 // @@search logic
 require('./$.fix-re-wks')('search', 1, function(defined, SEARCH){
   // 21.1.3.15 String.prototype.search(regexp)
@@ -11580,7 +12708,7 @@ require('./$.fix-re-wks')('search', 1, function(defined, SEARCH){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
   };
 });
-},{"./$.fix-re-wks":57}],181:[function(require,module,exports){
+},{"./$.fix-re-wks":58}],182:[function(require,module,exports){
 // @@split logic
 require('./$.fix-re-wks')('split', 2, function(defined, SPLIT, $split){
   // 21.1.3.17 String.prototype.split(separator, limit)
@@ -11593,7 +12721,7 @@ require('./$.fix-re-wks')('split', 2, function(defined, SPLIT, $split){
       : $split.call(String(O), separator, limit);
   };
 });
-},{"./$.fix-re-wks":57}],182:[function(require,module,exports){
+},{"./$.fix-re-wks":58}],183:[function(require,module,exports){
 'use strict';
 var strong = require('./$.collection-strong');
 
@@ -11606,7 +12734,7 @@ require('./$.collection')('Set', function(get){
     return strong.def(this, value = value === 0 ? 0 : value, value);
   }
 }, strong);
-},{"./$.collection":48,"./$.collection-strong":46}],183:[function(require,module,exports){
+},{"./$.collection":49,"./$.collection-strong":47}],184:[function(require,module,exports){
 'use strict';
 var $def = require('./$.def')
   , $at  = require('./$.string-at')(false);
@@ -11616,7 +12744,7 @@ $def($def.P, 'String', {
     return $at(this, pos);
   }
 });
-},{"./$.def":51,"./$.string-at":92}],184:[function(require,module,exports){
+},{"./$.def":52,"./$.string-at":93}],185:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toLength = require('./$.to-length')
@@ -11634,7 +12762,7 @@ $def($def.P + $def.F * !require('./$.fails')(function(){ 'q'.endsWith(/./); }), 
     return that.slice(end - search.length, end) === search;
   }
 });
-},{"./$.def":51,"./$.fails":56,"./$.string-context":93,"./$.to-length":102}],185:[function(require,module,exports){
+},{"./$.def":52,"./$.fails":57,"./$.string-context":94,"./$.to-length":103}],186:[function(require,module,exports){
 var $def    = require('./$.def')
   , toIndex = require('./$.to-index')
   , fromCharCode = String.fromCharCode
@@ -11658,7 +12786,7 @@ $def($def.S + $def.F * (!!$fromCodePoint && $fromCodePoint.length != 1), 'String
     } return res.join('');
   }
 });
-},{"./$.def":51,"./$.to-index":99}],186:[function(require,module,exports){
+},{"./$.def":52,"./$.to-index":100}],187:[function(require,module,exports){
 'use strict';
 var $def    = require('./$.def')
   , context = require('./$.string-context');
@@ -11669,7 +12797,7 @@ $def($def.P, 'String', {
     return !!~context(this, searchString, 'includes').indexOf(searchString, arguments[1]);
   }
 });
-},{"./$.def":51,"./$.string-context":93}],187:[function(require,module,exports){
+},{"./$.def":52,"./$.string-context":94}],188:[function(require,module,exports){
 'use strict';
 var $at  = require('./$.string-at')(true);
 
@@ -11687,7 +12815,7 @@ require('./$.iter-define')(String, 'String', function(iterated){
   this._i += point.length;
   return {value: point, done: false};
 });
-},{"./$.iter-define":73,"./$.string-at":92}],188:[function(require,module,exports){
+},{"./$.iter-define":74,"./$.string-at":93}],189:[function(require,module,exports){
 var $def      = require('./$.def')
   , toIObject = require('./$.to-iobject')
   , toLength  = require('./$.to-length');
@@ -11706,14 +12834,14 @@ $def($def.S, 'String', {
     } return res.join('');
   }
 });
-},{"./$.def":51,"./$.to-iobject":101,"./$.to-length":102}],189:[function(require,module,exports){
+},{"./$.def":52,"./$.to-iobject":102,"./$.to-length":103}],190:[function(require,module,exports){
 var $def = require('./$.def');
 
 $def($def.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
   repeat: require('./$.string-repeat')
 });
-},{"./$.def":51,"./$.string-repeat":94}],190:[function(require,module,exports){
+},{"./$.def":52,"./$.string-repeat":95}],191:[function(require,module,exports){
 'use strict';
 var $def     = require('./$.def')
   , toLength = require('./$.to-length')
@@ -11729,7 +12857,7 @@ $def($def.P + $def.F * !require('./$.fails')(function(){ 'q'.startsWith(/./); })
     return that.slice(index, index + search.length) === search;
   }
 });
-},{"./$.def":51,"./$.fails":56,"./$.string-context":93,"./$.to-length":102}],191:[function(require,module,exports){
+},{"./$.def":52,"./$.fails":57,"./$.string-context":94,"./$.to-length":103}],192:[function(require,module,exports){
 'use strict';
 // 21.1.3.25 String.prototype.trim()
 require('./$.string-trim')('trim', function($trim){
@@ -11737,7 +12865,7 @@ require('./$.string-trim')('trim', function($trim){
     return $trim(this, 3);
   };
 });
-},{"./$.string-trim":95}],192:[function(require,module,exports){
+},{"./$.string-trim":96}],193:[function(require,module,exports){
 'use strict';
 // ECMAScript 6 symbols shim
 var $              = require('./$')
@@ -11933,7 +13061,7 @@ setTag($Symbol, 'Symbol');
 setTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setTag(global.JSON, 'JSON', true);
-},{"./$":77,"./$.an-object":40,"./$.def":51,"./$.enum-keys":54,"./$.get-names":60,"./$.global":61,"./$.has":62,"./$.keyof":78,"./$.library":79,"./$.property-desc":84,"./$.redef":85,"./$.shared":88,"./$.support-desc":96,"./$.tag":97,"./$.to-iobject":101,"./$.uid":104,"./$.wks":106}],193:[function(require,module,exports){
+},{"./$":78,"./$.an-object":41,"./$.def":52,"./$.enum-keys":55,"./$.get-names":61,"./$.global":62,"./$.has":63,"./$.keyof":79,"./$.library":80,"./$.property-desc":85,"./$.redef":86,"./$.shared":89,"./$.support-desc":97,"./$.tag":98,"./$.to-iobject":102,"./$.uid":105,"./$.wks":107}],194:[function(require,module,exports){
 'use strict';
 var $            = require('./$')
   , weak         = require('./$.collection-weak')
@@ -11976,7 +13104,7 @@ if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
     });
   });
 }
-},{"./$":77,"./$.collection":48,"./$.collection-weak":47,"./$.has":62,"./$.is-object":69,"./$.redef":85}],194:[function(require,module,exports){
+},{"./$":78,"./$.collection":49,"./$.collection-weak":48,"./$.has":63,"./$.is-object":70,"./$.redef":86}],195:[function(require,module,exports){
 'use strict';
 var weak = require('./$.collection-weak');
 
@@ -11989,7 +13117,7 @@ require('./$.collection')('WeakSet', function(get){
     return weak.def(this, value, true);
   }
 }, weak, false, true);
-},{"./$.collection":48,"./$.collection-weak":47}],195:[function(require,module,exports){
+},{"./$.collection":49,"./$.collection-weak":48}],196:[function(require,module,exports){
 (function (global){
 var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
@@ -12010,7 +13138,7 @@ if (typeof document !== 'undefined') {
 module.exports = doccy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"min-document":35}],196:[function(require,module,exports){
+},{"min-document":36}],197:[function(require,module,exports){
 (function (global){
 var win;
 
@@ -12027,7 +13155,7 @@ if (typeof window !== "undefined") {
 module.exports = win;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 module.exports = attributeToProperty
 
 var transform = {
@@ -12048,7 +13176,7 @@ function attributeToProperty (h) {
   }
 }
 
-},{}],198:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 var attrToProp = require('hyperscript-attribute-to-property')
 
 var VAR = 0, TEXT = 1, OPEN = 2, CLOSE = 3, ATTR = 4
@@ -12331,12 +13459,12 @@ var closeRE = RegExp('^(' + [
 ].join('|') + ')(?:[\.#][a-zA-Z0-9\u007F-\uFFFF_:-]+)*$')
 function selfClosing (tag) { return closeRE.test(tag) }
 
-},{"hyperscript-attribute-to-property":197}],199:[function(require,module,exports){
+},{"hyperscript-attribute-to-property":198}],200:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 /*!
  * jquery-confirm v3.3.2 (http://craftpip.github.io/jquery-confirm/)
  * Author: Boniface Pereira
@@ -12347,7 +13475,7 @@ module.exports = Array.isArray || function (arr) {
  * Licensed under MIT (https://github.com/craftpip/jquery-confirm/blob/master/LICENSE)
  */
 if(typeof jQuery==="undefined"){throw new Error("jquery-confirm requires jQuery");}var jconfirm,Jconfirm;(function($,window){$.fn.confirm=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false};}$(this).each(function(){var $this=$(this);if($this.attr("jc-attached")){console.warn("jConfirm has already been attached to this element ",$this[0]);return;}$this.on("click",function(e){e.preventDefault();var jcOption=$.extend({},options);if($this.attr("data-title")){jcOption.title=$this.attr("data-title");}if($this.attr("data-content")){jcOption.content=$this.attr("data-content");}if(typeof jcOption.buttons=="undefined"){jcOption.buttons={};}jcOption["$target"]=$this;if($this.attr("href")&&Object.keys(jcOption.buttons).length==0){var buttons=$.extend(true,{},jconfirm.pluginDefaults.defaultButtons,(jconfirm.defaults||{}).defaultButtons||{});var firstBtn=Object.keys(buttons)[0];jcOption.buttons=buttons;jcOption.buttons[firstBtn].action=function(){location.href=$this.attr("href");};}jcOption.closeIcon=false;var instance=$.confirm(jcOption);});$this.attr("jc-attached",true);});return $(this);};$.confirm=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false};}var putDefaultButtons=!(options.buttons==false);if(typeof options.buttons!="object"){options.buttons={};}if(Object.keys(options.buttons).length==0&&putDefaultButtons){var buttons=$.extend(true,{},jconfirm.pluginDefaults.defaultButtons,(jconfirm.defaults||{}).defaultButtons||{});options.buttons=buttons;}return jconfirm(options);};$.alert=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false};}var putDefaultButtons=!(options.buttons==false);if(typeof options.buttons!="object"){options.buttons={};}if(Object.keys(options.buttons).length==0&&putDefaultButtons){var buttons=$.extend(true,{},jconfirm.pluginDefaults.defaultButtons,(jconfirm.defaults||{}).defaultButtons||{});var firstBtn=Object.keys(buttons)[0];options.buttons[firstBtn]=buttons[firstBtn];}return jconfirm(options);};$.dialog=function(options,option2){if(typeof options==="undefined"){options={};}if(typeof options==="string"){options={content:options,title:(option2)?option2:false,closeIcon:function(){}};}options.buttons={};if(typeof options.closeIcon=="undefined"){options.closeIcon=function(){};}options.confirmKeys=[13];return jconfirm(options);};jconfirm=function(options){if(typeof options==="undefined"){options={};}var pluginOptions=$.extend(true,{},jconfirm.pluginDefaults);if(jconfirm.defaults){pluginOptions=$.extend(true,pluginOptions,jconfirm.defaults);}pluginOptions=$.extend(true,{},pluginOptions,options);var instance=new Jconfirm(pluginOptions);jconfirm.instances.push(instance);return instance;};Jconfirm=function(options){$.extend(this,options);this._init();};Jconfirm.prototype={_init:function(){var that=this;if(!jconfirm.instances.length){jconfirm.lastFocused=$("body").find(":focus");}this._id=Math.round(Math.random()*99999);this.contentParsed=$(document.createElement("div"));if(!this.lazyOpen){setTimeout(function(){that.open();},0);}},_buildHTML:function(){var that=this;this._parseAnimation(this.animation,"o");this._parseAnimation(this.closeAnimation,"c");this._parseBgDismissAnimation(this.backgroundDismissAnimation);this._parseColumnClass(this.columnClass);this._parseTheme(this.theme);this._parseType(this.type);var template=$(this.template);template.find(".jconfirm-box").addClass(this.animationParsed).addClass(this.backgroundDismissAnimationParsed).addClass(this.typeParsed);if(this.typeAnimated){template.find(".jconfirm-box").addClass("jconfirm-type-animated");}if(this.useBootstrap){template.find(".jc-bs3-row").addClass(this.bootstrapClasses.row);template.find(".jc-bs3-row").addClass("justify-content-md-center justify-content-sm-center justify-content-xs-center justify-content-lg-center");template.find(".jconfirm-box-container").addClass(this.columnClassParsed);if(this.containerFluid){template.find(".jc-bs3-container").addClass(this.bootstrapClasses.containerFluid);}else{template.find(".jc-bs3-container").addClass(this.bootstrapClasses.container);}}else{template.find(".jconfirm-box").css("width",this.boxWidth);}if(this.titleClass){template.find(".jconfirm-title-c").addClass(this.titleClass);}template.addClass(this.themeParsed);var ariaLabel="jconfirm-box"+this._id;template.find(".jconfirm-box").attr("aria-labelledby",ariaLabel).attr("tabindex",-1);template.find(".jconfirm-content").attr("id",ariaLabel);if(this.bgOpacity!==null){template.find(".jconfirm-bg").css("opacity",this.bgOpacity);}if(this.rtl){template.addClass("jconfirm-rtl");}this.$el=template.appendTo(this.container);this.$jconfirmBoxContainer=this.$el.find(".jconfirm-box-container");this.$jconfirmBox=this.$body=this.$el.find(".jconfirm-box");this.$jconfirmBg=this.$el.find(".jconfirm-bg");this.$title=this.$el.find(".jconfirm-title");this.$titleContainer=this.$el.find(".jconfirm-title-c");this.$content=this.$el.find("div.jconfirm-content");this.$contentPane=this.$el.find(".jconfirm-content-pane");this.$icon=this.$el.find(".jconfirm-icon-c");this.$closeIcon=this.$el.find(".jconfirm-closeIcon");this.$holder=this.$el.find(".jconfirm-holder");this.$btnc=this.$el.find(".jconfirm-buttons");this.$scrollPane=this.$el.find(".jconfirm-scrollpane");that.setStartingPoint();this._contentReady=$.Deferred();this._modalReady=$.Deferred();this.$holder.css({"padding-top":this.offsetTop,"padding-bottom":this.offsetBottom,});this.setTitle();this.setIcon();this._setButtons();this._parseContent();this.initDraggable();if(this.isAjax){this.showLoading(false);}$.when(this._contentReady,this._modalReady).then(function(){if(that.isAjaxLoading){setTimeout(function(){that.isAjaxLoading=false;that.setContent();that.setTitle();that.setIcon();setTimeout(function(){that.hideLoading(false);that._updateContentMaxHeight();},100);if(typeof that.onContentReady==="function"){that.onContentReady();}},50);}else{that._updateContentMaxHeight();that.setTitle();that.setIcon();if(typeof that.onContentReady==="function"){that.onContentReady();}}if(that.autoClose){that._startCountDown();}});this._watchContent();if(this.animation==="none"){this.animationSpeed=1;this.animationBounce=1;}this.$body.css(this._getCSS(this.animationSpeed,this.animationBounce));this.$contentPane.css(this._getCSS(this.animationSpeed,1));this.$jconfirmBg.css(this._getCSS(this.animationSpeed,1));this.$jconfirmBoxContainer.css(this._getCSS(this.animationSpeed,1));},_typePrefix:"jconfirm-type-",typeParsed:"",_parseType:function(type){this.typeParsed=this._typePrefix+type;},setType:function(type){var oldClass=this.typeParsed;this._parseType(type);this.$jconfirmBox.removeClass(oldClass).addClass(this.typeParsed);},themeParsed:"",_themePrefix:"jconfirm-",setTheme:function(theme){var previous=this.theme;this.theme=theme||this.theme;this._parseTheme(this.theme);if(previous){this.$el.removeClass(previous);}this.$el.addClass(this.themeParsed);this.theme=theme;},_parseTheme:function(theme){var that=this;theme=theme.split(",");$.each(theme,function(k,a){if(a.indexOf(that._themePrefix)===-1){theme[k]=that._themePrefix+$.trim(a);}});this.themeParsed=theme.join(" ").toLowerCase();},backgroundDismissAnimationParsed:"",_bgDismissPrefix:"jconfirm-hilight-",_parseBgDismissAnimation:function(bgDismissAnimation){var animation=bgDismissAnimation.split(",");var that=this;$.each(animation,function(k,a){if(a.indexOf(that._bgDismissPrefix)===-1){animation[k]=that._bgDismissPrefix+$.trim(a);}});this.backgroundDismissAnimationParsed=animation.join(" ").toLowerCase();},animationParsed:"",closeAnimationParsed:"",_animationPrefix:"jconfirm-animation-",setAnimation:function(animation){this.animation=animation||this.animation;this._parseAnimation(this.animation,"o");},_parseAnimation:function(animation,which){which=which||"o";var animations=animation.split(",");var that=this;$.each(animations,function(k,a){if(a.indexOf(that._animationPrefix)===-1){animations[k]=that._animationPrefix+$.trim(a);}});var a_string=animations.join(" ").toLowerCase();if(which==="o"){this.animationParsed=a_string;}else{this.closeAnimationParsed=a_string;}return a_string;},setCloseAnimation:function(closeAnimation){this.closeAnimation=closeAnimation||this.closeAnimation;this._parseAnimation(this.closeAnimation,"c");},setAnimationSpeed:function(speed){this.animationSpeed=speed||this.animationSpeed;},columnClassParsed:"",setColumnClass:function(colClass){if(!this.useBootstrap){console.warn("cannot set columnClass, useBootstrap is set to false");return;}this.columnClass=colClass||this.columnClass;this._parseColumnClass(this.columnClass);this.$jconfirmBoxContainer.addClass(this.columnClassParsed);},_updateContentMaxHeight:function(){var height=$(window).height()-(this.$jconfirmBox.outerHeight()-this.$contentPane.outerHeight())-(this.offsetTop+this.offsetBottom);this.$contentPane.css({"max-height":height+"px"});},setBoxWidth:function(width){if(this.useBootstrap){console.warn("cannot set boxWidth, useBootstrap is set to true");return;}this.boxWidth=width;this.$jconfirmBox.css("width",width);},_parseColumnClass:function(colClass){colClass=colClass.toLowerCase();var p;switch(colClass){case"xl":case"xlarge":p="col-md-12";break;case"l":case"large":p="col-md-8 col-md-offset-2";break;case"m":case"medium":p="col-md-6 col-md-offset-3";break;case"s":case"small":p="col-md-4 col-md-offset-4";break;case"xs":case"xsmall":p="col-md-2 col-md-offset-5";break;default:p=colClass;}this.columnClassParsed=p;},initDraggable:function(){var that=this;var $t=this.$titleContainer;this.resetDrag();if(this.draggable){$t.on("mousedown",function(e){$t.addClass("jconfirm-hand");that.mouseX=e.clientX;that.mouseY=e.clientY;that.isDrag=true;});$(window).on("mousemove."+this._id,function(e){if(that.isDrag){that.movingX=e.clientX-that.mouseX+that.initialX;that.movingY=e.clientY-that.mouseY+that.initialY;that.setDrag();}});$(window).on("mouseup."+this._id,function(){$t.removeClass("jconfirm-hand");if(that.isDrag){that.isDrag=false;that.initialX=that.movingX;that.initialY=that.movingY;}});}},resetDrag:function(){this.isDrag=false;this.initialX=0;this.initialY=0;this.movingX=0;this.movingY=0;this.mouseX=0;this.mouseY=0;this.$jconfirmBoxContainer.css("transform","translate("+0+"px, "+0+"px)");},setDrag:function(){if(!this.draggable){return;}this.alignMiddle=false;var boxWidth=this.$jconfirmBox.outerWidth();var boxHeight=this.$jconfirmBox.outerHeight();var windowWidth=$(window).width();var windowHeight=$(window).height();var that=this;var dragUpdate=1;if(that.movingX%dragUpdate===0||that.movingY%dragUpdate===0){if(that.dragWindowBorder){var leftDistance=(windowWidth/2)-boxWidth/2;var topDistance=(windowHeight/2)-boxHeight/2;topDistance-=that.dragWindowGap;leftDistance-=that.dragWindowGap;if(leftDistance+that.movingX<0){that.movingX=-leftDistance;}else{if(leftDistance-that.movingX<0){that.movingX=leftDistance;}}if(topDistance+that.movingY<0){that.movingY=-topDistance;}else{if(topDistance-that.movingY<0){that.movingY=topDistance;}}}that.$jconfirmBoxContainer.css("transform","translate("+that.movingX+"px, "+that.movingY+"px)");}},_scrollTop:function(){if(typeof pageYOffset!=="undefined"){return pageYOffset;}else{var B=document.body;var D=document.documentElement;D=(D.clientHeight)?D:B;return D.scrollTop;}},_watchContent:function(){var that=this;if(this._timer){clearInterval(this._timer);}var prevContentHeight=0;this._timer=setInterval(function(){if(that.smoothContent){var contentHeight=that.$content.outerHeight()||0;if(contentHeight!==prevContentHeight){that.$contentPane.css({height:contentHeight}).scrollTop(0);prevContentHeight=contentHeight;}var wh=$(window).height();var total=that.offsetTop+that.offsetBottom+that.$jconfirmBox.height()-that.$contentPane.height()+that.$content.height();if(total<wh){that.$contentPane.addClass("no-scroll");}else{that.$contentPane.removeClass("no-scroll");}}},this.watchInterval);},_overflowClass:"jconfirm-overflow",_hilightAnimating:false,highlight:function(){this.hiLightModal();},hiLightModal:function(){var that=this;if(this._hilightAnimating){return;}that.$body.addClass("hilight");var duration=parseFloat(that.$body.css("animation-duration"))||2;this._hilightAnimating=true;setTimeout(function(){that._hilightAnimating=false;that.$body.removeClass("hilight");},duration*1000);},_bindEvents:function(){var that=this;this.boxClicked=false;this.$scrollPane.click(function(e){if(!that.boxClicked){var buttonName=false;var shouldClose=false;var str;if(typeof that.backgroundDismiss=="function"){str=that.backgroundDismiss();}else{str=that.backgroundDismiss;}if(typeof str=="string"&&typeof that.buttons[str]!="undefined"){buttonName=str;shouldClose=false;}else{if(typeof str=="undefined"||!!(str)==true){shouldClose=true;}else{shouldClose=false;}}if(buttonName){var btnResponse=that.buttons[buttonName].action.apply(that);shouldClose=(typeof btnResponse=="undefined")||!!(btnResponse);}if(shouldClose){that.close();}else{that.hiLightModal();}}that.boxClicked=false;});this.$jconfirmBox.click(function(e){that.boxClicked=true;});var isKeyDown=false;$(window).on("jcKeyDown."+that._id,function(e){if(!isKeyDown){isKeyDown=true;}});$(window).on("keyup."+that._id,function(e){if(isKeyDown){that.reactOnKey(e);isKeyDown=false;}});$(window).on("resize."+this._id,function(){that._updateContentMaxHeight();setTimeout(function(){that.resetDrag();},100);});},_cubic_bezier:"0.36, 0.55, 0.19",_getCSS:function(speed,bounce){return{"-webkit-transition-duration":speed/1000+"s","transition-duration":speed/1000+"s","-webkit-transition-timing-function":"cubic-bezier("+this._cubic_bezier+", "+bounce+")","transition-timing-function":"cubic-bezier("+this._cubic_bezier+", "+bounce+")"};},_setButtons:function(){var that=this;var total_buttons=0;if(typeof this.buttons!=="object"){this.buttons={};}$.each(this.buttons,function(key,button){total_buttons+=1;if(typeof button==="function"){that.buttons[key]=button={action:button};}that.buttons[key].text=button.text||key;that.buttons[key].btnClass=button.btnClass||"btn-default";that.buttons[key].action=button.action||function(){};that.buttons[key].keys=button.keys||[];that.buttons[key].isHidden=button.isHidden||false;that.buttons[key].isDisabled=button.isDisabled||false;$.each(that.buttons[key].keys,function(i,a){that.buttons[key].keys[i]=a.toLowerCase();});var button_element=$('<button type="button" class="btn"></button>').html(that.buttons[key].text).addClass(that.buttons[key].btnClass).prop("disabled",that.buttons[key].isDisabled).css("display",that.buttons[key].isHidden?"none":"").click(function(e){e.preventDefault();var res=that.buttons[key].action.apply(that,[that.buttons[key]]);that.onAction.apply(that,[key,that.buttons[key]]);that._stopCountDown();if(typeof res==="undefined"||res){that.close();}});that.buttons[key].el=button_element;that.buttons[key].setText=function(text){button_element.html(text);};that.buttons[key].addClass=function(className){button_element.addClass(className);};that.buttons[key].removeClass=function(className){button_element.removeClass(className);};that.buttons[key].disable=function(){that.buttons[key].isDisabled=true;button_element.prop("disabled",true);};that.buttons[key].enable=function(){that.buttons[key].isDisabled=false;button_element.prop("disabled",false);};that.buttons[key].show=function(){that.buttons[key].isHidden=false;button_element.css("display","");};that.buttons[key].hide=function(){that.buttons[key].isHidden=true;button_element.css("display","none");};that["$_"+key]=that["$$"+key]=button_element;that.$btnc.append(button_element);});if(total_buttons===0){this.$btnc.hide();}if(this.closeIcon===null&&total_buttons===0){this.closeIcon=true;}if(this.closeIcon){if(this.closeIconClass){var closeHtml='<i class="'+this.closeIconClass+'"></i>';this.$closeIcon.html(closeHtml);}this.$closeIcon.click(function(e){e.preventDefault();var buttonName=false;var shouldClose=false;var str;if(typeof that.closeIcon=="function"){str=that.closeIcon();}else{str=that.closeIcon;}if(typeof str=="string"&&typeof that.buttons[str]!="undefined"){buttonName=str;shouldClose=false;}else{if(typeof str=="undefined"||!!(str)==true){shouldClose=true;}else{shouldClose=false;}}if(buttonName){var btnResponse=that.buttons[buttonName].action.apply(that);shouldClose=(typeof btnResponse=="undefined")||!!(btnResponse);}if(shouldClose){that.close();}});this.$closeIcon.show();}else{this.$closeIcon.hide();}},setTitle:function(string,force){force=force||false;if(typeof string!=="undefined"){if(typeof string=="string"){this.title=string;}else{if(typeof string=="function"){if(typeof string.promise=="function"){console.error("Promise was returned from title function, this is not supported.");}var response=string();if(typeof response=="string"){this.title=response;}else{this.title=false;}}else{this.title=false;}}}if(this.isAjaxLoading&&!force){return;}this.$title.html(this.title||"");this.updateTitleContainer();},setIcon:function(iconClass,force){force=force||false;if(typeof iconClass!=="undefined"){if(typeof iconClass=="string"){this.icon=iconClass;}else{if(typeof iconClass==="function"){var response=iconClass();if(typeof response=="string"){this.icon=response;}else{this.icon=false;}}else{this.icon=false;}}}if(this.isAjaxLoading&&!force){return;}this.$icon.html(this.icon?'<i class="'+this.icon+'"></i>':"");this.updateTitleContainer();},updateTitleContainer:function(){if(!this.title&&!this.icon){this.$titleContainer.hide();}else{this.$titleContainer.show();}},setContentPrepend:function(content,force){if(!content){return;}this.contentParsed.prepend(content);},setContentAppend:function(content){if(!content){return;}this.contentParsed.append(content);},setContent:function(content,force){force=!!force;var that=this;if(content){this.contentParsed.html("").append(content);}if(this.isAjaxLoading&&!force){return;}this.$content.html("");this.$content.append(this.contentParsed);setTimeout(function(){that.$body.find("input[autofocus]:visible:first").focus();},100);},loadingSpinner:false,showLoading:function(disableButtons){this.loadingSpinner=true;this.$jconfirmBox.addClass("loading");if(disableButtons){this.$btnc.find("button").prop("disabled",true);}},hideLoading:function(enableButtons){this.loadingSpinner=false;this.$jconfirmBox.removeClass("loading");if(enableButtons){this.$btnc.find("button").prop("disabled",false);}},ajaxResponse:false,contentParsed:"",isAjax:false,isAjaxLoading:false,_parseContent:function(){var that=this;var e="&nbsp;";if(typeof this.content=="function"){var res=this.content.apply(this);if(typeof res=="string"){this.content=res;}else{if(typeof res=="object"&&typeof res.always=="function"){this.isAjax=true;this.isAjaxLoading=true;res.always(function(data,status,xhr){that.ajaxResponse={data:data,status:status,xhr:xhr};that._contentReady.resolve(data,status,xhr);if(typeof that.contentLoaded=="function"){that.contentLoaded(data,status,xhr);}});this.content=e;}else{this.content=e;}}}if(typeof this.content=="string"&&this.content.substr(0,4).toLowerCase()==="url:"){this.isAjax=true;this.isAjaxLoading=true;var u=this.content.substring(4,this.content.length);$.get(u).done(function(html){that.contentParsed.html(html);}).always(function(data,status,xhr){that.ajaxResponse={data:data,status:status,xhr:xhr};that._contentReady.resolve(data,status,xhr);if(typeof that.contentLoaded=="function"){that.contentLoaded(data,status,xhr);}});}if(!this.content){this.content=e;}if(!this.isAjax){this.contentParsed.html(this.content);this.setContent();that._contentReady.resolve();}},_stopCountDown:function(){clearInterval(this.autoCloseInterval);if(this.$cd){this.$cd.remove();}},_startCountDown:function(){var that=this;var opt=this.autoClose.split("|");if(opt.length!==2){console.error("Invalid option for autoClose. example 'close|10000'");return false;}var button_key=opt[0];var time=parseInt(opt[1]);if(typeof this.buttons[button_key]==="undefined"){console.error("Invalid button key '"+button_key+"' for autoClose");return false;}var seconds=Math.ceil(time/1000);this.$cd=$('<span class="countdown"> ('+seconds+")</span>").appendTo(this["$_"+button_key]);this.autoCloseInterval=setInterval(function(){that.$cd.html(" ("+(seconds-=1)+") ");if(seconds<=0){that["$$"+button_key].trigger("click");that._stopCountDown();}},1000);},_getKey:function(key){switch(key){case 192:return"tilde";case 13:return"enter";case 16:return"shift";case 9:return"tab";case 20:return"capslock";case 17:return"ctrl";case 91:return"win";case 18:return"alt";case 27:return"esc";case 32:return"space";}var initial=String.fromCharCode(key);if(/^[A-z0-9]+$/.test(initial)){return initial.toLowerCase();}else{return false;}},reactOnKey:function(e){var that=this;var a=$(".jconfirm");if(a.eq(a.length-1)[0]!==this.$el[0]){return false;}var key=e.which;if(this.$content.find(":input").is(":focus")&&/13|32/.test(key)){return false;}var keyChar=this._getKey(key);if(keyChar==="esc"&&this.escapeKey){if(this.escapeKey===true){this.$scrollPane.trigger("click");}else{if(typeof this.escapeKey==="string"||typeof this.escapeKey==="function"){var buttonKey;if(typeof this.escapeKey==="function"){buttonKey=this.escapeKey();}else{buttonKey=this.escapeKey;}if(buttonKey){if(typeof this.buttons[buttonKey]==="undefined"){console.warn("Invalid escapeKey, no buttons found with key "+buttonKey);}else{this["$_"+buttonKey].trigger("click");}}}}}$.each(this.buttons,function(key,button){if(button.keys.indexOf(keyChar)!=-1){that["$_"+key].trigger("click");}});},setDialogCenter:function(){console.info("setDialogCenter is deprecated, dialogs are centered with CSS3 tables");},_unwatchContent:function(){clearInterval(this._timer);},close:function(onClosePayload){var that=this;if(typeof this.onClose==="function"){this.onClose(onClosePayload);}this._unwatchContent();$(window).unbind("resize."+this._id);$(window).unbind("keyup."+this._id);$(window).unbind("jcKeyDown."+this._id);if(this.draggable){$(window).unbind("mousemove."+this._id);$(window).unbind("mouseup."+this._id);this.$titleContainer.unbind("mousedown");}that.$el.removeClass(that.loadedClass);$("body").removeClass("jconfirm-no-scroll-"+that._id);that.$jconfirmBoxContainer.removeClass("jconfirm-no-transition");setTimeout(function(){that.$body.addClass(that.closeAnimationParsed);that.$jconfirmBg.addClass("jconfirm-bg-h");var closeTimer=(that.closeAnimation==="none")?1:that.animationSpeed;setTimeout(function(){that.$el.remove();var l=jconfirm.instances;var i=jconfirm.instances.length-1;for(i;i>=0;i--){if(jconfirm.instances[i]._id===that._id){jconfirm.instances.splice(i,1);}}if(!jconfirm.instances.length){if(that.scrollToPreviousElement&&jconfirm.lastFocused&&jconfirm.lastFocused.length&&$.contains(document,jconfirm.lastFocused[0])){var $lf=jconfirm.lastFocused;if(that.scrollToPreviousElementAnimate){var st=$(window).scrollTop();var ot=jconfirm.lastFocused.offset().top;var wh=$(window).height();if(!(ot>st&&ot<(st+wh))){var scrollTo=(ot-Math.round((wh/3)));$("html, body").animate({scrollTop:scrollTo},that.animationSpeed,"swing",function(){$lf.focus();});}else{$lf.focus();}}else{$lf.focus();}jconfirm.lastFocused=false;}}if(typeof that.onDestroy==="function"){that.onDestroy();}},closeTimer*0.4);},50);return true;},open:function(){if(this.isOpen()){return false;}this._buildHTML();this._bindEvents();this._open();return true;},setStartingPoint:function(){var el=false;if(this.animateFromElement!==true&&this.animateFromElement){el=this.animateFromElement;jconfirm.lastClicked=false;}else{if(jconfirm.lastClicked&&this.animateFromElement===true){el=jconfirm.lastClicked;jconfirm.lastClicked=false;}else{return false;}}if(!el){return false;}var offset=el.offset();var iTop=el.outerHeight()/2;var iLeft=el.outerWidth()/2;iTop-=this.$jconfirmBox.outerHeight()/2;iLeft-=this.$jconfirmBox.outerWidth()/2;var sourceTop=offset.top+iTop;sourceTop=sourceTop-this._scrollTop();var sourceLeft=offset.left+iLeft;var wh=$(window).height()/2;var ww=$(window).width()/2;var targetH=wh-this.$jconfirmBox.outerHeight()/2;var targetW=ww-this.$jconfirmBox.outerWidth()/2;sourceTop-=targetH;sourceLeft-=targetW;if(Math.abs(sourceTop)>wh||Math.abs(sourceLeft)>ww){return false;}this.$jconfirmBoxContainer.css("transform","translate("+sourceLeft+"px, "+sourceTop+"px)");},_open:function(){var that=this;if(typeof that.onOpenBefore==="function"){that.onOpenBefore();}this.$body.removeClass(this.animationParsed);this.$jconfirmBg.removeClass("jconfirm-bg-h");this.$body.focus();that.$jconfirmBoxContainer.css("transform","translate("+0+"px, "+0+"px)");setTimeout(function(){that.$body.css(that._getCSS(that.animationSpeed,1));that.$body.css({"transition-property":that.$body.css("transition-property")+", margin"});that.$jconfirmBoxContainer.addClass("jconfirm-no-transition");that._modalReady.resolve();if(typeof that.onOpen==="function"){that.onOpen();}that.$el.addClass(that.loadedClass);},this.animationSpeed);},loadedClass:"jconfirm-open",isClosed:function(){return !this.$el||this.$el.css("display")==="";},isOpen:function(){return !this.isClosed();},toggle:function(){if(!this.isOpen()){this.open();}else{this.close();}}};jconfirm.instances=[];jconfirm.lastFocused=false;jconfirm.pluginDefaults={template:'<div class="jconfirm"><div class="jconfirm-bg jconfirm-bg-h"></div><div class="jconfirm-scrollpane"><div class="jconfirm-row"><div class="jconfirm-cell"><div class="jconfirm-holder"><div class="jc-bs3-container"><div class="jc-bs3-row"><div class="jconfirm-box-container jconfirm-animated"><div class="jconfirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1"><div class="jconfirm-closeIcon">&times;</div><div class="jconfirm-title-c"><span class="jconfirm-icon-c"></span><span class="jconfirm-title"></span></div><div class="jconfirm-content-pane"><div class="jconfirm-content"></div></div><div class="jconfirm-buttons"></div><div class="jconfirm-clear"></div></div></div></div></div></div></div></div></div></div>',title:"Hello",titleClass:"",type:"default",typeAnimated:true,draggable:true,dragWindowGap:15,dragWindowBorder:true,animateFromElement:true,alignMiddle:true,smoothContent:true,content:"Are you sure to continue?",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}}},contentLoaded:function(){},icon:"",lazyOpen:false,bgOpacity:null,theme:"light",animation:"scale",closeAnimation:"scale",animationSpeed:400,animationBounce:1,escapeKey:true,rtl:false,container:"body",containerFluid:false,backgroundDismiss:false,backgroundDismissAnimation:"shake",autoClose:false,closeIcon:null,closeIconClass:false,watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:true,scrollToPreviousElementAnimate:true,useBootstrap:true,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row"},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){}};var keyDown=false;$(window).on("keydown",function(e){if(!keyDown){var $target=$(e.target);var pass=false;if($target.closest(".jconfirm-box").length){pass=true;}if(pass){$(window).trigger("jcKeyDown");}keyDown=true;}});$(window).on("keyup",function(){keyDown=false;});jconfirm.lastClicked=false;$(document).on("mousedown","button, a",function(){jconfirm.lastClicked=$(this);});})(jQuery,window);
-},{}],201:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 /*! jQuery UI - v1.11.0pre - 2013-09-27
 * http://jqueryui.com
 * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.sortable.js, jquery.ui.effect.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js, jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-puff.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-size.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.position.js, jquery.ui.progressbar.js, jquery.ui.slider.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
@@ -27453,10 +28581,10 @@ $.widget( "ui.tooltip", {
 
 }( jQuery ) );*/
 
-},{}],202:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 $ = jQuery = require('jquery');
 module.exports = require('./dist/jquery-ui.js');
-},{"./dist/jquery-ui.js":201,"jquery":203}],203:[function(require,module,exports){
+},{"./dist/jquery-ui.js":202,"jquery":204}],204:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
@@ -37711,7 +38839,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],204:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 'use strict';
 
 var range; // Create a range object for efficently rendering strings to elements.
@@ -38395,7 +39523,7 @@ var morphdom = morphdomFactory(morphAttrs);
 
 module.exports = morphdom;
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 assert.notEqual = notEqual
 assert.notOk = notOk
 assert.equal = equal
@@ -38419,7 +39547,7 @@ function assert (t, m) {
   if (!t) throw new Error(m || 'AssertionError')
 }
 
-},{}],206:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 /* global MutationObserver */
 var document = require('global/document')
 var window = require('global/window')
@@ -38523,7 +39651,7 @@ function eachMutation (nodes, fn) {
   }
 }
 
-},{"assert":205,"global/document":195,"global/window":196}],207:[function(require,module,exports){
+},{"assert":206,"global/document":196,"global/window":197}],208:[function(require,module,exports){
 (function (process){
   /* globals require, module */
 
@@ -39149,7 +40277,7 @@ function eachMutation (nodes, fn) {
   page.sameOrigin = sameOrigin;
 
 }).call(this,require('_process'))
-},{"_process":36,"path-to-regexp":208}],208:[function(require,module,exports){
+},{"_process":37,"path-to-regexp":209}],209:[function(require,module,exports){
 var isarray = require('isarray')
 
 /**
@@ -39541,7 +40669,7 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(path, keys, options)
 }
 
-},{"isarray":199}],209:[function(require,module,exports){
+},{"isarray":200}],210:[function(require,module,exports){
 (function (process,global){
 /**
  * Copyright (c) 2014, Facebook, Inc.
@@ -40196,7 +41324,7 @@ function pathToRegexp (path, keys, options) {
 );
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":36}],210:[function(require,module,exports){
+},{"_process":37}],211:[function(require,module,exports){
 var bel = require('bel') // turns template tag into DOM elements
 var morphdom = require('morphdom') // efficiently diffs + morphs two DOM elements
 var defaultEvents = require('./update-events.js') // default events to be copied when dom elements update
@@ -40240,7 +41368,7 @@ module.exports.update = function (fromNode, toNode, opts) {
   }
 }
 
-},{"./update-events.js":211,"bel":33,"morphdom":204}],211:[function(require,module,exports){
+},{"./update-events.js":212,"bel":34,"morphdom":205}],212:[function(require,module,exports){
 module.exports = [
   // attribute events (can be set with attributes)
   'onclick',

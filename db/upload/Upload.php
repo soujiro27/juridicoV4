@@ -1,37 +1,8 @@
 <?php 
 
-class Insert {
+class Upload {
 
     private $all = 'Select * from sia_';
-
-
-    public function __construct($modulo,$datos){
-        if($modulo != 'Volantes' && $modulo != 'VolantesDiversos'){
-            if($modulo != 'ObservacionesDoctosJuridico' && $modulo != 'DocumentosSiglas' && $modulo!='confrontasJuridico' )
-            {
-                $modulo = 'Cat'.$modulo;
-            }
-            
-           
-
-            if($this->validaDatos($datos)){
-                $sql = $this->isExistRegister($modulo,$datos);
-                if($sql){
-                    $sql = $this->insertQuery($modulo,$datos);
-                    $pdo = $this->buildArrayPdo($datos);
-                   
-                    $this->InsertPdo($sql,$pdo);
-                }else{
-                    $insert = array('Error' => 'Registro Duplicado');
-                    echo json_encode($insert);
-                }
-                
-            }
-        }else{
-            $this->insertVolantes($modulo,$datos);
-        }
-    }
-
 
     public function conecta(){
         try{
@@ -111,10 +82,11 @@ class Insert {
             $dbQuery=$db->prepare($sql);
             $pdo[':usrAlta']=$_SESSION ["idUsuario"];
             $dbQuery->execute($pdo);
-            //$insert=array('Success' => 'Success');
-            $errores=$dbQuery->errorInfo();     
-            $insert=array('Error' => $errores);
+            $insert=array('Success' => 'Success');
             echo json_encode($insert);
+           // $errores=$dbQuery->errorInfo();     
+            //$insert=array('Error' => $errores);
+            //echo json_encode($insert);
         } catch(PDOException $e){
             $errores=$dbQuery->errorInfo();     
             $insert=array('Error' => $errores);
@@ -311,6 +283,25 @@ class Insert {
         }
     }
 
+    public function actualizaNombre($nombre,$id){
+        $db=$this->conecta();
+        try{
+            $sql = "update sia_Volantes set anexoDoc='$nombre' where idVolante='$id'";
+            $dbQuery=$db->prepare($sql);
+            //$pdo[':usrAlta']=$_SESSION ["idUsuario"];
+            $dbQuery->execute();
+            // $errores=$dbQuery->errorInfo();
+            $errores=$dbQuery->errorInfo();     
+            $insert=array('Error' => $errores);
+            echo json_encode($insert);     
+            //$insert=array('Success' => 'Success');
+            //echo json_encode($insert);
+           return True;
+        } catch(PDOException $e){
+            $errores=$dbQuery->errorInfo();     
+           return False;
+        }
+    }
 
 }
 
